@@ -13,7 +13,11 @@ git clone https://github.com/fix/Lisk-Lite-Client
 # Go into the repository
 cd Lisk-Lite-Client
 # Install dependencies and run the app
-npm install && npm start
+npm install
+cd client
+npm install
+cd ..
+npm start
 ```
 
 ### License [MIT](LICENSE.md) copyright (c) 2016 fx thoorens
