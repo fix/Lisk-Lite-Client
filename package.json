@@ -1,0 +1,28 @@
+{
+  "name": "LiskClient",
+  "version": "1.0.0",
+  "productName":"LiskClient",
+  "description": "Lisk Desktop Lite Client",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fix/Lisk-Lite-Client.git"
+  },
+  "keywords": [
+    "Electron",
+    "Lisk",
+    "Client"
+  ],
+  "author": "Fx Thoorens",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fix/Lisk-Lite-Client/issues"
+  },
+  "homepage": "https://github.com/fix/Lisk-Lite-Client#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.0"
+  }
+}

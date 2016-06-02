@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Lisk Client</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
+    <link href="../bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
+
+  </head>
+
+  <body ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
+
+    <md-toolbar>
+       <div class="md-toolbar-tools">
+       <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Account List">
+         <md-icon md-svg-icon="menu" ></md-icon>
+       </md-button>
+        <span>Lisk Client</span>
+         <!-- fill up the space between left and right area -->
+         <span flex></span>
+         <md-button>
+           <md-icon md-font-library="material-icons">wifi</md-icon>
+         </md-button>
+         <md-button>
+           <md-icon md-font-library="material-icons">settings</md-icon>
+         </md-button>
+         <md-button>
+           <md-icon md-font-library="material-icons">power_settings_new</md-icon>
+         </md-button>
+       </div>
+    </md-toolbar>
+
+    <div flex layout="row">
+
+        <md-sidenav  ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
+          <md-button class="md-fab" ng-click="ul.addAccount()" style="position: absolute;right: 20px;">
+            <md-icon md-font-library="material-icons">add</md-icon>
+          </md-button>
+          <md-list>
+            <md-list-item>
+              <h1>
+                Accounts
+
+              </h1>
+
+            </md-list-item>
+            <md-list-item ng-repeat="it in ul.accounts">
+                <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
+                  {{it.address}}
+                </md-button>
+            </md-list-item>
+          </md-list>
+        </md-sidenav>
+
+        <md-content flex id="content">
+          <md-card>
+            <md-card-title>
+              <md-card-title-media>
+                <div class="md-media-sm card-media" layout layout-align="center center" >
+                  <md-icon md-font-library="material-icons">account_balance</md-icon>
+                </div>
+              </md-card-title-media>
+              <md-card-title-text>
+                <span class="md-headline">Account {{ul.selected.address}}</span>
+                <span class="md-subhead description">Balance Ⱡ{{ul.selected.balance/100000000}}</span>
+              </md-card-title-text>
+            </md-card-title>
+          </md-card>
+
+
+          <md-button class="share" md-no-ink ng-click="ul.makeContact(ul.selected)" aria-label="Share with {{ ul.selected.address }}">
+            <md-icon md-font-library="material-icons">more_vert</md-icon>
+          </md-button>
+          <md-content>
+          <md-tabs md-dynamic-height>
+            <md-tab label="Transactions">
+
+                <md-table-container>
+                  <table md-table>
+                    <thead md-head md-order="query.order">
+                      <tr md-row>
+                        <th md-column md-numeric md-order-by="timestamp"><span>Date</span></th>
+                        <th md-column md-order-by="label"><span>Type</span></th>
+                        <th md-column md-numeric md-order-by="amount">Amount Ⱡ</th>
+                        <th md-column md-numeric md-order-by="fee">Fee Ⱡ</th>
+                        <th md-column md-numeric>From</th>
+                        <th md-column md-numeric>To</th>
+                      </tr>
+                    </thead>
+                    <tbody md-body>
+                      <tr md-row md-select="transaction" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.transactions | orderBy: query.order">
+                        <td md-cell>{{it.date}}</td>
+                        <td md-cell>{{it.label}}</td>
+                        <td md-cell>{{it.amount/100000000}}</td>
+                        <td md-cell>{{it.fee/100000000}}</td>
+                        <td md-cell>{{it.senderId}}</td>
+                        <td md-cell>{{it.recipientId}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </md-table-container>
+
+            </md-tab>
+
+            <md-tab label="Votes">
+              <md-table-container>
+                <table md-table md-row-select multiple ng-model="ul.selectedVotes">
+                  <thead md-head md-order="query.order">
+                    <tr md-row>
+                      <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
+                      <th md-column md-order-by="username"><span>Username</span></th>
+                      <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
+                      <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
+                    </tr>
+                  </thead>
+                  <tbody md-body>
+                    <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
+                      <td md-cell>{{it.rate}}</td>
+                      <td md-cell>{{it.username}}</td>
+                      <td md-cell>{{it.approval}}%</td>
+                      <td md-cell>{{it.productivity}}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </md-table-container>
+
+            </md-tab>
+            <md-tab ng-if="ul.selected.delegate" label="Delegate">
+              <md-list>
+                <md-list-item>
+                  <h1>{{ul.selected.delegate.username}}</h1>
+                </md-list-item>
+                <md-list-item>
+                  Rank {{ul.selected.delegate.rate}}
+                </md-list-item>
+                <md-list-item>
+                  Approval {{ul.selected.delegate.approval}}%
+                </md-list-item>
+                <md-list-item>
+                  Productivity {{ul.selected.delegate.productivity}}% - {{ul.selected.delegate.producedblocks}} produced blocks - {{ul.selected.delegate.missedblocks}} missed blocks
+                </md-list-item>
+              </md-list>
+            </md-tab>
+          </md-tabs>
+          </md-content>
+
+
+
+    </div>
+
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="../node_modules/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="../node_modules/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+    <script src="./src/accounts/Accounts.js"></script>
+    <script src="./src/accounts/AccountController.js"></script>
+    <script src="./src/accounts/AccountService.js"></script>
+
+    <script type="text/javascript">
+
+          angular
+              .module('liskApp', ['ngMaterial', 'md.data.table', 'accounts'])
+              .config(function($mdThemingProvider, $mdIconProvider){
+
+                  $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu"       , "./assets/svg/menu.svg"        , 24);
+
+                      $mdThemingProvider.theme('default')
+                          .primaryPalette('brown')
+                          .accentPalette('red');
+
+              });
+
+    </script>
+
+  </body>
+</html>
