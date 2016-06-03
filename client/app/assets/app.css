@@ -41,7 +41,7 @@ md-list-item > button {
 /* Primary content area */
 
 #content {
-  overflow: hidden;
+  overflow: scroll;
 }
 
 #content  {

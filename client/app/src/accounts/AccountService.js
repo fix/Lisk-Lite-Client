@@ -1,8 +1,8 @@
 (function(){
   'use strict';
 
-  angular.module('accounts')
-         .service('accountService', ['$q','$http', AccountService]);
+  angular.module('liskclient')
+         .service('accountService', ['$q','$http','networkService', AccountService]);
 
   /**
    * Accounts DataService
@@ -12,7 +12,7 @@
    * @returns {{loadAll: Function}}
    * @constructor
    */
-  function AccountService($q,$http){
+  function AccountService($q,$http,networkService){
 
     var lisk=require('lisk-js');
 
@@ -27,7 +27,7 @@
       7:"Transfer Lisk from Blockchain Application"
     };
 
-    var peer='https://login.lisk.io';
+    var peer=networkService.getPeer().ip;
 
     function showTimestamp(time){
       var d = new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
@@ -74,23 +74,25 @@
 
     function fetchAccount(address){
       var deferred = $q.defer();
-      $http.get(peer+'/api/accounts?address='+address).then(function (resp) {
-       if(resp.data && resp.data.success){
-         var account=resp.data.account;
-         deferred.resolve(account);
-         addAccount(account);
-       }
-       else if(resp.data && !resp.data.success){
-         account={
-           address:address,
-           balance:0,
-           secondSignature:false,
-           cold:true
-         };
-         deferred.resolve(account);
-         addAccount(account);
-       }
-      });
+      networkService.getFromPeer('/api/accounts?address='+address).then(
+        function (resp) {
+          if(resp.success){
+            var account=resp.account;
+            deferred.resolve(account);
+            addAccount(account);
+          }
+          else{
+            account={
+              address:address,
+              balance:0,
+              secondSignature:false,
+              cold:true
+            };
+            deferred.resolve(account);
+            addAccount(account);
+          }
+        }
+      );
       return deferred.promise;
     };
 

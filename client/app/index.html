@@ -35,9 +35,28 @@
         <span>Lisk Client</span>
          <!-- fill up the space between left and right area -->
          <span flex></span>
-         <md-button>
-           <md-icon md-font-library="material-icons">wifi</md-icon>
-         </md-button>
+
+         <md-menu>
+           <md-button>
+             <md-icon md-font-library="material-icons" md-colors="{'color' : ul.connectedPeer.isConnected?'green-50':'red' }" ng-click="ul.openWifi($mdOpenMenu, $event)">wifi</md-icon>
+           </md-button>
+            <md-menu-content flex layout-padding width="6">
+                <md-list>
+                  <md-list-item>
+                    Peer {{ul.connectedPeer.ip}}
+                  </md-list-item>
+                  <md-list-item>
+                    Height {{ul.connectedPeer.height}}
+                  </md-list-item>
+                  <md-list-item>
+                    Last checked {{ul.connectedPeer.lastConnection | date:'shortTime'}} | delay {{ul.connectedPeer.delay}}ms
+                  </md-list-item>
+                  <md-list-item ng-if="!ul.connectedPeer.isConnected">
+                    Error {{ul.connectedPeer.error}}
+                  </md-list-item>
+                </md-list>
+            </md-menu-content>
+          </md-menu>
          <md-button>
            <md-icon md-font-library="material-icons">settings</md-icon>
          </md-button>
@@ -88,10 +107,9 @@
           <md-button class="share" md-no-ink ng-click="ul.makeContact(ul.selected)" aria-label="Share with {{ ul.selected.address }}">
             <md-icon md-font-library="material-icons">more_vert</md-icon>
           </md-button>
-          <md-content>
+
           <md-tabs md-dynamic-height>
             <md-tab label="Transactions">
-
                 <md-table-container>
                   <table md-table>
                     <thead md-head md-order="query.order">
@@ -116,7 +134,6 @@
                     </tbody>
                   </table>
                 </md-table-container>
-
             </md-tab>
 
             <md-tab label="Votes">
@@ -159,7 +176,7 @@
               </md-list>
             </md-tab>
           </md-tabs>
-          </md-content>
+
 
 
 
@@ -174,11 +191,13 @@
     <script src="./src/accounts/Accounts.js"></script>
     <script src="./src/accounts/AccountController.js"></script>
     <script src="./src/accounts/AccountService.js"></script>
+    <script src="./src/network/NetworkService.js"></script>
+
 
     <script type="text/javascript">
 
           angular
-              .module('liskApp', ['ngMaterial', 'md.data.table', 'accounts'])
+              .module('liskApp', ['ngMaterial', 'md.data.table', 'liskclient'])
               .config(function($mdThemingProvider, $mdIconProvider){
 
                   $mdIconProvider

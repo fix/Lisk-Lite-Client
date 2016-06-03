@@ -1,9 +1,9 @@
 (function(){
 
   angular
-       .module('accounts')
+       .module('liskclient')
        .controller('AccountController', [
-          'accountService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$mdToast',
+          'accountService', 'networkService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$mdToast',
           AccountController
        ]);
 
@@ -15,7 +15,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $mdToast ) {
+  function AccountController( accountService, networkService, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $mdOpenMenu, $mdToast ) {
     var self = this;
 
     self.selected     = null;
@@ -25,6 +25,20 @@
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
     self.makeContact  = makeContact;
+
+    self.connectedPeer={isConnected:false};
+    self.connection = networkService.getConnection();
+    self.connection.then(
+      function(){
+
+      },
+      function(){
+
+      },
+      function(connectedPeer){
+        self.connectedPeer=connectedPeer;
+      }
+    );
 
     // Load all registered accounts
     self.accounts = accountService.loadAllAccounts();
@@ -40,6 +54,11 @@
     function toggleAccountsList() {
       $mdSidenav('left').toggle();
     }
+
+    self.openWifi = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
 
     /**
      * Select the current avatars
@@ -59,7 +78,9 @@
         .getTransactions(currentaddress)
         .then(function(transactions){
           if(self.selected.address==currentaddress){
-            self.selected.transactions = transactions;
+            if(!self.selected.transactions || self.selected.transactions[0].id!==transactions[0].id){
+              self.selected.transactions = transactions;
+            }
           }
         });
       accountService
