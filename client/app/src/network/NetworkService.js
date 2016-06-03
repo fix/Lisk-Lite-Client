@@ -2,13 +2,13 @@
   'use strict';
 
   angular.module('liskclient')
-         .service('networkService', ['$q','$http', NetworkService]);
+         .service('networkService', ['$q', '$http', '$timeout', NetworkService]);
 
   /**
    * NetworkService
    * @constructor
    */
-  function NetworkService($q,$http){
+  function NetworkService($q,$http,$timeout){
 
     var lisk=require('lisk-js');
 
@@ -18,27 +18,40 @@
 
     connection.notify(peer);
 
+
+    function getPrice(){
+      $http.get("http://coinmarketcap.northpole.ro/api/v5/LSK.json",{timeout: 2000}).success(function(data){
+        peer.market=data;
+      });
+      $timeout(function(){
+        getPrice();
+      },5*60000);
+    };
+
     function getHeight(){
-      var deferred = $q.defer();
-      $http.get(peer.ip+"/api/blocks/getheight").then(function(resp){
+      $http.get(peer.ip+"/api/blocks/getheight",{timeout:2000}).then(function(resp){
         peer.lastConnection=new Date();
         if(resp.data && resp.data.success){
-          deferred.resolve(resp.data.height);
-          peer.height=resp.data.height;
-          if(!peer.isConnected){
+          if(peer.height==resp.data.height){
+            peer.isConnected=false;
+            peer.error="Node is experiencing sychronisation issues";
+            connection.notify(peer);
+          }
+          else{
+            peer.height=resp.data.height;
             peer.isConnected=true;
             connection.notify(peer);
           }
         }
         else{
-          deferred.reject("Peer disconnected");
-          if(peer.isConnected){
-            peer.isConnected=false;
-            connection.notify(peer);
-          }
+          peer.isConnected=false;
+          peer.error=resp.statusText || "Peer Timeout after 2s";
+          connection.notify(peer);
         }
       });
-      return deferred.promise;
+      $timeout(function(){
+        getHeight();
+      },60000);
     };
 
     function getFromPeer(api){
@@ -94,10 +107,11 @@
     }
 
     getHeight();
+    getPrice();
+
 
     return {
       getPeer: getPeer,
-      getHeight: getHeight,
       getConnection: getConnection,
       getFromPeer: getFromPeer,
       postTransaction: postTransaction

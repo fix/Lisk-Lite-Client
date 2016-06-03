@@ -3,11 +3,11 @@
   angular
        .module('liskclient')
        .controller('AccountController', [
-          'accountService', 'networkService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$mdToast',
+          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog',
           AccountController
        ]);
 
-  const {dialog} = require('electron').remote;
+  const {app} = require('electron').remote;
   /**
    * Main Controller for the Angular Material Starter App
    * @param $scope
@@ -15,7 +15,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, networkService, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $mdOpenMenu, $mdToast ) {
+  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog ) {
     var self = this;
 
     self.selected     = null;
@@ -37,6 +37,13 @@
       },
       function(connectedPeer){
         self.connectedPeer=connectedPeer;
+        if(!self.connectedPeer.isConnected){
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Network disconected!')
+              .hideDelay(10000)
+          );
+        }
       }
     );
 
@@ -55,9 +62,19 @@
       $mdSidenav('left').toggle();
     }
 
-    self.openWifi = function($mdOpenMenu, ev) {
+    self.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
       $mdOpenMenu(ev);
+    };
+
+    self.closeApp = function() {
+      var confirm = $mdDialog.confirm()
+          .title('Quit Lisk Client?')
+          .ok('Quit')
+          .cancel('Cancel');
+      $mdDialog.show(confirm).then(function() {
+        app.quit();
+      });
     };
 
     /**
@@ -145,7 +162,7 @@
         /**
          * Account ContactSheet controller
          */
-        function ContactSheetController( $mdBottomSheet ) {
+        function ContactSheetController( $mdBottomSheet) {
           this.account = selectedAccount;
           this.send={fromAddress: selectedAccount.address, secondSignature:selectedAccount.secondSignature}
           this.items = [

@@ -38,29 +38,55 @@
 
          <md-menu>
            <md-button>
-             <md-icon md-font-library="material-icons" md-colors="{'color' : ul.connectedPeer.isConnected?'green-50':'red' }" ng-click="ul.openWifi($mdOpenMenu, $event)">wifi</md-icon>
+             <md-icon md-font-library="material-icons" md-colors="{'color' : ul.connectedPeer.isConnected?'green-50':'red' }" ng-click="ul.openMenu($mdOpenMenu, $event)">wifi</md-icon>
            </md-button>
             <md-menu-content flex layout-padding width="6">
                 <md-list>
                   <md-list-item>
-                    Peer {{ul.connectedPeer.ip}}
+                    <b>Peer</b> <span class="md-secondary">{{ul.connectedPeer.ip}}</span>
                   </md-list-item>
                   <md-list-item>
-                    Height {{ul.connectedPeer.height}}
+                    <b>Height</b> <span class="md-secondary">{{ul.connectedPeer.height}}</span>
                   </md-list-item>
                   <md-list-item>
-                    Last checked {{ul.connectedPeer.lastConnection | date:'shortTime'}} | delay {{ul.connectedPeer.delay}}ms
+                    <b>Last checked</b> <span class="md-secondary">{{ul.connectedPeer.lastConnection | date:'shortTime'}}</span>
                   </md-list-item>
-                  <md-list-item ng-if="!ul.connectedPeer.isConnected">
-                    Error {{ul.connectedPeer.error}}
+                  <md-list-item md-colors="{'background':'red' }" ng-if="!ul.connectedPeer.isConnected">
+                    {{ul.connectedPeer.error}}
+                  </md-list-item>
+                  <md-list-item md-colors="{'background':'green' }" ng-if="ul.connectedPeer.isConnected">
+                    <b>Delay</b> <span class="md-secondary">{{ul.connectedPeer.delay}}ms</span>
                   </md-list-item>
                 </md-list>
             </md-menu-content>
           </md-menu>
-         <md-button>
-           <md-icon md-font-library="material-icons">settings</md-icon>
-         </md-button>
-         <md-button>
+
+          <md-menu>
+            <md-button>
+              <md-icon md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">settings</md-icon>
+            </md-button>
+             <md-menu-content flex layout-padding width="6">
+                 <md-list>
+                   <md-list-item>
+                     <b>Price</b> <span class="md-secondary">${{ul.connectedPeer.market.price.usd}}</span>
+                   </md-list-item>
+                   <md-list-item>
+                     <b>Change 1h/7h/7d</b>
+                     <span class="md-secondary">
+                       <span md-colors="{'color' : ul.connectedPeer.market.change1h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change1h.usd}}%</span>
+                       /
+                       <span md-colors="{'color' : ul.connectedPeer.market.change7h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7h.usd}}%</span>
+                       /
+                       <span md-colors="{'color' : ul.connectedPeer.market.change7d.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7d.usd}}%</span>
+                     </span>
+                   </md-list-item>
+                   <md-list-item>
+                     <b>Capitalisation</b> <span class="md-secondary">${{ul.connectedPeer.market.marketCap.usd}}</span>
+                   </md-list-item>
+                 </md-list>
+             </md-menu-content>
+           </md-menu>
+         <md-button ng-click="ul.closeApp()">
            <md-icon md-font-library="material-icons">power_settings_new</md-icon>
          </md-button>
        </div>
@@ -98,7 +124,7 @@
               </md-card-title-media>
               <md-card-title-text>
                 <span class="md-headline">Account {{ul.selected.address}}</span>
-                <span class="md-subhead description">Balance Ⱡ{{ul.selected.balance/100000000}}</span>
+                <span class="md-subhead description">Balance Ⱡ{{ul.selected.balance/100000000}} ~ ${{(ul.selected.balance/100000000*ul.connectedPeer.market.price.usd).toFixed(2)}}</span>
               </md-card-title-text>
             </md-card-title>
           </md-card>
