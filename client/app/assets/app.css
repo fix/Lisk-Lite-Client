@@ -40,6 +40,10 @@ md-list-item > button {
 
 /* Primary content area */
 
+#app {
+  overflow: hidden;
+}
+
 #content {
   overflow: scroll;
 }

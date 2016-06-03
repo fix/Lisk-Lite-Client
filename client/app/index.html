@@ -25,7 +25,7 @@
 
   </head>
 
-  <body ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
+  <body id="app" ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
 
     <md-toolbar>
        <div class="md-toolbar-tools">
@@ -63,7 +63,8 @@
 
           <md-menu>
             <md-button>
-              <md-icon md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">settings</md-icon>
+              <md-icon ng-if="ul.connectedPeer.market.change1h.usd>=0" md-colors="{'color' : 'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_upward</md-icon>
+              <md-icon ng-if="ul.connectedPeer.market.change1h.usd<0" md-colors="{'color' : 'red-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_downward</md-icon>
             </md-button>
              <md-menu-content flex layout-padding width="6">
                  <md-list>
@@ -108,7 +109,7 @@
             </md-list-item>
             <md-list-item ng-repeat="it in ul.accounts">
                 <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
-                  {{it.address}}
+                  {{it.username||it.address}}
                 </md-button>
             </md-list-item>
           </md-list>
@@ -142,8 +143,7 @@
                       <tr md-row>
                         <th md-column md-numeric md-order-by="timestamp"><span>Date</span></th>
                         <th md-column md-order-by="label"><span>Type</span></th>
-                        <th md-column md-numeric md-order-by="amount">Amount Ⱡ</th>
-                        <th md-column md-numeric md-order-by="fee">Fee Ⱡ</th>
+                        <th md-column md-numeric md-order-by="total">Total Ⱡ</th>
                         <th md-column md-numeric>From</th>
                         <th md-column md-numeric>To</th>
                       </tr>
@@ -152,8 +152,8 @@
                       <tr md-row md-select="transaction" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.transactions | orderBy: query.order">
                         <td md-cell>{{it.date}}</td>
                         <td md-cell>{{it.label}}</td>
-                        <td md-cell>{{it.amount/100000000}}</td>
-                        <td md-cell>{{it.fee/100000000}}</td>
+                        <td ng-if="it.total>0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
+                        <td ng-if="it.total<0" md-cell><md-button md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td md-cell>{{it.senderId}}</td>
                         <td md-cell>{{it.recipientId}}</td>
                       </tr>
@@ -173,6 +173,7 @@
                       <tr md-row>
                         <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
                         <th md-column md-order-by="username"><span>Username</span></th>
+                        <th md-column><span>Address</span></th>
                         <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
                         <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
                       </tr>
@@ -181,6 +182,7 @@
                       <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
                         <td md-cell>{{it.rate}}</td>
                         <td md-cell>{{it.username}}</td>
+                        <td md-cell>{{it.address}}</td>
                         <td md-cell>{{it.approval}}%</td>
                         <td md-cell>{{it.productivity}}%</td>
                       </tr>

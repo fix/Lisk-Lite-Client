@@ -123,6 +123,7 @@
       window.localStorage.removeItem(account.address);
       window.localStorage.removeItem("transactions-"+account.address);
       window.localStorage.removeItem("voters-"+account.address);
+      window.localStorage.removeItem("username-"+account.address);
 
       //remove the address from stored addresses
       var addresses=JSON.parse(window.localStorage.getItem("addresses"));
@@ -139,6 +140,12 @@
             var transaction = resp.data.transactions[i];
             transaction.label=TxTypes[transaction.type];
             transaction.date=showTimestamp(transaction.timestamp);
+            if(transaction.recipientId==address){
+              transaction.total=transaction.amount
+            }
+            if(transaction.senderId==address){
+              transaction.total=-transaction.amount-transaction.fee;
+            }
           }
           window.localStorage.setItem("transactions-"+address,JSON.stringify(resp.data.transactions));
           deferred.resolve(resp.data.transactions);
@@ -220,6 +227,7 @@
           var account=JSON.parse(window.localStorage.getItem(address));
           if(account){
             account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
+            account.username=window.localStorage.getItem("username-"+address);
             return account;
           }
           return {address:address}
@@ -231,6 +239,7 @@
         if(stringaccount){
           var account=JSON.parse(stringaccount);
           account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
+          account.username=window.localStorage.getItem("username-"+address);
           return account;
         }
         else{
@@ -240,6 +249,10 @@
 
       refreshAccount: function(account){
         return fetchAccount(account.address);
+      },
+
+      setUsername: function(address,username){
+        window.localStorage.setItem("username-"+address,username);
       },
 
       addAccount: addAccount,

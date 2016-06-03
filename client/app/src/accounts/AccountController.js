@@ -131,15 +131,25 @@
           .ok('Add')
           .cancel('Cancel');
       $mdDialog.show(confirm).then(function(address) {
-        accountService.fetchAccount(address).then(function(account){
-          self.accounts.push(account);
-          selectAccount(account);
+        var isAddress = /^[0-9]+[L|l]$/g;
+        if(isAddress.test(address)){
+          accountService.fetchAccount(address).then(function(account){
+            self.accounts.push(account);
+            selectAccount(account);
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Account added!')
+                .hideDelay(3000)
+            );
+          });
+        }
+        else{
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Account added!')
+              .textContent('Address is not well formatted!')
               .hideDelay(3000)
           );
-        });
+        }
 
       });
 
@@ -154,7 +164,7 @@
           controllerAs  : "vm",
           templateUrl   : './src/accounts/view/contactSheet.html',
           controller    : [ '$mdBottomSheet', ContactSheetController],
-          parent        : angular.element(document.getElementById('content'))
+          parent        : angular.element(window.document.getElementById('app'))
         }).then(function(clickedItem) {
           $log.debug( clickedItem.address + ' clicked!');
         });
@@ -169,6 +179,9 @@
             { name: 'Send Lisk', icon: 'send'},
             { name: 'Delete', icon: 'delete'}
           ];
+          if(!selectedAccount.delegate){
+            this.items.push({ name: 'Label', icon: 'local_offer'});
+          }
           this.answer=function(answer){
             $mdDialog.hide(answer);
           }
@@ -194,11 +207,11 @@
               });
             }
 
-            if(action.name=="Send Lisk"){
+            else if(action.name=="Send Lisk"){
                 $mdDialog.show({
                   controllerAs       : "vm",
                   controller         : [ '$mdBottomSheet', ContactSheetController],
-                  parent             : angular.element(document.getElementById('content')),
+                  parent             : angular.element(document.getElementById('app')),
                   templateUrl        : './src/accounts/view/sendLisk.html',
                   clickOutsideToClose: true
                 }).then(function(vm) {
@@ -220,12 +233,29 @@
                       }
                     );
                   }
-                }, function() {
-
                 });
-
-
             }
+
+            else if (action.name=="Label") {
+              var prompt = $mdDialog.prompt()
+                  .title('Label')
+                  .textContent('Please enter a short label.')
+                  .placeholder('label')
+                  .ariaLabel('Label')
+                  .ok('Set')
+                  .cancel('Cancel');
+              $mdDialog.show(prompt).then(function(label) {
+                accountService.setUsername(selectedAccount.address,label);
+                self.accounts = accountService.loadAllAccounts();
+                $mdToast.show(
+                  $mdToast.simple()
+                    .textContent('Label set')
+                    .hideDelay(3000)
+                );
+              });
+            }
+
+
 
           };
         }
