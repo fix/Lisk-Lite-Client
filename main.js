@@ -18,7 +18,7 @@ function createWindow () {
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
-  
+
   // Create the Application's main menu
   var template = [{
       label: "Application",

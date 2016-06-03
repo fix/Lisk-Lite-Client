@@ -37,7 +37,7 @@
          <span flex></span>
 
          <md-menu>
-           <md-button>
+           <md-button aria-label="Show network">
              <md-icon md-font-library="material-icons" md-colors="{'color' : ul.connectedPeer.isConnected?'green-50':'red' }" ng-click="ul.openMenu($mdOpenMenu, $event)">wifi</md-icon>
            </md-button>
             <md-menu-content flex layout-padding width="6">
@@ -62,7 +62,7 @@
           </md-menu>
 
           <md-menu>
-            <md-button>
+            <md-button aria-label="Show market">
               <md-icon ng-if="ul.connectedPeer.market.change1h.usd>=0" md-colors="{'color' : 'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_upward</md-icon>
               <md-icon ng-if="ul.connectedPeer.market.change1h.usd<0" md-colors="{'color' : 'red-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_downward</md-icon>
             </md-button>
@@ -96,7 +96,7 @@
     <div flex layout="row">
 
         <md-sidenav  ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
-          <md-button class="md-fab" ng-click="ul.addAccount()" style="position: absolute;right: 20px;">
+          <md-button class="md-fab" ng-click="ul.addAccount()" md-colors="{'background':'grey-300'}" style="position: absolute;right: 20px;">
             <md-icon md-font-library="material-icons">add</md-icon>
           </md-button>
           <md-list>
@@ -109,7 +109,7 @@
             </md-list-item>
             <md-list-item ng-repeat="it in ul.accounts">
                 <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
-                  {{it.username||it.address}}
+                  {{it.username||it.address}} <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
                 </md-button>
             </md-list-item>
           </md-list>
@@ -120,11 +120,12 @@
             <md-card-title>
               <md-card-title-media>
                 <div class="md-media-sm card-media" layout layout-align="center center" >
-                  <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">account_balance</md-icon>
+                  <md-icon ng-if="!ul.selected.delegate" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">account_balance</md-icon>
+                  <md-icon ng-if="ul.selected.delegate" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">security</md-icon>
                 </div>
               </md-card-title-media>
               <md-card-title-text>
-                <span class="md-headline">Account {{ul.selected.address}}</span>
+                <span class="md-headline">{{ul.selected.username||'Account'}} {{ul.selected.address}}</span>
                 <span class="md-subhead description">Balance Ⱡ{{ul.selected.balance/100000000}} ~ ${{(ul.selected.balance/100000000*ul.connectedPeer.market.price.usd).toFixed(2)}}</span>
               </md-card-title-text>
             </md-card-title>
@@ -150,9 +151,9 @@
                     </thead>
                     <tbody md-body>
                       <tr md-row md-select="transaction" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.transactions | orderBy: query.order">
-                        <td md-cell>{{it.date}}</td>
+                        <td md-cell>{{it.date | date: 'short'}}</td>
                         <td md-cell>{{it.label}}</td>
-                        <td ng-if="it.total>0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
+                        <td ng-if="it.total>=0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td ng-if="it.total<0" md-cell><md-button md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td md-cell>{{it.senderId}}</td>
                         <td md-cell>{{it.recipientId}}</td>

@@ -82,26 +82,37 @@
      * @param menuId
      */
     function selectAccount ( account ) {
-      var currentaddress=account.address;
       self.selected = angular.isNumber(account) ? $scope.accounts[account] : account;
+      var currentaddress=self.selected.address;
       accountService
         .refreshAccount(self.selected)
         .then(function(account){
           if(self.selected.address==currentaddress){
-            self.selected = account;
+            self.selected.balance = account.balance;
           }
         });
       accountService
         .getTransactions(currentaddress)
         .then(function(transactions){
           if(self.selected.address==currentaddress){
-            if(!self.selected.transactions || self.selected.transactions[0].id!==transactions[0].id){
+            if(!self.selected.transactions){
               self.selected.transactions = transactions;
+            }
+            else{
+              transactions=transactions.sort(function(a,b){
+                return b.timestamp-a.timestamp;
+              });
+              var temp=self.selected.transactions.sort(function(a,b){
+                return b.timestamp-a.timestamp;
+              });
+              if(temp[0].id!=transactions[0].id){
+                self.selected.transactions = transactions;
+              }
             }
           }
         });
       accountService
-        .getVotedDelegates(currentaddress)
+        .getVotedDelegates(self.selected.address)
         .then(function(delegates){
           if(self.selected.address==currentaddress){
             self.selected.delegates = delegates;
@@ -109,7 +120,7 @@
           }
         });
       accountService
-        .getDelegate(account.publicKey)
+        .getDelegate(self.selected.publicKey)
         .then(function(delegate){
           if(self.selected.address==currentaddress){
             self.selected.delegate = delegate;
@@ -146,7 +157,7 @@
         else{
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Address is not well formatted!')
+              .textContent('Address '+address+' is not recognised')
               .hideDelay(3000)
           );
         }
@@ -216,7 +227,7 @@
                   clickOutsideToClose: true
                 }).then(function(vm) {
                   if(vm){
-                    accountService.sendLisk(vm.send.toAddress, parseInt(vm.send.amount*100000000), vm.send.passphrase, vm.send.secondpassphrase).then(
+                    accountService.sendLisk(selectedAccount.address, vm.send.toAddress, parseInt(vm.send.amount*100000000), vm.send.passphrase, vm.send.secondpassphrase).then(
                       function(transaction){
                         $mdToast.show(
                           $mdToast.simple()

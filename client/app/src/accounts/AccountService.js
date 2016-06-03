@@ -96,6 +96,19 @@
       return deferred.promise;
     };
 
+    function getAccount(address){
+      var stringaccount=window.localStorage.getItem(address);
+      if(stringaccount){
+        var account=JSON.parse(stringaccount);
+        account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
+        account.username=window.localStorage.getItem("username-"+address);
+        return account;
+      }
+      else{
+        return null;
+      }
+    }
+
 
     function addAccount(account){
       if(!account || !account.address){
@@ -134,14 +147,19 @@
 
     function getTransactions(address) {
       var deferred = $q.defer();
+      var d = new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
+      var t = parseInt(d.getTime() / 1000);
       $http.get(peer+"/api/transactions?orderBy=t_timestamp:desc&recipientId=" +address +"&senderId="+address).then(function (resp) {
         if(resp.data.success){
           for(var i=0;i<resp.data.transactions.length;i++){
             var transaction = resp.data.transactions[i];
             transaction.label=TxTypes[transaction.type];
-            transaction.date=showTimestamp(transaction.timestamp);
+            transaction.date=new Date((transaction.timestamp + t) * 1000);
             if(transaction.recipientId==address){
-              transaction.total=transaction.amount
+              transaction.total=transaction.amount;
+              if(transaction.type==0){
+                transaction.label="Receive Lisk";
+              }
             }
             if(transaction.senderId==address){
               transaction.total=-transaction.amount-transaction.fee;
@@ -186,8 +204,20 @@
       return deferred.promise;
     };
 
-    function sendLisk(toAddress, amount, masterpassphrase, secondpassphrase){
+    function sendLisk(fromAddress, toAddress, amount, masterpassphrase, secondpassphrase){
       var deferred = $q.defer();
+      var isAddress = /^[0-9]+[L|l]$/g;
+      if(!isAddress.test(toAddress)){
+        deferred.reject("The destination address "+toAddress+" is erroneous");
+        return deferred.promise;
+      }
+
+      var account=getAccount(fromAddress);
+      if(amount+10000000>account.balance){
+        deferred.reject("Not enough LSK on your account "+fromAddress);
+        return deferred.promise;
+      }
+
       try{
         var transaction=lisk.transaction.createTransaction(toAddress, amount, masterpassphrase, secondpassphrase);
       }
@@ -195,6 +225,13 @@
         deferred.reject(e);
         return deferred.promise;
       }
+
+
+      if(transaction.sendeId!=fromAddress){
+        deferred.reject("Passphrase is not corresponding to account "+fromAddress);
+        return deferred.promise;
+      }
+
       $http({
         url: peer+'/peer/transactions',
         data: { transaction: transaction },
@@ -227,6 +264,7 @@
           var account=JSON.parse(window.localStorage.getItem(address));
           if(account){
             account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
+            account.delegate=JSON.parse(window.localStorage.getItem("delegate-"+address));
             account.username=window.localStorage.getItem("username-"+address);
             return account;
           }
@@ -234,18 +272,7 @@
         });
       },
 
-      getAccount: function(address){
-        var stringaccount=window.localStorage.getItem(address);
-        if(stringaccount){
-          var account=JSON.parse(stringaccount);
-          account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
-          account.username=window.localStorage.getItem("username-"+address);
-          return account;
-        }
-        else{
-          return null;
-        }
-      },
+      getAccount: getAccount,
 
       refreshAccount: function(account){
         return fetchAccount(account.address);
