@@ -119,7 +119,7 @@
             <md-card-title>
               <md-card-title-media>
                 <div class="md-media-sm card-media" layout layout-align="center center" >
-                  <md-icon md-font-library="material-icons">account_balance</md-icon>
+                  <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">account_balance</md-icon>
                 </div>
               </md-card-title-media>
               <md-card-title-text>
@@ -162,31 +162,41 @@
                 </md-table-container>
             </md-tab>
 
-            <md-tab label="Votes">
-              <md-table-container>
-                <table md-table md-row-select multiple ng-model="ul.selectedVotes">
-                  <thead md-head md-order="query.order">
-                    <tr md-row>
-                      <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
-                      <th md-column md-order-by="username"><span>Username</span></th>
-                      <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
-                      <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
-                    </tr>
-                  </thead>
-                  <tbody md-body>
-                    <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
-                      <td md-cell>{{it.rate}}</td>
-                      <td md-cell>{{it.username}}</td>
-                      <td md-cell>{{it.approval}}%</td>
-                      <td md-cell>{{it.productivity}}%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </md-table-container>
-
+            <md-tab>
+              <md-tab-label>
+                Votes ({{ul.selectedVotes.length}}/101)
+              </md-tab-label>
+              <md-tab-body>
+                <md-table-container>
+                  <table md-table md-row-select multiple ng-model="ul.selectedVotes">
+                    <thead md-head md-order="query.order">
+                      <tr md-row>
+                        <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
+                        <th md-column md-order-by="username"><span>Username</span></th>
+                        <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
+                        <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
+                      </tr>
+                    </thead>
+                    <tbody md-body>
+                      <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
+                        <td md-cell>{{it.rate}}</td>
+                        <td md-cell>{{it.username}}</td>
+                        <td md-cell>{{it.approval}}%</td>
+                        <td md-cell>{{it.productivity}}%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </md-table-container>
+              </md-tab-body>
             </md-tab>
-            <md-tab ng-if="ul.selected.delegate" label="Delegate">
-              <md-list>
+
+            <md-tab ng-if="ul.selected.delegate">
+              <md-tab-label>
+                Delegate
+                <md-icon md-colors="{'color' : 'red' }" ng-if="ul.selected.delegate.rate>101" md-font-library="material-icons">close</md-icon>
+                <md-icon md-colors="{'color' : 'green' }" ng-if="ul.selected.delegate.rate<102" md-font-library="material-icons">check</md-icon>
+              </md-tab-label>
+              <md-tab-body>
                 <md-list-item>
                   <h1>{{ul.selected.delegate.username}}</h1>
                 </md-list-item>
@@ -200,8 +210,10 @@
                   Productivity {{ul.selected.delegate.productivity}}% - {{ul.selected.delegate.producedblocks}} produced blocks - {{ul.selected.delegate.missedblocks}} missed blocks
                 </md-list-item>
               </md-list>
-            </md-tab>
-          </md-tabs>
+            </md-tab-body>
+          </md-tab>
+
+        </md-tabs>
 
 
 
