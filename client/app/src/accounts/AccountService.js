@@ -204,55 +204,39 @@
       return deferred.promise;
     };
 
-    function sendLisk(fromAddress, toAddress, amount, masterpassphrase, secondpassphrase){
+    function createTransaction(type,config){
       var deferred = $q.defer();
-      var isAddress = /^[0-9]+[L|l]$/g;
-      if(!isAddress.test(toAddress)){
-        deferred.reject("The destination address "+toAddress+" is erroneous");
-        return deferred.promise;
-      }
-
-      var account=getAccount(fromAddress);
-      if(amount+10000000>account.balance){
-        deferred.reject("Not enough LSK on your account "+fromAddress);
-        return deferred.promise;
-      }
-
-      try{
-        var transaction=lisk.transaction.createTransaction(toAddress, amount, masterpassphrase, secondpassphrase);
-      }
-      catch(e){
-        deferred.reject(e);
-        return deferred.promise;
-      }
-
-
-      if(transaction.sendeId!=fromAddress){
-        deferred.reject("Passphrase is not corresponding to account "+fromAddress);
-        return deferred.promise;
-      }
-
-      $http({
-        url: peer+'/peer/transactions',
-        data: { transaction: transaction },
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'os': 'liskwalletapp',
-          'version': '0.0.3',
-          'port': 1,
-          'nethash': 'ed14889723f24ecc54871d058d98ce91ff2f973192075c0155ba2b7b70ad2511'
+      if(type==0){
+        var isAddress = /^[0-9]+[L|l]$/g;
+        if(!isAddress.test(config.toAddress)){
+          deferred.reject("The destination address "+config.toAddress+" is erroneous");
+          return deferred.promise;
         }
-      }).then(function(resp){
-        if(resp.data.success){
-          deferred.resolve(transaction);
+
+        var account=getAccount(config.fromAddress);
+        if(config.amount+10000000>account.balance){
+          deferred.reject("Not enough LSK on your account "+config.fromAddress);
+          return deferred.promise;
         }
-        else{
-          deferred.reject(resp.data.message);
+
+        try{
+          var transaction=lisk.transaction.createTransaction(config.toAddress, config.amount, config.masterpassphrase, config.secondpassphrase);
         }
-      });
+        catch(e){
+          deferred.reject(e);
+          return deferred.promise;
+        }
+
+        if(lisk.crypto.getAddress(transaction.senderPublicKey)!=config.fromAddress){
+          deferred.reject("Passphrase is not corresponding to account "+config.fromAddress);
+          return deferred.promise;
+        }
+
+        transaction.senderId=config.fromAddress;
+        deferred.resolve(transaction);
+      }
       return deferred.promise;
-    };
+    }
 
     return {
       loadAllAccounts : function() {
@@ -290,7 +274,7 @@
 
       getTransactions: getTransactions,
 
-      sendLisk: sendLisk,
+      createTransaction: createTransaction,
 
       getVotedDelegates: getVotedDelegates,
 

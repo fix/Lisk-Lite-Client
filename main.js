@@ -17,7 +17,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/client/app/index.html`)
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Create the Application's main menu
   var template = [{

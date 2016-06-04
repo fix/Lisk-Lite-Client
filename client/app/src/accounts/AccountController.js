@@ -3,7 +3,7 @@
   angular
        .module('liskclient')
        .controller('AccountController', [
-          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog',
+          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$scope',
           AccountController
        ]);
 
@@ -15,7 +15,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog ) {
+  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $scope ) {
     var self = this;
 
     self.selected     = null;
@@ -24,7 +24,7 @@
     self.selectedVotes = [];
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
-    self.makeContact  = makeContact;
+    self.sendLisk  = sendLisk;
 
     self.connectedPeer={isConnected:false};
     self.connection = networkService.getConnection();
@@ -169,107 +169,174 @@
     /**
      * Show the Contact view in the bottom sheet
      */
-    function makeContact(selectedAccount) {
+    function sendLisk(selectedAccount) {
 
-        $mdBottomSheet.show({
-          controllerAs  : "vm",
-          templateUrl   : './src/accounts/view/contactSheet.html',
-          controller    : [ '$mdBottomSheet', ContactSheetController],
-          parent        : angular.element(window.document.getElementById('app'))
-        }).then(function(clickedItem) {
-          $log.debug( clickedItem.address + ' clicked!');
-        });
+      var account = selectedAccount;
 
-        /**
-         * Account ContactSheet controller
-         */
-        function ContactSheetController( $mdBottomSheet) {
-          this.account = selectedAccount;
-          this.send={fromAddress: selectedAccount.address, secondSignature:selectedAccount.secondSignature}
-          this.items = [
-            { name: 'Send Lisk', icon: 'send'},
-            { name: 'Delete', icon: 'delete'}
-          ];
-          if(!selectedAccount.delegate){
-            this.items.push({ name: 'Label', icon: 'local_offer'});
-          }
-          this.answer=function(answer){
-            $mdDialog.hide(answer);
-          }
-          this.contactAccount = function(action) {
+      var items = [
+        { name: 'Send Lisk', icon: 'send'},
+        { name: 'Delete', icon: 'delete'}
+      ];
 
-            $mdBottomSheet.hide(action);
-            if(action.name=="Delete"){
-              var confirm = $mdDialog.confirm()
-                  .title('Delete Account '+ this.account.address)
-                  .textContent('Are you sure? There is no way back.')
-                  .ok('Delete permanently this account')
-                  .cancel('Cancel');
-              $mdDialog.show(confirm).then(function() {
-                accountService.deleteAccount(selectedAccount).then(function(account){
-                  self.accounts = accountService.loadAllAccounts();
-                  if(self.accounts.length>0) selectAccount(self.accounts[0]);
-                  $mdToast.show(
-                    $mdToast.simple()
-                      .textContent('Account deleted!')
-                      .hideDelay(3000)
-                  );
-                });
-              });
-            }
+      if(!selectedAccount.delegate){
+        items.push({ name: 'Label', icon: 'local_offer'});
+      }
 
-            else if(action.name=="Send Lisk"){
-                $mdDialog.show({
-                  controllerAs       : "vm",
-                  controller         : [ '$mdBottomSheet', ContactSheetController],
-                  parent             : angular.element(document.getElementById('app')),
-                  templateUrl        : './src/accounts/view/sendLisk.html',
-                  clickOutsideToClose: true
-                }).then(function(vm) {
-                  if(vm){
-                    accountService.sendLisk(selectedAccount.address, vm.send.toAddress, parseInt(vm.send.amount*100000000), vm.send.passphrase, vm.send.secondpassphrase).then(
-                      function(transaction){
-                        $mdToast.show(
-                          $mdToast.simple()
-                            .textContent('Transaction '+transaction.id+' sent!')
-                            .hideDelay(5000)
-                        );
-                      },
-                      function(reason) {
-                        $mdToast.show(
-                          $mdToast.simple()
-                            .textContent('Error: '+reason)
-                            .hideDelay(5000)
-                        );
-                      }
-                    );
-                  }
-                });
-            }
-
-            else if (action.name=="Label") {
-              var prompt = $mdDialog.prompt()
-                  .title('Label')
-                  .textContent('Please enter a short label.')
-                  .placeholder('label')
-                  .ariaLabel('Label')
-                  .ok('Set')
-                  .cancel('Cancel');
-              $mdDialog.show(prompt).then(function(label) {
-                accountService.setUsername(selectedAccount.address,label);
-                self.accounts = accountService.loadAllAccounts();
-                $mdToast.show(
-                  $mdToast.simple()
-                    .textContent('Label set')
-                    .hideDelay(3000)
-                );
-              });
-            }
-
-
-
-          };
+      function answer(action){
+        $mdBottomSheet.hide();
+        if(action=="Delete"){
+          var confirm = $mdDialog.confirm()
+              .title('Delete Account '+ account.address)
+              .textContent('Are you sure? There is no way back.')
+              .ok('Delete permanently this account')
+              .cancel('Cancel');
+          $mdDialog.show(confirm).then(function() {
+            accountService.deleteAccount(account).then(function(){
+              self.accounts = accountService.loadAllAccounts();
+              if(self.accounts.length>0) selectAccount(self.accounts[0]);
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Account deleted!')
+                  .hideDelay(3000)
+              );
+            });
+          });
         }
+
+        else if(action=="Send Lisk"){
+          createLiskTransaction();
+        }
+
+        else if (action=="Label") {
+          var prompt = $mdDialog.prompt()
+              .title('Label')
+              .textContent('Please enter a short label.')
+              .placeholder('label')
+              .ariaLabel('Label')
+              .ok('Set')
+              .cancel('Cancel');
+          $mdDialog.show(prompt).then(function(label) {
+            accountService.setUsername(selectedAccount.address,label);
+            self.accounts = accountService.loadAllAccounts();
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Label set')
+                .hideDelay(3000)
+            );
+          });
+        }
+      };
+
+      $scope.bs={
+        address: account.address,
+        answer: answer,
+        items: items
+      };
+
+      $mdBottomSheet.show({
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/contactSheet.html',
+        clickOutsideToClose: true,
+        preserveScope: true,
+        scope: $scope
+      });
+
+      function createLiskTransaction() {
+
+        var data={fromAddress: selectedAccount.address, secondSignature:selectedAccount.secondSignature};
+
+        function next() {
+          $mdDialog.hide();
+          accountService.createTransaction(0,
+            {
+              fromAddress: $scope.send.data.fromAddress,
+              toAddress: $scope.send.data.toAccount.address,
+              amount: parseInt($scope.send.data.amount*100000000),
+              masterpassphrase: $scope.send.data.passphrase,
+              secondpassphrase: $scope.send.data.secondpassphrase
+            }
+          ).then(
+            function(transaction){
+              validateTransaction(transaction);
+            },
+            function(error){
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Error: '+ error)
+                  .hideDelay(5000)
+              );
+            }
+          );
+        };
+
+        function querySearch(text){
+          text=text.toLowerCase();
+          var filter=self.accounts.filter(function(account){
+            return (account.address.toLowerCase().indexOf(text)>-1) || (account.username && (account.username.toLowerCase().indexOf(text)>-1));
+          });
+          return filter;
+        }
+
+        function cancel() {
+          $mdDialog.hide();
+        };
+
+        $scope.send = {
+          data: data,
+          cancel: cancel,
+          next: next,
+          querySearch: querySearch
+        };
+
+        $mdDialog.show({
+          parent             : angular.element(document.getElementById('app')),
+          templateUrl        : './src/accounts/view/sendLisk.html',
+          clickOutsideToClose: true,
+          preserveScope: true,
+          scope: $scope
+        });
+      };
+
+      function validateTransaction(transaction){
+
+        function send() {
+          $mdDialog.hide();
+          networkService.postTransaction(transaction).then(
+            function(transaction){
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Transaction '+ transaction.id +' sent with success!')
+                  .hideDelay(5000)
+              );
+            },
+            function(error){
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Error: '+ error)
+                  .hideDelay(5000)
+              );
+            }
+          );
+        };
+
+        function cancel() {
+          $mdDialog.hide();
+        };
+
+        $scope.validate={
+          send:send,
+          cancel:cancel,
+          transaction:transaction
+        };
+
+        $mdDialog.show({
+          scope              : $scope,
+          preserveScope      : true,
+          parent             : angular.element(document.getElementById('app')),
+          templateUrl        : './src/accounts/view/showTransaction.html',
+          clickOutsideToClose: true
+        });
+      };
     }
 
   }
