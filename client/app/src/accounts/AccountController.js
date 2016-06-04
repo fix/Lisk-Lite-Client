@@ -25,6 +25,7 @@
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
     self.sendLisk  = sendLisk;
+    self.currency = JSON.parse(window.localStorage.getItem("currency")) || {name:"btc",symbol:"Ƀ"};
 
     self.connectedPeer={isConnected:false};
     self.connection = networkService.getConnection();
@@ -62,6 +63,18 @@
       $mdSidenav('left').toggle();
     }
 
+    self.myAccounts = function(){
+      return self.accounts.filter(function(account){
+        return !!account.virtual;
+      });
+    }
+
+    self.otherAccounts = function(){
+      return self.accounts.filter(function(account){
+        return !account.virtual;
+      });
+    }
+
     self.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
       $mdOpenMenu(ev);
@@ -77,18 +90,94 @@
       });
     };
 
+    self.changeCurrency=function(){
+      var currencies=[
+        {name:"btc",symbol:"Ƀ"},
+        {name:"usd",symbol:"$"},
+        {name:"eur",symbol:"€"},
+        {name:"cny",symbol:"CN¥"},
+        {name:"cad",symbol:"Can$"},
+        {name:"gbp",symbol:"£"},
+        {name:"hkd",symbol:"HK$"},
+        {name:"jpy",symbol:"JP¥"},
+        {name:"rub",symbol:'\u20BD'},
+        {name:"aud",symbol:"A$"}
+      ];
+      self.currency=currencies[currencies.map(function(x) {return x.name; }).indexOf(self.currency.name)+1];
+      if(self.currency==undefined) self.currency=currencies[0];
+      window.localStorage.setItem("currency",JSON.stringify(self.currency));
+    }
+
+    self.getDefaultValue=function(account){
+      var amount=account.balance;
+      if(account.virtual){
+        for (var folder in account.virtual) {
+          if (account.virtual[folder].amount) {
+            amount=amount-account.virtual[folder].amount;
+          }
+        }
+      }
+      return amount;
+    };
+
+    self.saveFolder=function(account,folder){
+      accountService.setToFolder(account.address,folder,account.virtual.uservalue(folder)()*100000000);
+    }
+
+    self.createFolder=function(account){
+      if(account.virtual){
+        var confirm = $mdDialog.prompt()
+            .title('Create Virtual Folder')
+            .textContent('Please enter a folder name.')
+            .placeholder('folder name')
+            .ariaLabel('Folder Name')
+            .ok('Add')
+            .cancel('Cancel');
+        $mdDialog.show(confirm).then(function(foldername) {
+          account.virtual=accountService.setToFolder(account.address,foldername,0);
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Virtual folder added!')
+              .hideDelay(3000)
+          );
+        });
+      }
+      else{
+        var confirm = $mdDialog.prompt()
+            .title('Enable Virtual Folders')
+            .textContent('Please enter your passphrase to enable virtual folders.')
+            .placeholder('passphrase')
+            .ariaLabel('Passphrase')
+            .ok('Enable')
+            .cancel('Cancel');
+        $mdDialog.show(confirm).then(function(passphrase) {
+          accountService.createVirtual(passphrase).then(function(virtual){
+            account.virtual=virtual;
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Virtual folders enabled!')
+                .hideDelay(3000)
+            );
+            self.createFolder(account);
+          });
+        });
+      }
+    };
+
     /**
      * Select the current avatars
      * @param menuId
      */
-    function selectAccount ( account ) {
-      self.selected = angular.isNumber(account) ? $scope.accounts[account] : account;
-      var currentaddress=self.selected.address;
+    function selectAccount (account) {
+      var currentaddress=account.address;
+      self.selected = accountService.getAccount(currentaddress);
+      console.log(self.selected);
       accountService
         .refreshAccount(self.selected)
         .then(function(account){
           if(self.selected.address==currentaddress){
             self.selected.balance = account.balance;
+            if(!self.selected.virtual) self.selected.virtual = account.virtual;
           }
         });
       accountService

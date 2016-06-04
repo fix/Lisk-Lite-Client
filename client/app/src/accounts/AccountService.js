@@ -102,6 +102,8 @@
         var account=JSON.parse(stringaccount);
         account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
         account.username=window.localStorage.getItem("username-"+address);
+        account.delegate=JSON.parse(window.localStorage.getItem("delegate-"+address));
+        account.virtual=getVirtual(address);
         return account;
       }
       else{
@@ -236,7 +238,77 @@
         deferred.resolve(transaction);
       }
       return deferred.promise;
+    };
+
+    function createVirtual(passphrase){
+      var deferred = $q.defer();
+      var address=lisk.crypto.getAddress(lisk.crypto.getKeys(passphrase).publicKey);
+      var account=getAccount(address);
+      if(account){
+        account.virtual=account.virtual || {};
+        window.localStorage.setItem("virtual-"+address, JSON.stringify(account.virtual));
+        deferred.resolve(account.virtual);
+      }
+      else{
+        deferred.reject("No account "+address+" registered, please add it first");
+      }
+
+      return deferred.promise;
+    };
+
+    function setToFolder(address, folder, amount){
+      var virtual=getVirtual(address);
+      var f=virtual[folder];
+      if(f && amount>=0){
+        f.amount=amount;
+      }
+      else if(!f && amount>=0){
+        virtual[folder]={amount:amount};
+      }
+      window.localStorage.setItem("virtual-"+address, JSON.stringify(virtual));
+      return getVirtual(address);
+    };
+
+    function deleteFolder(address, folder){
+      var virtual=getVirtual(address);
+      virtual[folder]=null;
+      window.localStorage.setItem("virtual-"+address, JSON.stringify(virtual));
+      return virtual;
+    };
+
+    function getVirtual(address){
+      var virtual=JSON.parse(window.localStorage.getItem("virtual-"+address));
+      if(virtual){
+        virtual.uservalue=function(folder){
+          return function(value){
+            if(virtual[folder]){
+              if(arguments.length==1){
+                if(value===null){
+                  return virtual[folder].amount=null;
+                }
+                else{
+                  return virtual[folder].amount=value*100000000;
+                }
+              }
+              else{
+                return virtual[folder].amount===null?"":virtual[folder].amount/100000000;
+              }
+            }
+          }
+        };
+        virtual.getFolders=function(){
+          var folders=[];
+          for (var i in virtual){
+            if (virtual.hasOwnProperty(i) && typeof virtual[i] != 'function') {
+              folders.push(i);
+            }
+          }
+          return folders;
+        }
+      }
+      return virtual;
     }
+
 
     return {
       loadAllAccounts : function() {
@@ -250,6 +322,7 @@
             account.transactions=JSON.parse(window.localStorage.getItem("transactions-"+address));
             account.delegate=JSON.parse(window.localStorage.getItem("delegate-"+address));
             account.username=window.localStorage.getItem("username-"+address);
+            account.virtual=getVirtual(address);
             return account;
           }
           return {address:address}
@@ -278,7 +351,13 @@
 
       getVotedDelegates: getVotedDelegates,
 
-      getDelegate: getDelegate
+      getDelegate: getDelegate,
+
+      createVirtual: createVirtual,
+
+      setToFolder: setToFolder,
+
+      deleteFolder: deleteFolder
     }
   }
 
