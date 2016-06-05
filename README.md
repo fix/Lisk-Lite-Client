@@ -1,7 +1,7 @@
 # Multi Platform Lisk Lite Client
 
 ## Authors
-Fix Thoorens
+Fixcrypt. To support the development, please vote for delegate **fixcrypt**.
 
 ## Screenshot
 
