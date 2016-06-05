@@ -69,7 +69,7 @@
              <md-menu-content flex layout-padding width="6">
                  <md-list>
                    <md-list-item>
-                     <b>Price ({{ul.currency.symbol}})</b> <md-button class="md-secondary" md-prevent-menu-close ng-click="ul.changeCurrency()">{{ul.connectedPeer.market.price[ul.currency.name]}}</md-button>
+                     <b>Price ({{ul.currency.symbol}})</b> <span class="md-secondary"><md-button class="md-secondary" md-prevent-menu-close ng-click="ul.changeCurrency()">{{ul.connectedPeer.market.price[ul.currency.name]}}</md-button></span>
                    </md-list-item>
                    <md-list-item>
                      <b>Change 1h/7h/7d</b>
