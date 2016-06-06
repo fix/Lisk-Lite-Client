@@ -28,22 +28,23 @@
   <body id="app" ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
 
     <md-toolbar>
-       <div class="md-toolbar-tools">
+       <div class="md-toolbar-tools" style="-webkit-app-region: drag;">
        <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Account List">
          <md-icon md-svg-icon="menu" ></md-icon>
        </md-button>
-        <span>Lisk Client</span>
+         <img src="lisk.png" alt="" height="30">
+         <span>Lisk Client</span>
          <!-- fill up the space between left and right area -->
          <span flex></span>
 
-         <md-menu>
+         <md-menu md-offset="0 60">
            <md-button aria-label="Show network">
              <md-icon md-font-library="material-icons" md-colors="{'color' : ul.connectedPeer.isConnected?'green-50':'red' }" ng-click="ul.openMenu($mdOpenMenu, $event)">wifi</md-icon>
            </md-button>
             <md-menu-content flex layout-padding width="6">
                 <md-list>
                   <md-list-item>
-                    <b>Peer</b> <span class="md-secondary"><md-button style="text-transform: none;" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button></span>
+                    <b>Peer</b> <span class="md-secondary"><md-button class="md-secondary" style="text-transform: none;" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button></span>
                   </md-list-item>
                   <md-list-item>
                     <b>Height</b> <span class="md-secondary">{{ul.connectedPeer.height}}</span>
@@ -61,10 +62,9 @@
             </md-menu-content>
           </md-menu>
 
-          <md-menu>
+          <md-menu md-offset="0 60">
             <md-button aria-label="Show market">
-              <md-icon ng-if="ul.connectedPeer.market.change1h[ul.currency.name]>=0" md-colors="{'color' : 'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_upward</md-icon>
-              <md-icon ng-if="ul.connectedPeer.market.change1h[ul.currency.name]<0" md-colors="{'color' : 'red-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_downward</md-icon>
+              <md-icon md-colors="{'color' : ul.connectedPeer.market.change1h[ul.currency.name]<0?'red-200':'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_{{ul.connectedPeer.market.change1h[ul.currency.name]<0?"down":"up"}}ward</md-icon>
             </md-button>
              <md-menu-content flex layout-padding width="6">
                  <md-list>
@@ -156,6 +156,21 @@
 
           <md-tabs md-dynamic-height>
             <md-tab label="Transactions">
+                <md-card ng-if="ul.selected.cold" md-colors="{'background': 'blue-100'}">
+                  <md-card-title>
+                    <md-card-title-text>
+                      <span>
+                        This account has never interacted with the network. This is either:
+                        <ul>
+                          <li>a cold wallet, ie the owner of the passphrase has never used it</li>
+                          <li ng-if="ul.selected.transactions.length>0">an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost</li>
+                          <li ng-if="ul.selected.transactions.length==0">an inexistant wallet, ie nobody knows the passphrase of this wallet.</li>
+                        </ul>
+                      </span>
+                    </md-card-title-text>
+                  </md-card-title>
+                </md-card>
+
                 <md-table-container>
                   <table md-table>
                     <thead md-head md-order="query.order">

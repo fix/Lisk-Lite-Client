@@ -105,6 +105,10 @@ md-toolbar h1 {
   font-weight: 400;
 }
 
+.md-toolbar-tools button {
+  -webkit-app-region: no-drag;
+}
+
 .avatar {
   position: relative;
   width: 128px;

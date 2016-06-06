@@ -23,6 +23,7 @@
   function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $scope,$mdMedia) {
     var self = this;
 
+    self.isNetworkConnected=false;
     self.selected     = null;
     self.accounts        = [ ];
     self.selectAccount   = selectAccount;
@@ -43,12 +44,25 @@
       },
       function(connectedPeer){
         self.connectedPeer=connectedPeer;
-        if(!self.connectedPeer.isConnected){
+        if(!self.connectedPeer.isConnected && self.isNetworkConnected){
+          self.isNetworkConnected=false;
           $mdToast.show(
             $mdToast.simple()
               .textContent('Network disconected!')
               .hideDelay(10000)
           );
+        }
+        else if(self.connectedPeer.isConnected && !self.isNetworkConnected){
+          self.isNetworkConnected=true;
+          // trick to make it appear last.
+          $timeout(function(){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Network connected and healthy!')
+                .hideDelay(10000)
+            );
+          },1000);
+
         }
       }
     );
@@ -71,12 +85,16 @@
     self.myAccounts = function(){
       return self.accounts.filter(function(account){
         return !!account.virtual;
+      }).sort(function(a,b){
+        return b.balance-a.balance;
       });
     }
 
     self.otherAccounts = function(){
       return self.accounts.filter(function(account){
         return !account.virtual;
+      }).sort(function(a,b){
+        return b.balance-a.balance;
       });
     }
 

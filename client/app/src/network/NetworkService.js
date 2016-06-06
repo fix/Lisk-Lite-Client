@@ -28,7 +28,7 @@
       },5*60000);
     };
 
-    function getHeight(){
+    function listenNetworkHeight(){
       $http.get(peer.ip+"/api/blocks/getheight",{timeout:2000}).then(function(resp){
         peer.lastConnection=new Date();
         if(resp.data && resp.data.success){
@@ -52,7 +52,7 @@
         }
       });
       $timeout(function(){
-        getHeight();
+        listenNetworkHeight();
       },60000);
     };
 
@@ -135,7 +135,7 @@
       return connection.promise;
     }
 
-    getHeight();
+    listenNetworkHeight();
     getPrice();
     pickRandomPeer();
 
