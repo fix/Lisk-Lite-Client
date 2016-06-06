@@ -111,7 +111,12 @@
       self.currency=currencies[currencies.map(function(x) {return x.name; }).indexOf(self.currency.name)+1];
       if(self.currency==undefined) self.currency=currencies[0];
       window.localStorage.setItem("currency",JSON.stringify(self.currency));
-    }
+    };
+
+    self.pickRandomPeer=function(){
+      console.log("fire");
+      networkService.pickRandomPeer();
+    };
 
     self.getDefaultValue=function(account){
       var amount=account.balance;

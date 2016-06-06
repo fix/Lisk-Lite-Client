@@ -43,7 +43,7 @@
             <md-menu-content flex layout-padding width="6">
                 <md-list>
                   <md-list-item>
-                    <b>Peer</b> <span class="md-secondary">{{ul.connectedPeer.ip}}</span>
+                    <b>Peer</b> <span class="md-secondary"><md-button style="text-transform: none;" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button></span>
                   </md-list-item>
                   <md-list-item>
                     <b>Height</b> <span class="md-secondary">{{ul.connectedPeer.height}}</span>

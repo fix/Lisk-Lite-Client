@@ -36,6 +36,8 @@
             peer.isConnected=false;
             peer.error="Node is experiencing sychronisation issues";
             connection.notify(peer);
+            pickRandomPeer();
+            return;
           }
           else{
             peer.height=resp.data.height;
@@ -96,6 +98,33 @@
         }
       });
       return deferred.promise;
+    };
+
+    function pickRandomPeer(){
+      getFromPeer("/api/peers?state=2").then(function(response){
+        if(response.success){
+          findGoodPeer(response.peers,0);
+        }
+      })
+    };
+
+    function findGoodPeer(peers, index){
+      if(index>peers.length-1){
+        peer.ip="https://login.lisk.io";
+        return;
+      }
+      peer.ip="http://"+peers[index].ip+":"+peers[index].port;
+      getFromPeer("/api/blocks/getheight").then(function(response){
+        if(response.success && response.height<peer.height){
+          findGoodPeer(peers, index+1);
+        }
+        else {
+          return;
+        }
+      },
+      function(error){
+        findGoodPeer(peers, index+1);
+      });
     }
 
     function getPeer(){
@@ -108,13 +137,15 @@
 
     getHeight();
     getPrice();
+    pickRandomPeer();
 
 
     return {
       getPeer: getPeer,
       getConnection: getConnection,
       getFromPeer: getFromPeer,
-      postTransaction: postTransaction
+      postTransaction: postTransaction,
+      pickRandomPeer:pickRandomPeer
     }
   }
 
