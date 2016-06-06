@@ -93,7 +93,7 @@
        </div>
     </md-toolbar>
 
-    <div flex layout="row">
+    <md-content flex layout="row">
 
         <md-sidenav  ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
           <md-button class="md-fab" ng-click="ul.addAccount()" md-colors="{'background':'grey-300'}" style="position: absolute;right: 20px;">
@@ -107,7 +107,10 @@
             </md-list-item>
             <md-list-item ng-repeat="it in ul.myAccounts()">
                 <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
-                  {{it.username||it.address}} <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
+                  <md-icon ng-if="!it.delegate&&!it.cold" md-font-library="material-icons">account_balance</md-icon>
+                  <md-icon ng-if="!it.delegate&&it.cold" md-font-library="material-icons">cloud_off</md-icon>
+                  <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
+                  {{it.username||it.address}}
                 </md-button>
             </md-list-item>
             <md-list-item>
@@ -117,7 +120,10 @@
             </md-list-item>
             <md-list-item ng-repeat="it in ul.otherAccounts()">
                 <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
-                  {{it.username||it.address}} <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
+                  <md-icon ng-if="!it.delegate&&!it.cold" md-font-library="material-icons">account_balance</md-icon>
+                  <md-icon ng-if="!it.delegate&&it.cold" md-font-library="material-icons">cloud_off</md-icon>
+                  <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
+                  {{it.username||it.address}}
                 </md-button>
             </md-list-item>
           </md-list>
@@ -128,7 +134,8 @@
             <md-card-title>
               <md-card-title-media>
                 <div class="md-media-sm card-media" layout layout-align="center center" >
-                  <md-icon ng-if="!ul.selected.delegate" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">account_balance</md-icon>
+                  <md-icon ng-if="!ul.selected.delegate&&!ul.selected.cold" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">account_balance</md-icon>
+                  <md-icon ng-if="!ul.selected.delegate&&ul.selected.cold" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">cloud_off</md-icon>
                   <md-icon ng-if="ul.selected.delegate" md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">security</md-icon>
                 </div>
               </md-card-title-media>
@@ -166,8 +173,8 @@
                         <td md-cell>{{it.label}}</td>
                         <td ng-if="it.total>=0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td ng-if="it.total<0" md-cell><md-button md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
-                        <td md-cell>{{it.senderId}}</td>
-                        <td md-cell>{{it.recipientId}}</td>
+                        <td md-cell>{{it.senderId | accountlabel}}</td>
+                        <td md-cell>{{it.recipientId | accountlabel}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -180,13 +187,16 @@
               </md-tab-label>
               <md-tab-body>
                 <md-list-item>
-                  <h3>Default <br> {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
-                  <md-button class="md-secondary" md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
+                  <h3>Default {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
+                  <span class="md-secondary">
+                    <md-button md-block md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
+                  </span>
                 </md-list-item>
                 <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
-                  <h3 style="text-transform: capitalize;">{{folder}} <br> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
+                  <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
                   <md-input-container md-no-float class="md-secondary">
                     <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
+                    <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
                   </md-input-container>
                 </md-list-item>
                 <md-list-item ng-if="!ul.selected.virtual">
@@ -218,7 +228,7 @@
 
             <md-tab>
               <md-tab-label>
-                Votes ({{ul.selectedVotes.length}}/101)
+                Votes
               </md-tab-label>
               <md-tab-body>
                 <md-table-container>
@@ -276,7 +286,7 @@
 
 
 
-    </div>
+    </md-content>
 
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-animate/angular-animate.min.js"></script>

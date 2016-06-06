@@ -78,6 +78,7 @@
         function (resp) {
           if(resp.success){
             var account=resp.account;
+            account.cold=!account.publicKey;
             deferred.resolve(account);
             addAccount(account);
           }
@@ -179,6 +180,10 @@
 
     function getDelegate(publicKey){
       var deferred = $q.defer();
+      if(!publicKey){
+        deferred.reject("No publicKey");
+        return deferred.promise;
+      }
       $http.get(peer+"/api/delegates/get/?publicKey="+publicKey).then(function (resp) {
         if(resp.data && resp.data.success && resp.data.delegate){
           window.localStorage.setItem("delegate-"+resp.data.delegate.address,JSON.stringify(resp.data.delegate));
@@ -337,6 +342,10 @@
 
       setUsername: function(address,username){
         window.localStorage.setItem("username-"+address,username);
+      },
+
+      getUsername: function(address){
+        return window.localStorage.getItem("username-"+address) || address;
       },
 
       addAccount: addAccount,

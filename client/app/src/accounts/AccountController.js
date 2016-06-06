@@ -3,8 +3,13 @@
   angular
        .module('liskclient')
        .controller('AccountController', [
-          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$scope',
+          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$scope', '$mdMedia',
           AccountController
+       ]).filter('accountlabel', ['accountService', function(accountService) {
+           return function(address) {
+             return accountService.getUsername(address);
+           };
+         }
        ]);
 
   const {app} = require('electron').remote;
@@ -15,7 +20,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $scope ) {
+  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $scope,$mdMedia) {
     var self = this;
 
     self.selected     = null;
@@ -60,7 +65,7 @@
      * Hide or Show the 'left' sideNav area
      */
     function toggleAccountsList() {
-      $mdSidenav('left').toggle();
+      if($mdMedia('sm')) $mdSidenav('left').toggle();
     }
 
     self.myAccounts = function(){
@@ -171,12 +176,16 @@
     function selectAccount (account) {
       var currentaddress=account.address;
       self.selected = accountService.getAccount(currentaddress);
-      console.log(self.selected);
+      if(self.selected.delegates){
+        self.selectedVotes = self.selected.delegates.slice(0);
+      }
+      else self.selectedVotes=[];
       accountService
         .refreshAccount(self.selected)
         .then(function(account){
           if(self.selected.address==currentaddress){
             self.selected.balance = account.balance;
+
             if(!self.selected.virtual) self.selected.virtual = account.virtual;
           }
         });
@@ -194,7 +203,7 @@
               var temp=self.selected.transactions.sort(function(a,b){
                 return b.timestamp-a.timestamp;
               });
-              if(temp[0].id!=transactions[0].id){
+              if(temp.length==0 || temp[0].id!=transactions[0].id){
                 self.selected.transactions = transactions;
               }
             }
@@ -204,7 +213,7 @@
         .getVotedDelegates(self.selected.address)
         .then(function(delegates){
           if(self.selected.address==currentaddress){
-            self.selected.delegates = delegates;
+            self.selected.delegates=delegates;
             self.selectedVotes = delegates.slice(0);
           }
         });
