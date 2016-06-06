@@ -12,7 +12,9 @@
 
     var lisk=require('lisk-js');
 
-    var peer={ip:'https://login.lisk.io', isConnected:false, height:0, lastConnection:null};
+    var peersArray=['https://login.lisk.io/','https://login01.lisk.io/','https://login02.lisk.io/','https://login03.lisk.io/','https://login04.lisk.io/','https://login05.lisk.io/','https://login06.lisk.io/','https://login07.lisk.io/','https://login08.lisk.io/']
+    var arrayIP = peersArray[Math.floor(Math.random() * peersArray.length)];
+    var peer={ip:arrayIP, isConnected:false, height:0, lastConnection:null};
 
     var connection=$q.defer();
 
