@@ -5,7 +5,7 @@ Fixcrypt. To support the development, please vote for delegate **fixcrypt**.
 
 ## Screenshot
 
-![linux](https://i.imgur.com/HqgsLLV.png)
+![linux](http://i.imgur.com/UZ91bgg.png)
 
 ## To Use
 
