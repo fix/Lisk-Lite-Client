@@ -19,7 +19,10 @@
     "Lisk",
     "Client"
   ],
-  "author": "Fx Thoorens",
+  "author":{
+    "name": "Fx Thoorens",
+    "email": "fixcrypt@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fix/Lisk-Lite-Client/issues"
@@ -33,6 +36,10 @@
     "app-category-type": "finance",
     "win": {
       "iconUrl": "https://"
+    },
+    "linux": {
+      "synopsis": "A Lite Lisk Client to securely connect to the Lisk network and manage your lisk assets.",
+      "description": ""
     }
   }
 }
