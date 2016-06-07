@@ -1,3 +1,6 @@
 node_modules
 *.zip
 Lisk\ Client-*
+.tags
+dist/
+npm-debug.log
