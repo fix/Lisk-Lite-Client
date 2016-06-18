@@ -16,6 +16,10 @@ html, body {
   width: 36px;
 }
 
+.selectcoin {
+  min-height: 125;
+}
+
 
 md-toolbar h3 {
   margin: auto;
@@ -39,7 +43,9 @@ md-list-item > button {
 
 
 /* Primary content area */
-
+.no-errors .md-errors-spacer {
+  display: none;
+}
 
 
 #content {

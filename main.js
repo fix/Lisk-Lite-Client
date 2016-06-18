@@ -14,11 +14,11 @@ function createWindow () {
   let {width,height} = electron.screen.getPrimaryDisplay().workAreaSize
   mainWindow = new BrowserWindow({width: width-100, height: height-100, center:true, icon: __dirname + "/client/lisk.png", resizable:true, frame:false})
 
+
+
+
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/client/app/index.html`)
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
 
   // Create the Application's main menu
   var template = [{
@@ -30,13 +30,13 @@ function createWindow () {
       ]}, {
       label: "Edit",
       submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-          { type: "separator" },
           { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
           { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
           { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
+          { type: "separator" },
+          { label: "Open Dev Tools", accelerator: "CmdOrCtrl+D", click: function() { mainWindow.webContents.openDevTools(); }},
+          { label: "Reload App", accelerator: "CmdOrCtrl+R", click: function() { mainWindow.webContents.window.reload(); }}
       ]}
   ];
 
@@ -49,12 +49,15 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

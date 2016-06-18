@@ -10,7 +10,7 @@
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css"/>
     <link href="../node_modules/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="assets/app.css"/>
 
@@ -26,7 +26,6 @@
   </head>
 
   <body id="app" ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
-
     <md-toolbar>
        <div class="md-toolbar-tools" style="-webkit-app-region: drag;">
        <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Account List">
@@ -44,7 +43,7 @@
             <md-menu-content flex layout-padding width="6">
                 <md-list>
                   <md-list-item>
-                    <b>Peer</b> <span class="md-secondary"><md-button class="md-secondary" style="text-transform: none;" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button></span>
+                    <b>Peer</b> <md-button class="md-secondary" aria-label="Pick Random Peer" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button>
                   </md-list-item>
                   <md-list-item>
                     <b>Height</b> <span class="md-secondary">{{ul.connectedPeer.height}}</span>
@@ -52,10 +51,10 @@
                   <md-list-item>
                     <b>Last checked</b> <span class="md-secondary">{{ul.connectedPeer.lastConnection | date:'shortTime'}}</span>
                   </md-list-item>
-                  <md-list-item md-colors="{'background':'red' }" ng-if="!ul.connectedPeer.isConnected">
+                  <md-list-item md-colors="{background:'red' }" ng-if="!ul.connectedPeer.isConnected">
                     {{ul.connectedPeer.error}}
                   </md-list-item>
-                  <md-list-item md-colors="{'background':'green' }" ng-if="ul.connectedPeer.isConnected">
+                  <md-list-item md-colors="{background:'green' }" ng-if="ul.connectedPeer.isConnected">
                     <b>Delay</b> <span class="md-secondary">{{ul.connectedPeer.delay}}ms</span>
                   </md-list-item>
                 </md-list>
@@ -69,7 +68,7 @@
              <md-menu-content flex layout-padding width="6">
                  <md-list>
                    <md-list-item>
-                     <b>Price ({{ul.currency.symbol}})</b> <span class="md-secondary"><md-button class="md-secondary" md-prevent-menu-close ng-click="ul.changeCurrency()">{{ul.connectedPeer.market.price[ul.currency.name]}}</md-button></span>
+                     <b>Price ({{ul.currency.symbol}})</b> <md-button class="md-secondary" aria-label="Change Currency" md-prevent-menu-close ng-click="ul.changeCurrency()">{{ul.connectedPeer.market.price[ul.currency.name]}}</md-button>
                    </md-list-item>
                    <md-list-item>
                      <b>Change 1h/7h/7d</b>
@@ -96,7 +95,7 @@
     <md-content flex layout="row">
 
         <md-sidenav  ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
-          <md-button class="md-fab" ng-click="ul.addAccount()" md-colors="{'background':'grey-300'}" style="position: absolute;right: 20px;">
+          <md-button class="md-fab md-primary" ng-click="ul.addAccount()" md-colors="{'background':'grey-300'}" style="position: absolute;right: 20px;">
             <md-icon md-font-library="material-icons">add</md-icon>
           </md-button>
           <md-list>
@@ -200,20 +199,7 @@
               <md-tab-label>
                 Folders
               </md-tab-label>
-              <md-tab-body>
-                <md-list-item>
-                  <h3>Default {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
-                  <span class="md-secondary">
-                    <md-button md-block md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
-                  </span>
-                </md-list-item>
-                <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
-                  <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
-                  <md-input-container md-no-float class="md-secondary">
-                    <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
-                    <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
-                  </md-input-container>
-                </md-list-item>
+              <md-tab-body md-list>
                 <md-list-item ng-if="!ul.selected.virtual">
                   <md-card>
                     <md-card-title>
@@ -233,86 +219,324 @@
                   </md-card>
 
                 </md-list-item>
+
+                <md-list-item>
+                  <h3>Default {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
+                  <span class="md-secondary">
+                    <md-button md-block md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
+                  </span>
+                </md-list-item>
+                <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
+                  <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
+                  <md-input-container md-no-float class="md-secondary">
+                    <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
+                    <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
+                  </md-input-container>
+
+                </md-list-item>
                 <md-list-item ng-if="ul.selected.virtual">
                   <md-button ng-click="ul.createFolder(ul.selected)">Create a new virtual folder</md-button>
                 </md-list-item>
+
               </md-list>
             </md-tab-body>
           </md-tab-body>
           </md-tab>
 
-            <md-tab>
-              <md-tab-label>
-                Votes
-              </md-tab-label>
-              <md-tab-body>
+          <md-tab>
+            <md-tab-label>
+              Exchange
+            </md-tab-label>
+            <md-tab-body>
+              <md-card flex="100">
+                <md-card-title>
+                  <md-card-title-media>
+                    <div class="md-media-sm card-media" layout layout-align="center center" >
+                      <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">info</md-icon>
+                    </div>
+                  </md-card-title-media>
+                  <md-card-title-text>
+                    <span>
+                      Buy and Sell through our partner <a href="#" onclick='require("electron").shell.openExternal("https://changer.com")'>changer.com</a>. By using the following forms, you are accepting their <a href="#" onclick='require("electron").shell.openExternal("https://www.changer.com/about")'>Terms and Conditions</a>.
+                      Please report any issue to <a href="mailto:support@changer.com">support@changer.com</a>
+                    </span>
+                    <div layout="row">
+                      <md-input-container flex="40" class="no-errors">
+                        <input type="email" ng-model="ul.exchangeEmail" placeholder="Your email, used to send confirmation">
+                      </md-input-container>
+                      <span flex="20"></span>
+                      <md-select flex="40" ng-change="ul.getMarketInfo(ul.selectedCoin)" ng-model="ul.selectedCoin" placeholder="Select a coin">
+                        <md-option ng-value="it.symbol" ng-repeat="it in ul.getCoins()">
+                          {{it.name}}
+                        </md-option>
+                      </md-select>
+                    </div>
+                  </md-card-title-text>
+                </md-card-title>
+
+              </md-card>
+              <md-content layout="row">
+                <md-card flex="50">
+                  <md-toolbar>
+                    <h2 class="md-toolbar-tools">
+                      <span>Buy LSK at {{(1/ul.buycoin.rate).toFixed(5)}} {{ul.selectedCoin}}</span>
+                    </h2>
+                  </md-toolbar>
+                  <md-list ng-if="!ul.exchangeBuy">
+                    <md-list-item>
+                      <md-input-container>
+                        <input  ng-model="ul.exchangeAmount" ng-change="ul.validateExchangeAmount(ul.exchangeAmount)" max="200" type="number" placeholder="Amount (LSK)">
+                      </md-input-container>
+
+                    </md-list-item>
+                  </md-list>
+
+
+                  <md-list ng-if="ul.exchangeBuy">
+                    <md-list-item>
+                      Send {{ul.exchangeBuy.send_amount}} {{ul.exchangeBuy.sendCurrency}} to
+                    </md-list-item>
+                    <md-list-item>
+                      <b class="md-secondary">{{ul.exchangeBuy.payee}}</b>
+                    </md-list-item>
+                    <md-list-item>
+                      Receive {{ul.exchangeBuy.receive_amount}} LSK to
+                    </md-list-item>
+                    <md-list-item>
+                      <b class="md-secondary">{{ul.exchangeBuy.receiver_id}}</b>
+                    </md-list-item>
+                    <md-list-item>
+                      Valid until <span class="md-secondary">{{ul.exchangeBuy.expirationDate | date:'shortTime'}}</span>
+                    </md-list-item>
+                    <md-list-item>
+                      <md-progress-linear md-mode="determinate" value="{{ul.exchangeBuy.expirationProgress}}"></md-progress-linear>
+                    </md-list-item>
+                    <md-list-item ng-if="ul.exchangeBuy.batch_required">
+                      <md-input-container>
+                        <input ng-model="ul.exchangeTransactionId" type="text" placeholder="Transaction id">
+                      </md-input-container>
+                      <md-button class="md-secondary" ng-click="ul.sendBatch()" md-colors="{background:'red'}">Send</md-button>
+                    </md-list-item>
+                    <md-list-item ng-if="ul.exchangeBuy.monitor">
+                      Status: {{ul.exchangeBuy.monitor.status}}
+                    </md-list-item>
+                  </md-list>
+
+                  <md-card-footer>
+                    <md-button ng-if="!ul.exchangeBuy" md-colors="{background:'green'}" ng-click="ul.buy()">Request Buy Quote...</md-button>
+                    <md-button ng-if="ul.exchangeBuy" md-colors="{background:'red'}" ng-click="ul.cancelExchange()">Cancel</md-button>
+                  </md-card-footer>
+
+                </md-card>
+
+
+                <md-card flex="50">
+                  <md-toolbar>
+                    <h2 class="md-toolbar-tools">
+                      <span>Sell LSK at {{ul.sellcoin.rate.toFixed(5)}} {{ul.selectedCoin}} </span>
+                    </h2>
+                  </md-toolbar>
+                    <md-card-title ng-if="!ul.selected.virtual">Please login with your account before using this feature</md-card-title>
+                    <md-list ng-if="!ul.exchangeSell&&ul.selected.virtual">
+                      <md-list-item>
+                        <md-input-container>
+                          <input ng-model="ul.exchangeAmount" ng-change="ul.validateExchangeAmount(ul.exchangeAmount)" max="200" type="number" placeholder="Amount (LSK)">
+                        </md-input-container>
+                      </md-list-item>
+                      <md-list-item>
+                        <md-input-container>
+                          <input flex="100" ng-model="ul.recipientAddress" type="text"  placeholder="Recepient Address">
+                        </md-input-container>
+                      </md-list-item>
+
+                      <md-list-item>
+                        <md-input-container>
+                          <input flex="100" ng-model="ul.passphrase" type="text"  placeholder="Passphrase">
+                        </md-input-container>
+                      </md-list-item>
+
+                      <md-list-item ng-if="ul.selected.secondSignature">
+                        <md-input-container>
+                          <input flex="100" ng-model="ul.secondpassphrase" type="text"  placeholder="Second passphrase">
+                        </md-input-container>
+                      </md-list-item>
+
+                    </md-list>
+
+                    <md-list ng-if="ul.exchangeSell&&ul.selected.virtual">
+                      <md-list-item>
+                        Send {{ul.exchangeSell.send_amount}} LSK to
+                      </md-list-item>
+                      <md-list-item>
+                        <b class="md-secondary">{{ul.exchangeSell.payee}}</b>
+                      </md-list-item>
+                      <md-list-item>
+                        Receive {{ul.exchangeSell.receive_amount}} {{ul.exchangeSell.receiveCurrency}} to
+                      </md-list-item>
+                      <md-list-item>
+                        <b class="md-secondary">{{ul.exchangeSell.receiver_id}}</b>
+                      </md-list-item>
+                      <md-list-item>
+                        Valid until <span class="md-secondary">{{ul.exchangeSell.expirationDate | date:'shortTime'}}</span>
+                      </md-list-item>
+                      <md-list-item>
+                        <md-progress-linear md-mode="determinate" value="{{ul.exchangeSell.expirationProgress}}"></md-progress-linear>
+                      </md-list-item>
+                      <md-list-item ng-if="ul.exchangeSell.monitor">
+                        Status: {{ul.exchangeSell.monitor.status}}
+                      </md-list-item>
+                    </md-list>
+
+                    <md-card-footer>
+                      <md-button ng-if="ul.selected.virtual&&!ul.exchangeSell" ng-click="ul.sell()" md-colors="{'background':'red'}">Request Sell Quote...</md-button>
+                      <md-button ng-if="ul.selected.virtual&&ul.exchangeSell&&!ul.exchangeSell.sentTransaction" md-colors="{background:'red'}" ng-click="ul.exchangeLiskNow(ul.exchangeSellTransaction)">Send {{ul.exchangeSell.send_amount}}LSK now!</md-button>
+                      <md-button ng-if="ul.selected.virtual&&ul.exchangeSell&&!ul.exchangeSell.sentTransaction" ng-click="ul.cancelExchange()">Cancel</md-button>
+                      <md-button ng-if="!ul.selected.virtual" md-colors="{background:'green'}" ng-click="ul.createFolder(ul.selected)">Login</md-button>
+                    </md-card-footer>
+
+                </md-card>
+
+              </md-content>
+              <md-content>
+                <h1>History</h1>
+
                 <md-table-container>
-                  <table md-table md-row-select multiple ng-model="ul.selectedVotes">
-                    <thead md-head md-order="query.order">
+                  <table md-table ng-model="ul.exchangeHistory">
+                    <thead md-head>
                       <tr md-row>
-                        <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
-                        <th md-column md-order-by="username"><span>Username</span></th>
-                        <th md-column><span>Address</span></th>
-                        <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
-                        <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
+                        <th md-column><span>Date</span></th>
+                        <th md-column><span>Details</span></th>
+                        <th md-column><span>Status</span></th>
                       </tr>
                     </thead>
                     <tbody md-body>
-                      <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
-                        <td md-cell>{{it.rate}}</td>
-                        <td md-cell>{{it.username}}</td>
-                        <td md-cell>{{it.address}}</td>
-                        <td md-cell>{{it.approval}}%</td>
-                        <td md-cell>{{it.productivity}}%</td>
+                      <tr md-colors="{background:it.status.status=='processed'?'green-200':'grey-100'}" md-row ng-repeat="it in ul.exchangeHistory | orderBy : exchange.expiration : true">
+                        <td md-cell>{{(it.status.processed_time || it.status.exchange_time || it.exchange.expiration) | exchangedate | date: 'medium'}}</td>
+                        <td md-cell>{{it.exchange.send_amount}} {{it.exchange.pair.send}} -> {{it.status.receive_amount || it.exchange.receive_amount}} {{it.exchange.pair.receive}}</td>
+                        <td md-cell>{{it.status.status}} <md-button md-colors="{background:'green'}" ng-if="it.status.status=='processing'" ng-click="ul.refreshExchange(it.exchange)">Refresh</md-button></td>
                       </tr>
                     </tbody>
                   </table>
                 </md-table-container>
-              </md-tab-body>
-            </md-tab>
+              </md-content>
 
-
-
-            <md-tab ng-if="ul.selected.delegate">
-              <md-tab-label>
-                Delegate
-                <md-icon md-colors="{'color' : 'red' }" ng-if="ul.selected.delegate.rate>101" md-font-library="material-icons">close</md-icon>
-                <md-icon md-colors="{'color' : 'green' }" ng-if="ul.selected.delegate.rate<102" md-font-library="material-icons">check</md-icon>
-              </md-tab-label>
-              <md-tab-body>
-                <md-list-item>
-                  <h1>{{ul.selected.delegate.username}}</h1>
-                </md-list-item>
-                <md-list-item>
-                  Rank {{ul.selected.delegate.rate}}
-                </md-list-item>
-                <md-list-item>
-                  Approval {{ul.selected.delegate.approval}}%
-                </md-list-item>
-                <md-list-item>
-                  Productivity {{ul.selected.delegate.productivity}}% - {{ul.selected.delegate.producedblocks}} produced blocks - {{ul.selected.delegate.missedblocks}} missed blocks
-                </md-list-item>
-              </md-list>
             </md-tab-body>
           </md-tab>
 
-        </md-tabs>
+          <md-tab>
+            <md-tab-label>
+              Votes
+            </md-tab-label>
+            <md-tab-body>
+
+                <md-list-item ng-if="!ul.selected.virtual">
+                  <md-card>
+                    <md-card-title>
+                      <md-card-title-media>
+                        <div class="md-media-sm card-media" layout layout-align="center center" >
+                          <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">info</md-icon>
+                        </div>
+                      </md-card-title-media>
+                      <md-card-title-text>
+                        <span>
+                          If you own this account, you can enable Voting<br>
+                        </span>
+                        <md-button ng-click="ul.createFolder(ul.selected)">Enable Votes</md-button>
+                      </md-card-title-text>
+                    </md-card-title>
+                  </md-card>
+                </md-list-item>
+                <md-list-item ng-if="!ul.selected.virtual">
+                  <md-table-container>
+                    <table md-table ng-model="ul.selectedVotes">
+                      <thead md-head md-order="query.order">
+                        <tr md-row>
+                          <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
+                          <th md-column md-order-by="username"><span>Username</span></th>
+                          <th md-column><span>Address</span></th>
+                          <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
+                          <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
+                        </tr>
+                      </thead>
+                      <tbody md-body>
+                        <tr md-row ng-repeat="it in ul.selected.delegates | orderBy: query.order">
+                          <td md-cell>{{it.rate}}</td>
+                          <td md-cell>{{it.username}}</td>
+                          <td md-cell>{{it.address}}</td>
+                          <td md-cell>{{it.approval}}%</td>
+                          <td md-cell>{{it.productivity}}%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </md-table-container>
+                </md-list-item>
+                <table ng-if="ul.selected.virtual" md-table md-row-select multiple ng-model="ul.selectedVotes">
+                  <thead md-head md-order="query.order">
+                    <tr md-row>
+                      <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
+                      <th md-column md-order-by="username"><span>Username</span></th>
+                      <th md-column><span>Address</span></th>
+                      <th md-column md-numeric md-order-by="approval"><span>Approval</span></th>
+                      <th md-column md-numeric md-order-by="productivity"><span>Productivity</span></th>
+                    </tr>
+                  </thead>
+                  <tbody md-body>
+                    <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
+                      <td md-cell>{{it.rate}}</td>
+                      <td md-cell>{{it.username}}</td>
+                      <td md-cell>{{it.address}}</td>
+                      <td md-cell>{{it.approval}}%</td>
+                      <td md-cell>{{it.productivity}}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </md-table-container>
+            </md-tab-body>
+          </md-tab>
+
+          <md-tab ng-if="ul.selected.delegate">
+            <md-tab-label>
+              Delegate
+              <md-icon md-colors="{'color' : 'red' }" ng-if="ul.selected.delegate.rate>101" md-font-library="material-icons">close</md-icon>
+              <md-icon md-colors="{'color' : 'green' }" ng-if="ul.selected.delegate.rate<102" md-font-library="material-icons">check</md-icon>
+            </md-tab-label>
+            <md-tab-body>
+              <md-list-item>
+                <h1>{{ul.selected.delegate.username}}</h1>
+              </md-list-item>
+              <md-list-item>
+                Rank {{ul.selected.delegate.rate}}
+              </md-list-item>
+              <md-list-item>
+                Approval {{ul.selected.delegate.approval}}%
+              </md-list-item>
+              <md-list-item>
+                Productivity {{ul.selected.delegate.productivity}}% - {{ul.selected.delegate.producedblocks}} produced blocks - {{ul.selected.delegate.missedblocks}} missed blocks
+              </md-list-item>
+            </md-list>
+          </md-tab-body>
+        </md-tab>
+
+
+      </md-tabs>
 
 
 
 
     </md-content>
 
-    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular/angular.min.js"></script>
     <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="../node_modules/angular-aria/angular-aria.min.js"></script>
-    <script type="text/javascript" src="../node_modules/angular-material/angular-material.min.js"></script>
-    <script type="text/javascript" src="../node_modules/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <script src="../node_modules/angular-material/angular-material.min.js"></script>
+    <script src="../node_modules/angular-material-data-table/dist/md-data-table.min.js"></script>
 
     <script src="./src/accounts/Accounts.js"></script>
-    <script src="./src/accounts/AccountController.js"></script>
     <script src="./src/accounts/AccountService.js"></script>
+    <script src="./src/accounts/AccountController.js"></script>
     <script src="./src/network/NetworkService.js"></script>
+    <script src="./src/changer/ChangerService.js"></script>
+
 
 
     <script type="text/javascript">
@@ -323,11 +547,11 @@
 
                   $mdIconProvider
                       .defaultIconSet("./assets/svg/avatars.svg", 128)
-                      .icon("menu"       , "./assets/svg/menu.svg"        , 24);
+                      .icon("menu", "./assets/svg/menu.svg", 24);
 
-                      $mdThemingProvider.theme('default')
-                          .primaryPalette('brown')
-                          .accentPalette('red');
+                  $mdThemingProvider.theme('default')
+                      .primaryPalette('brown')
+                      .accentPalette('red');
 
               });
 

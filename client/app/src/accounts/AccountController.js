@@ -3,11 +3,16 @@
   angular
        .module('liskclient')
        .controller('AccountController', [
-          'accountService', 'networkService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log', '$mdDialog', '$scope', '$mdMedia',
+          'accountService', 'networkService', 'changerService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$interval', '$log', '$mdDialog', '$scope', '$mdMedia',
           AccountController
        ]).filter('accountlabel', ['accountService', function(accountService) {
            return function(address) {
              return accountService.getUsername(address);
+           };
+         }
+       ]).filter('exchangedate', [function() {
+           return function(exchangetime) {
+             return new Date(exchangetime*1000);
            };
          }
        ]);
@@ -20,7 +25,7 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, networkService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $log, $mdDialog, $scope,$mdMedia) {
+  function AccountController( accountService, networkService, changerService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $interval, $log, $mdDialog, $scope,$mdMedia) {
     var self = this;
 
     self.isNetworkConnected=false;
@@ -32,6 +37,11 @@
     self.toggleList   = toggleAccountsList;
     self.sendLisk  = sendLisk;
     self.currency = JSON.parse(window.localStorage.getItem("currency")) || {name:"btc",symbol:"Ƀ"};
+    self.marketinfo= {};
+    self.exchangeHistory=changerService.getHistory();
+    console.log(self.exchangeHistory);
+    self.selectedCoin=window.localStorage.getItem("selectedCoin") || "bitcoin_BTC";
+    self.exchangeEmail=window.localStorage.getItem("email") || "";
 
     self.connectedPeer={isConnected:false};
     self.connection = networkService.getConnection();
@@ -66,6 +76,199 @@
         }
       }
     );
+
+    self.getMarketInfo=function(symbol){
+      changerService.getMarketInfo(symbol,"lisk_LSK").then(function(answer){
+        self.buycoin=answer;
+      });
+
+      changerService.getMarketInfo("lisk_LSK",symbol).then(function(answer){
+        self.sellcoin=answer;
+      });
+    };
+
+    self.getMarketInfo(self.selectedCoin);
+
+    self.buy=function(){
+      if(self.exchangeEmail) window.localStorage.setItem("email",self.exchangeEmail);
+      if(self.selectedCoin) window.localStorage.setItem("selectedCoin",self.selectedCoin)
+      var amount = self.exchangeAmount/self.buycoin.rate;
+      if(self.selectedCoin.split("_")[1]=="USD"){
+        amount=parseFloat(amount.toFixed(2));
+      }
+      changerService.makeExchange(self.exchangeEmail, amount, self.selectedCoin, "lisk_LSK", self.selected.address).then(function(resp){
+        self.exchangeBuy=resp;
+        self.exchangeBuy.expirationPeriod=self.exchangeBuy.expiration-new Date().getTime()/1000;
+        self.exchangeBuy.expirationProgress=0;
+        self.exchangeBuy.expirationDate=new Date(self.exchangeBuy.expiration*1000);
+        self.exchangeBuy.sendCurrency=self.selectedCoin.split("_")[1];
+        self.exchangeBuy.receiveCurrency="LSK";
+        var progressbar=$interval(function(){
+          if(!self.exchangeBuy){
+            $interval.cancel(progressbar);
+          }
+          else{
+            self.exchangeBuy.expirationProgress=(100-100*(self.exchangeBuy.expiration-new Date().getTime()/1000)/self.exchangeBuy.expirationPeriod).toFixed(0);
+          }
+        },200);
+        changerService.monitorExchange(resp).then(
+          function(data){
+            self.exchangeHistory=changerService.getHistory();
+          },
+          function(data){
+
+          },
+          function(data){
+            if(data.payee && self.exchangeBuy.payee!=data.payee){
+              self.exchangeBuy=data;
+              self.exchangeHistory=changer.getHistory();
+            }
+            else{
+              self.exchangeBuy.monitor=data;
+            }
+          }
+        );
+
+      },function(error){
+        console.log(error);
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(error.data)
+            .hideDelay(10000)
+        );
+        self.exchangeBuy=null;
+      });
+    };
+
+    self.sendBatch=function(){
+      changerService.sendBatch(self.exchangeBuy,self.exchangeTransactionId).then(function(data){
+        self.exchangeBuy.batch_required=false;
+        self.exchangeTransactionId=null;
+      },
+      function(error){
+        console.log(error);
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(error)
+            .hideDelay(10000)
+        );
+      });
+    }
+
+    self.sell=function(){
+      if(self.exchangeEmail) window.localStorage.setItem("email",self.exchangeEmail);
+      changerService.makeExchange(self.exchangeEmail, self.exchangeAmount, "lisk_LSK", self.selectedCoin, self.recipientAddress).then(function(resp){
+        accountService.createTransaction(0,
+          {
+            fromAddress: self.selected.address,
+            toAddress: resp.payee,
+            amount: parseInt(resp.send_amount*100000000),
+            masterpassphrase: self.passphrase,
+            secondpassphrase: self.secondpassphrase
+          }
+        ).then(function(transaction){
+          console.log(transaction);
+          self.exchangeTransaction=transaction
+          self.exchangeSell=resp;
+          self.exchangeSell.expirationPeriod=self.exchangeSell.expiration-new Date().getTime()/1000;
+          self.exchangeSell.expirationProgress=0;
+          self.exchangeSell.expirationDate=new Date(self.exchangeSell.expiration*1000);
+          self.exchangeSell.receiveCurrency=self.selectedCoin.split("_")[1];
+          self.exchangeSell.sendCurrency="LSK";
+          var progressbar=$interval(function(){
+            if(!self.exchangeSell){
+              $interval.cancel(progressbar);
+            }
+            else{
+              self.exchangeSell.expirationProgress=(100-100*(self.exchangeSell.expiration-new Date().getTime()/1000)/self.exchangeSell.expirationPeriod).toFixed(0);
+            }
+          },200);
+
+          self.exchangeSellTransaction=transaction;
+          changerService.monitorExchange(resp).then(
+            function(data){
+              self.exchangeHistory=changerService.getHistory();
+            },
+            function(data){
+
+            },
+            function(data){
+              if(data.payee && self.exchangeSell.payee!=data.payee){
+                self.exchangeSell=data;
+                self.exchangeHistory=changer.getHistory();
+              }
+              else{
+                self.exchangeSell.monitor=data;
+              }
+            }
+          );
+        },
+        function(error){
+          console.log(error);
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(error)
+              .hideDelay(10000)
+          );
+        });
+        self.passphrase=null;
+        self.secondpassphrase=null;
+
+      },function(error){
+        console.log(error);
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(error.data)
+            .hideDelay(10000)
+        );
+        self.exchangeSell=null;
+      });
+    }
+
+    self.refreshExchange=function(exchange){
+      changerService.refreshExchange(exchange).then(function(exchange){
+        self.exchangeHistory=changerService.getHistory();
+      });
+
+    }
+
+    self.exchangeLiskNow=function(transaction){
+      networkService.postTransaction(transaction).then(
+        function(transaction){
+          self.exchangeSell.sentTransaction=transaction;
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Transaction '+ transaction.id +' sent with success!')
+              .hideDelay(5000)
+          );
+        },
+        function(error){
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Error: '+ error)
+              .hideDelay(5000)
+          );
+        }
+      );
+    }
+
+    self.cancelExchange=function(){
+      if(self.exchangeBuy){
+        changerService.cancelExchange(self.exchangeBuy);
+        self.exchangeBuy=null;
+        self.exchangeTransactionId=null;
+      }
+      if(self.exchangeSell){
+        changerService.cancelExchange(self.exchangeSell);
+        self.exchangeTransaction=null;
+        self.exchangeSell=null;
+      }
+    }
+
+    self.getCoins=function(){
+      console.log();
+      return changerService.getCoins();
+    }
 
     // Load all registered accounts
     self.accounts = accountService.loadAllAccounts();

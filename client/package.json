@@ -21,8 +21,10 @@
     "angular-animate": "^1.5.5",
     "angular-aria": "^1.5.5",
     "angular-messages": "^1.5.5",
-    "angular-material": "^1.0.0",
+    "angular-ui-router": "~0.2.15",
+    "angular-material": "^1.1.0-rc.5",
     "angular-material-data-table": "git://github.com/daniel-nagy/md-data-table.git#master",
+    "angular-qrcode": "~6.2.1",
     "lisk-js": "^0.2.0"
   },
   "devDependencies": {
