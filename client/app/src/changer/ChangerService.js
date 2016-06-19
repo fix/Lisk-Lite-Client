@@ -80,11 +80,18 @@
       return deferred.promise;
     };
 
-    function getMarketInfo(coin1, coin2){
+    function getMarketInfo(coin1, coin2, optionalamount){
       var deferred = $q.defer();
-
-      $http.get(url+"rates/"+coin1+"/"+coin2).then(function(resp){
-        deferred.resolve(resp.data);
+      var param="";
+      if(optionalamount){
+        param="?amount="+optionalamount
+      }
+      $http.get(url+"rates/"+coin1+"/"+coin2+param).then(function(resp){
+        var rates=resp.data;
+        $http.get(url+"limits/"+coin1+"/"+coin2).then(function(resp2){
+          rates.limits=resp2.data.limits;
+          deferred.resolve(rates);
+        });
       });
 
       return deferred.promise;

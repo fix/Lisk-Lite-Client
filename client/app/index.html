@@ -195,54 +195,6 @@
                 </md-table-container>
             </md-tab>
 
-            <md-tab>
-              <md-tab-label>
-                Folders
-              </md-tab-label>
-              <md-tab-body md-list>
-                <md-list-item ng-if="!ul.selected.virtual">
-                  <md-card>
-                    <md-card-title>
-                      <md-card-title-media>
-                        <div class="md-media-sm card-media" layout layout-align="center center" >
-                          <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">info</md-icon>
-                        </div>
-                      </md-card-title-media>
-                      <md-card-title-text>
-                        <span>
-                          If you own this account, you can enable virtual folders, acting as simple subaccounts to better manage your money, without needing to send a real transaction and pay a fee. <br>
-                          Moreover, this account will move under the "My Accounts" list.
-                        </span>
-                        <md-button ng-click="ul.createFolder(ul.selected)">Enable Virtual Folders</md-button>
-                      </md-card-title-text>
-                    </md-card-title>
-                  </md-card>
-
-                </md-list-item>
-
-                <md-list-item>
-                  <h3>Default {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
-                  <span class="md-secondary">
-                    <md-button md-block md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
-                  </span>
-                </md-list-item>
-                <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
-                  <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
-                  <md-input-container md-no-float class="md-secondary">
-                    <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
-                    <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
-                  </md-input-container>
-
-                </md-list-item>
-                <md-list-item ng-if="ul.selected.virtual">
-                  <md-button ng-click="ul.createFolder(ul.selected)">Create a new virtual folder</md-button>
-                </md-list-item>
-
-              </md-list>
-            </md-tab-body>
-          </md-tab-body>
-          </md-tab>
-
           <md-tab>
             <md-tab-label>
               Exchange
@@ -257,7 +209,7 @@
                   </md-card-title-media>
                   <md-card-title-text>
                     <span>
-                      Buy and Sell through our partner <a href="#" onclick='require("electron").shell.openExternal("https://changer.com")'>changer.com</a>. By using the following forms, you are accepting their <a href="#" onclick='require("electron").shell.openExternal("https://www.changer.com/about")'>Terms and Conditions</a>.
+                      Deposit and Withdraw through our partner <a href="#" onclick='require("electron").shell.openExternal("https://changer.com")'>changer.com</a>. By using the following forms, you are accepting their <a href="#" onclick='require("electron").shell.openExternal("https://www.changer.com/about")'>Terms and Conditions</a>.
                       Please report any issue to <a href="mailto:support@changer.com">support@changer.com</a>
                     </span>
                     <div layout="row">
@@ -279,13 +231,17 @@
                 <md-card flex="50">
                   <md-toolbar>
                     <h2 class="md-toolbar-tools">
-                      <span>Buy LSK at {{(1/ul.buycoin.rate).toFixed(5)}} {{ul.selectedCoin}}</span>
+                      <span>Deposit LSK - {{(1/ul.buycoin.rate).toFixed(5)}} {{ul.selectedCoin}}</span>
                     </h2>
                   </md-toolbar>
                   <md-list ng-if="!ul.exchangeBuy">
                     <md-list-item>
+                      Minimum: {{(ul.buycoin.limits.min_amount*ul.buycoin.rate).toFixed(1)}} LSK
+                      Maximum: {{(ul.buycoin.limits.max_amount*ul.buycoin.rate).toFixed(1)}} LSK
+                    </md-list-item>
+                    <md-list-item>
                       <md-input-container>
-                        <input  ng-model="ul.exchangeAmount" ng-change="ul.validateExchangeAmount(ul.exchangeAmount)" max="200" type="number" placeholder="Amount (LSK)">
+                        <input  ng-model="ul.buyAmount" min="{{(ul.buycoin.limits.min_amount*ul.buycoin.rate).toFixed(1)}}" max="{{(ul.buycoin.limits.max_amount*ul.buycoin.rate).toFixed(1)}}" type="number" placeholder="Amount (LSK)">
                       </md-input-container>
 
                     </md-list-item>
@@ -323,7 +279,7 @@
                   </md-list>
 
                   <md-card-footer>
-                    <md-button ng-if="!ul.exchangeBuy" md-colors="{background:'green'}" ng-click="ul.buy()">Request Buy Quote...</md-button>
+                    <md-button ng-if="!ul.exchangeBuy" md-colors="{background:'green'}" ng-click="ul.buy()">Next...</md-button>
                     <md-button ng-if="ul.exchangeBuy" md-colors="{background:'red'}" ng-click="ul.cancelExchange()">Cancel</md-button>
                   </md-card-footer>
 
@@ -333,14 +289,18 @@
                 <md-card flex="50">
                   <md-toolbar>
                     <h2 class="md-toolbar-tools">
-                      <span>Sell LSK at {{ul.sellcoin.rate.toFixed(5)}} {{ul.selectedCoin}} </span>
+                      <span>Withdraw LSK - {{ul.sellcoin.rate.toFixed(5)}} {{ul.selectedCoin}} </span>
                     </h2>
                   </md-toolbar>
                     <md-card-title ng-if="!ul.selected.virtual">Please login with your account before using this feature</md-card-title>
                     <md-list ng-if="!ul.exchangeSell&&ul.selected.virtual">
                       <md-list-item>
+                        Minimum: {{(ul.sellcoin.limits.min_amount).toFixed(1)}} LSK
+                        Maximum: {{(ul.sellcoin.limits.max_amount).toFixed(1)}} LSK
+                      </md-list-item>
+                      <md-list-item>
                         <md-input-container>
-                          <input ng-model="ul.exchangeAmount" ng-change="ul.validateExchangeAmount(ul.exchangeAmount)" max="200" type="number" placeholder="Amount (LSK)">
+                          <input ng-model="ul.sellAmount" min="{{(ul.sellcoin.limits.min_amount).toFixed(1)}}" max="{{(ul.sellcoin.limits.max_amount).toFixed(1)}}" type="number" placeholder="Amount (LSK)">
                         </md-input-container>
                       </md-list-item>
                       <md-list-item>
@@ -388,7 +348,7 @@
                     </md-list>
 
                     <md-card-footer>
-                      <md-button ng-if="ul.selected.virtual&&!ul.exchangeSell" ng-click="ul.sell()" md-colors="{'background':'red'}">Request Sell Quote...</md-button>
+                      <md-button ng-if="ul.selected.virtual&&!ul.exchangeSell" ng-click="ul.sell()" md-colors="{'background':'red'}">Next...</md-button>
                       <md-button ng-if="ul.selected.virtual&&ul.exchangeSell&&!ul.exchangeSell.sentTransaction" md-colors="{background:'red'}" ng-click="ul.exchangeLiskNow(ul.exchangeSellTransaction)">Send {{ul.exchangeSell.send_amount}}LSK now!</md-button>
                       <md-button ng-if="ul.selected.virtual&&ul.exchangeSell&&!ul.exchangeSell.sentTransaction" ng-click="ul.cancelExchange()">Cancel</md-button>
                       <md-button ng-if="!ul.selected.virtual" md-colors="{background:'green'}" ng-click="ul.createFolder(ul.selected)">Login</md-button>
@@ -493,6 +453,54 @@
               </md-table-container>
             </md-tab-body>
           </md-tab>
+
+          <md-tab>
+            <md-tab-label>
+              Folders
+            </md-tab-label>
+            <md-tab-body md-list>
+              <md-list-item ng-if="!ul.selected.virtual">
+                <md-card>
+                  <md-card-title>
+                    <md-card-title-media>
+                      <div class="md-media-sm card-media" layout layout-align="center center" >
+                        <md-icon md-font-library="material-icons" ng-style="{'font-size': '48px', 'height':'48px', 'width':'48px'}">info</md-icon>
+                      </div>
+                    </md-card-title-media>
+                    <md-card-title-text>
+                      <span>
+                        If you own this account, you can enable virtual folders, acting as simple subaccounts to better manage your money, without needing to send a real transaction and pay a fee. <br>
+                        Moreover, this account will move under the "My Accounts" list.
+                      </span>
+                      <md-button ng-click="ul.createFolder(ul.selected)">Enable Virtual Folders</md-button>
+                    </md-card-title-text>
+                  </md-card-title>
+                </md-card>
+
+              </md-list-item>
+
+              <md-list-item>
+                <h3>Default {{ul.currency.symbol}} {{(ul.getDefaultValue(ul.selected)/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}}</h3>
+                <span class="md-secondary">
+                  <md-button md-block md-colors="{'background' : ul.getDefaultValue(ul.selected)>0 ? 'green-200':'red-200' }"> {{ul.getDefaultValue(ul.selected)/100000000}}</md-button>
+                </span>
+              </md-list-item>
+              <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
+                <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
+                <md-input-container md-no-float class="md-secondary">
+                  <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
+                  <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
+                </md-input-container>
+
+              </md-list-item>
+              <md-list-item ng-if="ul.selected.virtual">
+                <md-button ng-click="ul.createFolder(ul.selected)">Create a new virtual folder</md-button>
+              </md-list-item>
+
+            </md-list>
+          </md-tab-body>
+        </md-tab-body>
+        </md-tab>
 
           <md-tab ng-if="ul.selected.delegate">
             <md-tab-label>

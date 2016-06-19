@@ -91,53 +91,56 @@
 
     self.buy=function(){
       if(self.exchangeEmail) window.localStorage.setItem("email",self.exchangeEmail);
-      if(self.selectedCoin) window.localStorage.setItem("selectedCoin",self.selectedCoin)
-      var amount = self.exchangeAmount/self.buycoin.rate;
-      if(self.selectedCoin.split("_")[1]=="USD"){
-        amount=parseFloat(amount.toFixed(2));
-      }
-      changerService.makeExchange(self.exchangeEmail, amount, self.selectedCoin, "lisk_LSK", self.selected.address).then(function(resp){
-        self.exchangeBuy=resp;
-        self.exchangeBuy.expirationPeriod=self.exchangeBuy.expiration-new Date().getTime()/1000;
-        self.exchangeBuy.expirationProgress=0;
-        self.exchangeBuy.expirationDate=new Date(self.exchangeBuy.expiration*1000);
-        self.exchangeBuy.sendCurrency=self.selectedCoin.split("_")[1];
-        self.exchangeBuy.receiveCurrency="LSK";
-        var progressbar=$interval(function(){
-          if(!self.exchangeBuy){
-            $interval.cancel(progressbar);
-          }
-          else{
-            self.exchangeBuy.expirationProgress=(100-100*(self.exchangeBuy.expiration-new Date().getTime()/1000)/self.exchangeBuy.expirationPeriod).toFixed(0);
-          }
-        },200);
-        changerService.monitorExchange(resp).then(
-          function(data){
-            self.exchangeHistory=changerService.getHistory();
-          },
-          function(data){
-
-          },
-          function(data){
-            if(data.payee && self.exchangeBuy.payee!=data.payee){
-              self.exchangeBuy=data;
-              self.exchangeHistory=changer.getHistory();
+      if(self.selectedCoin) window.localStorage.setItem("selectedCoin",self.selectedCoin);
+      changerService.getMarketInfo(self.selectedCoin,"lisk_LSK",self.buyAmount/self.buycoin.rate).then(function(rate){
+        var amount = self.buyAmount/rate.rate;
+        if(self.selectedCoin.split("_")[1]=="USD"){
+          amount=parseFloat(amount.toFixed(2));
+        }
+        changerService.makeExchange(self.exchangeEmail, amount, self.selectedCoin, "lisk_LSK", self.selected.address).then(function(resp){
+          self.exchangeBuy=resp;
+          self.exchangeBuy.expirationPeriod=self.exchangeBuy.expiration-new Date().getTime()/1000;
+          self.exchangeBuy.expirationProgress=0;
+          self.exchangeBuy.expirationDate=new Date(self.exchangeBuy.expiration*1000);
+          self.exchangeBuy.sendCurrency=self.selectedCoin.split("_")[1];
+          self.exchangeBuy.receiveCurrency="LSK";
+          var progressbar=$interval(function(){
+            if(!self.exchangeBuy){
+              $interval.cancel(progressbar);
             }
             else{
-              self.exchangeBuy.monitor=data;
+              self.exchangeBuy.expirationProgress=(100-100*(self.exchangeBuy.expiration-new Date().getTime()/1000)/self.exchangeBuy.expirationPeriod).toFixed(0);
             }
-          }
-        );
+          },200);
+          changerService.monitorExchange(resp).then(
+            function(data){
+              self.exchangeHistory=changerService.getHistory();
+            },
+            function(data){
 
-      },function(error){
-        console.log(error);
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(error.data)
-            .hideDelay(10000)
-        );
-        self.exchangeBuy=null;
+            },
+            function(data){
+              if(data.payee && self.exchangeBuy.payee!=data.payee){
+                self.exchangeBuy=data;
+                self.exchangeHistory=changer.getHistory();
+              }
+              else{
+                self.exchangeBuy.monitor=data;
+              }
+            }
+          );
+
+        },function(error){
+          console.log(error);
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(error.data)
+              .hideDelay(10000)
+          );
+          self.exchangeBuy=null;
+        });
       });
+
     };
 
     self.sendBatch=function(){
@@ -157,7 +160,7 @@
 
     self.sell=function(){
       if(self.exchangeEmail) window.localStorage.setItem("email",self.exchangeEmail);
-      changerService.makeExchange(self.exchangeEmail, self.exchangeAmount, "lisk_LSK", self.selectedCoin, self.recipientAddress).then(function(resp){
+      changerService.makeExchange(self.exchangeEmail, self.sellAmount, "lisk_LSK", self.selectedCoin, self.recipientAddress).then(function(resp){
         accountService.createTransaction(0,
           {
             fromAddress: self.selected.address,
