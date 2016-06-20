@@ -1,6 +1,6 @@
 {
   "name": "LiskClient",
-  "version": "1.0.0beta1",
+  "version": "1.0.0beta2",
   "productName":"LiskClient",
   "description": "Lisk Desktop Lite Client",
   "main": "main.js",

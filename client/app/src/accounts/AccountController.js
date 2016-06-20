@@ -275,7 +275,6 @@
 
     // Load all registered accounts
     self.accounts = accountService.loadAllAccounts();
-    if(self.accounts.length>0) selectAccount(self.accounts[0]);
 
     // *********************************
     // Internal methods

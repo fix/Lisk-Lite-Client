@@ -25,14 +25,14 @@
 
   </head>
 
-  <body id="app" ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
-    <md-toolbar>
+  <body style="background-image:url(./assets/img/pexels-photo.jpeg);background-size: cover;" id="app" ng-app="liskApp" layout="column" ng-controller="AccountController as ul" ng-cloak>
+    <md-toolbar style="background-color: rgba(0, 0, 0, 0);">
        <div class="md-toolbar-tools" style="-webkit-app-region: drag;">
        <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Account List">
          <md-icon md-svg-icon="menu" ></md-icon>
        </md-button>
          <img src="lisk.png" alt="" height="30">
-         <span>Lisk Client</span>
+         <md-button ng-click="ul.selected=null">Lisk Client</md-button>
          <!-- fill up the space between left and right area -->
          <span flex></span>
 
@@ -92,7 +92,72 @@
        </div>
     </md-toolbar>
 
-    <md-content flex layout="row">
+      <div class="main-dashboard" layout="column" layout-align="space-around center" ng-if="!ul.selected" flex>
+           <md-content style="min-width:50%; opacity:0.8; border-radius:10px;" md-whiteframe="3">
+             <md-toolbar>
+               <div class="md-toolbar-tools">
+                 <h2>My Accounts</h2>
+               </div>
+             </md-toolbar>
+             <md-list>
+               <md-list-item ng-repeat="it in ul.myAccounts()">
+                   <md-button ng-click="ul.selectAccount(it)" ng-class="{'selected' : it.address === ul.selected.address }">
+                     <md-icon ng-if="!it.delegate&&!it.cold" md-font-library="material-icons">account_balance</md-icon>
+                     <md-icon ng-if="!it.delegate&&it.cold" md-font-library="material-icons">cloud_off</md-icon>
+                     <md-icon ng-if="it.delegate" md-font-library="material-icons">security</md-icon>
+                     {{it.username||it.address}}
+                     <span style="position: absolute;right: 10px;">
+                       Ⱡ{{it.balance/100000000}}
+                     </span>
+                   </md-button>
+
+               </md-list-item>
+               <md-list-item>
+                 <md-button ng-click="ul.addAccount()">
+                   <md-icon md-font-library="material-icons">add</md-icon> New Account
+                 </md-button>
+               </md-list-item>
+             </md-list>
+           </md-content>
+           <div layout="row" layout-align="space-between stretch">
+             <md-content style="opacity:0.8; border-radius:10px; width: 360px; margin:10px;" md-whiteframe="3">
+               <md-list>
+                 <md-list-item>
+                   <b>Price ({{ul.currency.symbol}})</b> <md-button class="md-secondary" aria-label="Change Currency" md-prevent-menu-close ng-click="ul.changeCurrency()">{{ul.connectedPeer.market.price[ul.currency.name]}}</md-button>
+                 </md-list-item>
+                 <md-list-item>
+                   <b>Change 1h/7h/7d</b>
+                   <span class="md-secondary">
+                     <span md-colors="{'color' : ul.connectedPeer.market.change1h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change1h[ul.currency.name]}}%</span>
+                     /
+                     <span md-colors="{'color' : ul.connectedPeer.market.change7h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7h[ul.currency.name]}}%</span>
+                     /
+                     <span md-colors="{'color' : ul.connectedPeer.market.change7d.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7d[ul.currency.name]}}%</span>
+                   </span>
+                 </md-list-item>
+                 <md-list-item>
+                   <b>Capitalisation</b> <span class="md-secondary">{{ul.connectedPeer.market.marketCap[ul.currency.name] | number:0}}</span>
+                 </md-list-item>
+               </md-list>
+             </md-content>
+             <md-content style="opacity:0.8; border-radius:10px; width: 360px; margin:10px;" md-whiteframe="3">
+               <md-list flex>
+                 <md-list-item>
+                   <b>Peer</b> <md-button class="md-secondary" aria-label="Pick Random Peer" md-prevent-menu-close ng-click="ul.pickRandomPeer()">{{ul.connectedPeer.ip}}</md-button>
+                 </md-list-item>
+                 <md-list-item>
+                   <b>Height</b> <span class="md-secondary">{{ul.connectedPeer.height}}</span>
+                 </md-list-item>
+                 <md-list-item>
+                   <b>Last checked</b> <span class="md-secondary">{{ul.connectedPeer.lastConnection | date:'shortTime'}}</span>
+                 </md-list-item>
+               </md-list>
+             </md-content>
+           </div>
+      </div>
+
+
+    <md-content ng-if="ul.selected" flex layout="row">
 
         <md-sidenav  ng-click="ul.toggleList()" md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
           <md-button class="md-fab md-primary" ng-click="ul.addAccount()" md-colors="{'background':'grey-300'}" style="position: absolute;right: 20px;">
