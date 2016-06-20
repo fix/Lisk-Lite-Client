@@ -129,12 +129,12 @@ a:hover, a:focus {
 }
 
 .btn-primary {
-  background-color:#70cbce;
+  background-color:rgb(121,85,72);
   color: #ffffff;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-  background-color: #8be2e5;
+  background-color: rgb(101,65,52);
   color: #ffffff;
   -webkit-transition: all 0.35s ease-in-out;
   -moz-transition: all 0.35s ease-in-out;
@@ -236,7 +236,7 @@ a:hover, a:focus {
 
 .navbar {
     border: 0px solid rgba(0, 0, 0, 0);
-    background: #70cbce;
+    background: rgb(121,85,72);
     margin: auto;
     min-height: 60px;
     padding-top: 8px;
@@ -267,15 +267,15 @@ a:hover, a:focus {
 }
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color: #4ec3cd;
+    border-color: rgb(121,85,72);
 }
 
 .navbar-inverse .navbar-toggle {
     border-color: transparent;
 }
 
-.logo img {
-	margin-top: 6px;
+.logo h4 {
+  color: #ffffff;
 }
 
 
@@ -372,7 +372,7 @@ header {
 
 
 #be-the-first {
-  background: url(../img/be-the-first-bg.jpg) #231f20 no-repeat center center fixed;
+  background: rgb(121,85,72);
   min-height: 300px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -380,6 +380,9 @@ header {
   background-size: cover;
 }
 
+#main-info h3 {
+  text-align: center;
+}
 hr.line {
 	width: 100%;
 	border: 2px solid;
@@ -400,9 +403,14 @@ hr.line {
 	color: #fdc05d;
 }
 
+.brown {
+  border-color: rgb(121,85,72);
+	color: rgb(121,85,72);
+}
+
 .iphone {
     position: relative;
-    height: 200px;
+    top: -120px;
 }
 
 .iphone img {
@@ -421,13 +429,13 @@ hr.line {
 }
 
 .fa-envelope-o {
-  color: #4ec3cd;
+  color: rgb(121,85,72);
   font-size: 22px;
   display: block;
   padding-top: 15px;
   width: 60px;
   height: 60px;
-  border: 2px solid #4ec3cd;
+  border: 2px solid rgb(121,85,72);
   -moz-border-radius: 30px;
   -o-border-radius: 30px;
   -webkit-border-radius: 30px;
@@ -461,7 +469,7 @@ footer {
 
 
 #pricing {
-  background: #70cbce;
+  background:rgb(121,85,72);
 }
 
 .pricing-container {
@@ -559,7 +567,7 @@ footer {
 }
 
 .features.last a {
-	color: #70cbce;
+	color: rgb(121,85,72);
 	font-size: 14px;
 	letter-spacing: 1px;
 }
