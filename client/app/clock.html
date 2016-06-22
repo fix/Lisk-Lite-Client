@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+
+        <title>jClocksGMT v. 2.0</title>
+
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+
+        <link rel="stylesheet" href="assets/css/jClocksGMT.css">
+
+        <style>
+            * {transition: all 0.5s;}
+            body { font-family: Arial, sans-serif; margin:auto;text-align: center;overflow:hidden;}
+            body>div.jcgmt-container {
+              display: inline-block;
+              float:none;
+              margin-right:2%;
+              margin-left:2%;
+            }
+            .jcgmt-digital{
+              color:#111;
+              text-shadow: 0px 0px 2px white;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="clock_hou"></div>
+        <div id="clock_india"></div>
+        <div id="clock_korea"></div>
+        <div id="clock_hawaii"></div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+        <script src="assets/js/jClocksGMT.js"></script>
+        <script src="assets/js/jquery.rotate.js"></script>
+
+        <script>
+            $(document).ready(function(){
+
+                $('#clock_hou').jClocksGMT(
+                {
+                    title: 'San Francisco',
+                    offset: '-6',
+                    timeformat: 'HH:mm',
+                    imgpath: 'assets/'
+                });
+
+                $('#clock_india').jClocksGMT(
+                {
+                    title: 'Paris',
+                    offset: '+1',
+                    timeformat: 'HH:mm',
+                    imgpath: 'assets/'
+                });
+
+                $('#clock_korea').jClocksGMT(
+                {
+                    title: 'Beijing',
+                    offset: '+8',
+                    timeformat: 'HH:mm',
+                    imgpath: 'assets/'
+                });
+
+                $('#clock_hawaii').jClocksGMT(
+                {
+                    title: 'Hawaii',
+                    offset: '-11',
+                    timeformat: 'HH:mm',
+                    imgpath: 'assets/'
+                });
+
+
+            });
+        </script>
+
+    </body>
+</html>

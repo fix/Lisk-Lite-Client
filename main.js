@@ -36,7 +36,8 @@ function createWindow () {
           { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
           { type: "separator" },
           { label: "Open Dev Tools", accelerator: "CmdOrCtrl+D", click: function() { mainWindow.webContents.openDevTools(); }},
-          { label: "Reload App", accelerator: "CmdOrCtrl+R", click: function() { mainWindow.webContents.window.reload(); }}
+          { label: "Reload App", accelerator: "CmdOrCtrl+R", click: function() { mainWindow.webContents.reload(); }},
+          { label: "Print Page", accelerator: "CmdOrCtrl+P", click: function() { mainWindow.webContents.print({printBackground:true}); }}
       ]}
   ];
 

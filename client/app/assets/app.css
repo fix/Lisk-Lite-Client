@@ -6,6 +6,30 @@ html, body {
   padding: 0px;
 }
 
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.1);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-track:hover {
+    visibility: visible;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(100,100,100,0.3);
+    transition:background linear 0.5s;
+}
+
 /* Toolbar area */
 
 .menu {

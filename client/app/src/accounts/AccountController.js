@@ -284,7 +284,7 @@
      * Hide or Show the 'left' sideNav area
      */
     function toggleAccountsList() {
-      if($mdMedia('sm')) $mdSidenav('left').toggle();
+      if($mdMedia('md')||$mdMedia('sm')) $mdSidenav('left').toggle();
     }
 
     self.myAccounts = function(){
