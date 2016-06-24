@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="assets/css/jClocksGMT.css">
 
         <style>
-            * {transition: all 0.5s;}
+            * {transition: all 0.5s;user-select: none;-webkit-user-select: none; -webkit-user-select: none; }
             body { font-family: Arial, sans-serif; margin:auto;text-align: center;overflow:hidden;}
             body>div.jcgmt-container {
               display: inline-block;
@@ -26,9 +26,9 @@
     </head>
     <body>
 
-        <div id="clock_hou"></div>
-        <div id="clock_india"></div>
-        <div id="clock_korea"></div>
+        <div id="clock_ca"></div>
+        <div id="clock_france"></div>
+        <div id="clock_china"></div>
         <div id="clock_hawaii"></div>
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -39,15 +39,15 @@
         <script>
             $(document).ready(function(){
 
-                $('#clock_hou').jClocksGMT(
+                $('#clock_ca').jClocksGMT(
                 {
                     title: 'San Francisco',
-                    offset: '-6',
+                    offset: '-8',
                     timeformat: 'HH:mm',
                     imgpath: 'assets/'
                 });
 
-                $('#clock_india').jClocksGMT(
+                $('#clock_france').jClocksGMT(
                 {
                     title: 'Paris',
                     offset: '+1',
@@ -55,10 +55,11 @@
                     imgpath: 'assets/'
                 });
 
-                $('#clock_korea').jClocksGMT(
+                $('#clock_china').jClocksGMT(
                 {
                     title: 'Beijing',
                     offset: '+8',
+                    dst: false,
                     timeformat: 'HH:mm',
                     imgpath: 'assets/'
                 });
@@ -66,7 +67,8 @@
                 $('#clock_hawaii').jClocksGMT(
                 {
                     title: 'Hawaii',
-                    offset: '-11',
+                    offset: '-10',
+                    dst: false,
                     timeformat: 'HH:mm',
                     imgpath: 'assets/'
                 });
