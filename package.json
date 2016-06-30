@@ -8,7 +8,9 @@
     "start": "electron main.js",
     "postinstall": "install-app-deps",
     "pack": "build --target dir",
-    "dist": "build"
+    "dist:win": "build --win",
+    "dist:osx": "build --osx",
+    "dist:linux": "build --linux"
   },
   "repository": {
     "type": "git",
@@ -35,7 +37,7 @@
     "app-bundle-id": "com.liskwallet.liteclient",
     "app-category-type": "finance",
     "win": {
-      "iconUrl": "https://"
+      "iconUrl": "https://lisk.io/i/mediakit/icon_1.png"
     },
     "linux": {
       "synopsis": "A Lite Lisk Client to securely connect to the Lisk network and manage your lisk assets.",
