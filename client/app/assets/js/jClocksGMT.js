@@ -1,11 +1,11 @@
 /***************************************************************************************************************************************************************
- *        _ ________           __        ________  _________     
+ *        _ ________           __        ________  _________
  *       (_) ____/ /___  _____/ /_______/ ____/  |/  /_  __/
- *      / / /   / / __ \/ ___/ //_/ ___/ / __/ /|_/ / / /    
- *     / / /___/ / /_/ / /__/ ,< (__  ) /_/ / /  / / / / 
- *  __/ /\____/_/\____/\___/_/|_/____/\____/_/  /_/ /_/  
- * /___/                                                        
- * 
+ *      / / /   / / __ \/ ___/ //_/ ___/ / __/ /|_/ / / /
+ *     / / /___/ / /_/ / /__/ ,< (__  ) /_/ / /  / / / /
+ *  __/ /\____/_/\____/\___/_/|_/____/\____/_/  /_/ /_/
+ * /___/
+ *
  * NAME: jClocksGMT.js
  * VERSION: 2.0.2
  * LAST UPDATE: 2016.04.26
@@ -15,12 +15,12 @@
  *      Email: r@kingkode.com
  *      Location: Houston, Texas, United States
  *      Website: http://kingkode.com/jclocksgmt-js/
- *      __   _             __             __   
- *     / /__(_)___  ____ _/ /______  ____/ /__ 
+ *      __   _             __             __
+ *     / /__(_)___  ____ _/ /______  ____/ /__
  *    / //_/ / __ \/ __ `/ //_/ __ \/ __  / _ \
  *   / ,< / / / / / /_/ / ,< / /_/ / /_/ /  __/
- *  /_/|_/_/_/ /_/\__, /_/|_|\____/\__,_/\___/ 
- *               /____/                        
+ *  /_/|_/_/_/ /_/\__, /_/|_|\____/\__,_/\___/
+ *               /____/
  *
  * Plugin Website: http://www.github.com/mcmastermind/jClocksGMT
  *
@@ -56,7 +56,7 @@
  *          angleSec: 0,                 Integer: Starting angle of second hand
  *          angleMin: 0,                 Integer: Starting angle of minute hand
  *          angleHour: 0,                Integer: Starting angle of hour hand
- *          skin: 1,                     Integer: Set 1 of 5 included skins for the analog clock 
+ *          skin: 1,                     Integer: Set 1 of 5 included skins for the analog clock
  *          imgpath: ''                  String:  Set path of images
  *
  *      Common offsets by time zone: (only use the number after GMT: GMT-2 = offset: '-2'
@@ -87,7 +87,7 @@
  *          GMT+11	 Magadan, Soloman Is.
  *          GMT+12	 Fiji, Wellington, Auckland
  *
- *          To find specific GMT offsets, 
+ *          To find specific GMT offsets,
  *              goto: http://www.timeanddate.com/time/zone/
  *              search: location
  *              use: Current Offset
@@ -130,11 +130,11 @@
  (function($) {
 
     $.fn.extend({
-        
-        jClocksGMT: function( options ) 
+
+        jClocksGMT: function( options )
         {
             // plugin default options
-            var defaults = 
+            var defaults =
             {
                 title: 'Greenwich, England',
                 offset: '0',
@@ -150,10 +150,10 @@
                 skin: 1,
                 imgpath: ''
             }
-            
+
             // merge user options with defaults
             var options = $.extend(defaults, options);
-            
+
             return this.each(function()
             {
                 // set offset variable per instance
@@ -182,18 +182,18 @@
                 }
 
                 // create digital clock container
-                $("<div />", { class: "jcgmt-digital" }).appendTo("#" + id);
+                $("<div />", { class: "jcgmt-digital" }).html("00:00").appendTo("#" + id);
 
                 //create date container
                 $("<div />", { class: "jcgmt-date" }).appendTo("#" + id);
-                
+
                 // initial hand rotation
                 $('#' + id + ' .jcgmt-sec').rotate( options.angleSec );
                 $('#' + id + ' .jcgmt-min').rotate( options.angleMin );
                 $('#' + id + ' .jcgmt-hour').rotate( options.angleHour );
 
                 // get timezone by gmt offset
-                Date.prototype.getTimezoneByOffset = function( offset, y, m, d ) 
+                Date.prototype.getTimezoneByOffset = function( offset, y, m, d )
                 {
                     var date = new Date; // get date
 
@@ -201,7 +201,7 @@
                     {
                         date = new Date( y, m, d ); // get date with params
                     }
-                    
+
                     var utc = date.getTime() + ( date.getTimezoneOffset() * 60000 ); // get local offset
 
                     var dateGMT = new Date( utc + ( 3600000 * offset ) ); // get requested offset based on local
@@ -210,7 +210,7 @@
                 }
 
                 // check if daylight saving time is in effect
-                Date.prototype.stdTimezoneOffset = function() 
+                Date.prototype.stdTimezoneOffset = function()
                 {
                     var jan = this.getTimezoneByOffset( offset, this.getFullYear(), 0, 1 );
 
@@ -220,7 +220,7 @@
                 }
 
                 // checkes if DST is in effect
-                Date.prototype.isDST = function() 
+                Date.prototype.isDST = function()
                 {
                     var date = this.getTimezoneByOffset(offset);
 
@@ -268,27 +268,27 @@
                         : ret;
                     });
                   }
-                
+
                 // create new date object
                 var dateCheck = new Date().getTimezoneByOffset( offset );
 
                 // check for DST
-                if( options.dst && dateCheck.isDST() ) 
+                if( options.dst && dateCheck.isDST() )
                 {
                    offset = offset + 1;
                 }
 
                 // clock interval
-                setInterval(function () 
+                setInterval(function ()
                 {
                     // create new date object
-                    var nd = new Date().getTimezoneByOffset( offset ); 
-                    
+                    var nd = new Date().getTimezoneByOffset( offset );
+
                     // time string variable
                     var timeStr = nd.format( options.timeformat );
-                    
+
                     // update analog clock if enabled
-                    if( options.analog ) 
+                    if( options.analog )
                     {
                         // rotate second hand
                         $('#' + id + ' .jcgmt-sec').rotate( nd.getSeconds() * 6 );
@@ -300,16 +300,16 @@
                         // update title for tooltip
                         $('#' + id + ' .jcgmt-clockHolder').attr( 'title', timeStr );
                     }
-                    
+
                     // update digital clock if enabled
-                    if( options.digital ) 
+                    if( options.digital )
                     {
                         $('#' + id + ' .jcgmt-digital').html( timeStr );
                         $('#' + id + ' .jcgmt-digital').attr( 'title', timeStr );
                     }
 
                     // update date if enabled
-                    if( options.date ) 
+                    if( options.date )
                     {
                         var dateStamp = nd.format( options.dateformat );
                         $('#' + id + ' .jcgmt-date').html( dateStamp );

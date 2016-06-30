@@ -30,7 +30,7 @@ Fixcrypt. To support the development, please vote for delegate **fixcrypt**.
 
 ## Screenshot
 
-![linux](http://i.imgur.com/L71jinb.png)
+![linux](http://i.imgur.com/e9qxCTx.gif)
 
 ![linux](http://i.imgur.com/UZ91bgg.png)
 
