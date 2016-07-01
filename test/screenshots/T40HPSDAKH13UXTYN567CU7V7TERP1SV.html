@@ -1,0 +1,679 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" ng-app="liskApp" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+        <base href="/" />
+        <title>Lisk</title>
+
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="/images/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+
+        <meta charset="UTF-8" />
+        <meta name="application-name" content="Lisk - Blockchain Application Platform" />
+        <meta name="msapplication-TileColor" content="#F3F3E1" />
+        <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
+        <meta name="msapplication-square70x70logo" content="/images/mstile-70x70.png" />
+        <meta name="msapplication-square150x150logo" content="/images/mstile-150x150.png" />
+        <meta name="msapplication-wide310x150logo" content="/images/mstile-310x150.png" />
+        <meta name="msapplication-square310x310logo" content="/images/mstile-310x310.png" />
+
+        <link rel="stylesheet" href="/static/css/app.css" />
+
+        <script src="/static/js/vendor_app.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="application/javascript">
+            var socket = io.connect();
+            socket.on('blocks/change', function (err, data) {
+
+            });
+        </script>
+    </head>
+    <body>
+        <!-- uiView:  --><div ui-view="" ng-class="lang.id" class="container-app ng-scope en" style=""><div ng-show="view.inLoading" ng-class="{'fadeInAnimation': view.inLoading}" class="loading-wrapper ng-scope ng-hide" style="position: fixed; top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 999999; background: rgba(225, 225, 225, 0.6);">
+    <div class="valign-wrapper" style="height: 100%;">
+        <div class="valign" style="margin: 0 auto;">
+            <div class="preloader-wrapper big active" style="margin: 0 auto; display: block;">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <h2 style="display: block; text-align: center; margin-top: 1.8rem; line-height: 1.4rem; font-size: 1.4rem;" class="ng-binding">Loading blockchain</h2>
+        </div>
+    </div>
+</div>
+<div id="wrapper" ng-controller="appController" ng-class="{'toggled': !toggled}" class="ng-scope">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <a ui-sref="main.account">
+            <div id="logo"></div>
+        </a>
+        <div class="account-block">
+            <div class="icon">
+                <img src="/images/account.png" alt="Account" />
+            </div>
+            <span class="name" ng-show="username" style=""><translate><span class="ng-binding ng-scope">Welcome back, fixcrypt</span></translate></span>
+            <span class="address ng-binding">265497897926228908L</span>
+        </div>
+        <!-- <div class="white-glow"></div> -->
+        <ul id="menu">
+            <li ng-show="showMenuItem('main.dashboard')" ui-sref-active="active" class="">
+                <a ui-sref="main.dashboard" class="waves-effect waves-blue" href="/dashboard">
+                    <div class="nav-icon" id="dashboard-icon"></div>
+                    <span class="menu-text"><translate><span class="ng-scope">Dashboard</span></translate></span>
+                </a>
+            </li>
+            <li ng-show="showMenuItem('main.multi') &amp;&amp; multisignature" ui-sref-active="active" class="ng-hide">
+                <a ui-sref="main.multi" class="waves-effect waves-blue">
+                    <div class="nav-icon" id="multi-icon"></div>
+                    <span class="menu-text"><translate><span class="ng-scope">Multi-Signature</span></translate></span>
+                </a>
+            </li>
+            <li ng-show="showMenuItem('main.conversations')" ui-sref-active="active" class="ng-hide">
+                <a ui-sref="main.conversations" class="waves-effect waves-blue">
+                    <div class="nav-icon" id="conversations-icon"></div>
+                    <span class="menu-text"><translate><span class="ng-scope">Conversations</span></translate></span>
+                </a>
+            </li>
+            <li ng-show="showMenuItem('main.dappstore')" ui-sref-active="active" class="">
+                <a ui-sref="main.dappstore" class="waves-effect waves-blue" href="/dappstore">
+                    <div class="nav-icon" id="dappstore-icon"></div>
+                    <span class="menu-text"><translate><span class="ng-scope">Applications</span></translate></span>
+                </a>
+            </li>
+            <li ng-show="showMenuItem('main.forging')" ui-sref-active="active" class="">
+                <a ui-sref="main.forging" class="waves-effect waves-blue" href="/forging">
+                    <div class="nav-icon" id="forging-icon"></div>
+                    <span class="menu-text"><translate><span class="ng-scope">Forging</span></translate></span>
+                    <i ng-click="collapseMenu()" stop-event="" class="vertical-text right submenu-collapsing mdi-hardware-keyboard-arrow-down" ng-class="{'mdi-hardware-keyboard-arrow-down': subForgingCollapsed, 'mdi-hardware-keyboard-arrow-up':!subForgingCollapsed}"></i>
+                </a>
+            </li>
+            <ul id="submenu" ng-hide="subForgingCollapsed" class="ng-hide">
+                <li ng-show="showMenuItem('main.delegates')" ui-sref-active="active" class="">
+                    <a ui-sref="main.delegates" class="waves-effect waves-blue" href="/delegates">
+                        <div class="nav-icon" id="delegates-icon"></div>
+                        <span class="menu-text"><translate><span class="ng-scope">Delegates</span></translate></span>
+                    </a>
+                </li>
+                <li ng-show="showMenuItem('main.votes')" ui-sref-active="active" class="">
+                    <a ui-sref="main.votes" class="waves-effect waves-blue" href="/delegates/votes">
+                        <div class="nav-icon" id="myvotes-icon"></div>
+                        <span class="menu-text"><translate><span class="ng-scope">My Votes</span></translate></span>
+                    </a>
+                </li>
+            </ul>
+        <li ng-show="showMenuItem('main.blockchain')" ui-sref-active="active" class="active">
+            <a ui-sref="main.blockchain" class="waves-effect waves-blue" href="/blockchain">
+                <div class="nav-icon" id="blockchain-icon"></div>
+                <span class="menu-text"><translate><span class="ng-scope">Blockchain</span></translate></span>
+            </a>
+        </li>
+    </ul>
+    <div id="inc"></div>
+</div>
+<!-- /#sidebar-wrapper -->
+<!-- Page Content -->
+<div id="page-content-wrapper">
+    <div class="header-wrapper">
+        <div class="nav-bar clearfix" id="header">
+            <div class="logo">
+                <button type="button" class="toggle-menu" ng-click="toggleMenu()">
+                    <span class="sr-only"><translate><span class="ng-scope">Toggle navigation</span></translate></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 id="title" class="ng-binding">
+                    <span class="title-icon ng-hide" ng-show="view.page.previous" ng-click="goToPrevious()">
+                        <span class="sr-only"><translate><span class="ng-scope">Go to previous page</span></translate></span>
+                    </span>
+                    Blockchain
+                </h1>
+                <!-- ngIf: forgingStatus && view.bar.forgingMenu -->
+            </div>
+            <div id="top-menu">
+                <span id="balance" class="ng-binding">
+                    1146.06336681
+                    LSK
+                </span>
+                <a class="btn btn-blue-nav waves-effect waves-light left-margin-20" ng-click="sendTransaction()">
+                    <i class="mdi-content-send left"></i><translate><span class="ng-scope">SEND</span></translate>
+                </a>
+                <div class="mini-chart valign-wrapper ng-hide" ng-show="syncState!=0" style="">
+                    <div class="mini-chart-label ng-binding">0%</div>
+                    <div class="chart-container"><canvas id="total-forged" class="chart chart-doughnut ng-isolate-scope" chart-data="loading.values" chart-labels="loading.labels" chart-options="loading.options" chart-colours="loading.colours" height="40" width="80" style="width: 80px; height: 40px;"></canvas></div>
+                </div>
+                <div class="more-down left-margin-20" dropdown="" is-open="moreDropdownStatus.isopen">
+                    <i class="mdi-navigation-more-vert" dropdown-toggle="" aria-haspopup="true" aria-expanded="false"></i>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#" ng-click="myUserInfo()"><translate><span class="ng-scope">My Profile</span></translate></a>
+                        </li>
+                        <!-- ngIf: !secondPassphrase --><li ng-if="!secondPassphrase" class="ng-scope">
+                            <a href="#" ng-click="setSecondPassphrase()"><translate><span class="ng-scope">2nd Passphrase</span></translate></a>
+                        </li><!-- end ngIf: !secondPassphrase -->
+                        <li>
+                            <a ui-sref="main.settings" href="/settings"><translate><span class="ng-scope">Settings</span></translate></a>
+                        </li>
+                        <li>
+                            <a href="/"><translate><span class="ng-scope">Logout</span></translate></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="search-bar ng-hide" ng-show="view.bar.showTransactionsSearchBar">
+            <!-- ngIf: searchTransactions.searchForTransaction -->
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="mdi-action-search"></i>
+                </span>
+                <input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" placeholder="Search for transactions (Transaction ID, Sender address, Recipient address)" ng-model="searchTransactions.searchForTransaction" />
+                <span class="input-group-addon spinner-addon">
+                    <div class="preloader-wrapper" ng-class="{'active': searchTransactions.inSearch}">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class="search-bar" ng-show="view.bar.showBlockSearchBar" style="">
+            <!-- ngIf: searchBlocks.searchForBlock -->
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="mdi-action-search"></i>
+                </span>
+                <input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" placeholder="Search for blocks" ng-model="searchBlocks.searchForBlock" />
+                <span class="input-group-addon spinner-addon">
+                    <div class="preloader-wrapper" ng-class="{'active': searchBlocks.inSearch}">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <!-- ngIf: view.bar.forgingMenu -->
+        <!-- ngIf: view.bar.showDappsBar -->
+    <!-- ngIf: view.bar.showDappsCategoryBar -->
+</div>
+<!-- uiView:  --><div class="container-fluid ng-scope" ui-view=""><div class="top-margin ng-scope"></div>
+<div class="row ng-scope">
+    <div class="col-xs-12">
+        <div class="panel panel-default paginated" ng-class="{'paginated': countForgingBlocks || !searchBlocks.searchForBlock}">
+            <div class="panel-heading">
+                <h2 class="ng-binding">
+                  Latest Blocks
+                </h2>
+            </div>
+            <div class="table-menu" ng-show="countForgingBlocks || !searchBlocks.searchForBlock">
+                    <div class="more-down-table" dropdown="" on-toggle="toggled(open)" is-open="moreDownTable.isopen">
+                        <i class="mdi-navigation-more-vert" dropdown-toggle="" aria-haspopup="true" aria-expanded="false"></i>
+
+                        <div class="dropdown-menu" role="menu">
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet ng-pristine ng-untouched ng-valid ng-empty" id="advanced" ng-model="showAllColumns" /><label for="advanced"><translate><span class="ng-scope">Show All Columns</span></translate></label></p>
+                            <p ng-click="check($event)"><input type="checkbox" class="filled-in violet ng-pristine ng-untouched ng-valid ng-empty" id="fulltime" ng-model="showFullTime" /><label for="fulltime"><translate><span class="ng-scope">Show Full Time</span></translate></label></p>
+                        </div>
+                    </div>
+                </div><table ng-show="countForgingBlocks  || !searchBlocks.searchForBlock" ng-table="tableBlocks" border="0" width="100%" cellpadding="0" cellspacing="0" template-pagination="custom/pager" class="ng-scope ng-table"><!-- ngInclude: templates.header --><thead ng-include="templates.header" class="ng-scope"><tr class="ng-scope"> <!-- ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable sort-desc"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Height</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  ng-hide"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Block ID</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  ng-hide"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Generator</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Time</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Transactions</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Amount</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Fee</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header  sortable"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator">Reward</span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --><th title="" ng-repeat="$column in $columns" ng-class="{ 'sortable': $column.sortable(this), 'sort-asc': params.sorting()[$column.sortable(this)]=='asc', 'sort-desc': params.sorting()[$column.sortable(this)]=='desc' }" ng-click="sortBy($column, $event)" ng-show="$column.show(this)" ng-init="template=$column.headerTemplateURL(this)" class="header"> <!-- ngIf: !template --><div ng-if="!template" ng-show="!template" class="ng-table-header ng-scope" ng-class="{'sort-indicator': params.settings().sortingIndicator=='div'}"> <span ng-bind="$column.title(this)" ng-class="{'sort-indicator': params.settings().sortingIndicator=='span'}" class="ng-binding sort-indicator"></span> </div><!-- end ngIf: !template --> <!-- ngIf: template --> </th><!-- end ngRepeat: $column in $columns --> </tr> <tr ng-show="show_filter" class="ng-table-filters ng-scope ng-hide"> <!-- ngRepeat: $column in $columns --><th data-title-text="Height" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Block ID" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope ng-hide"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Generator" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope ng-hide"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Time" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Transactions" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Amount" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Fee" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="Reward" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --><th data-title-text="" ng-repeat="$column in $columns" ng-show="$column.show(this)" class="filter ng-scope"> <!-- ngRepeat: (name, filter) in $column.filter(this) --> </th><!-- end ngRepeat: $column in $columns --> </tr> </thead>
+                
+                <tbody><!-- ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119518</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">8696661133768802649</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">1479038695434861905L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">2</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">3.8707941</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0.2</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119517</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">15447305854259235675</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">1975079421629408862L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119516</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">11576370913843433241</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">12263243490950058338L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119515</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">3804924256048848254</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">161483934494629016L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119514</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">7380839908194614308</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">1882655293553451363L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119513</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">5260343234734064564</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">14181809830721103291L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119512</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">3731742142715386803</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">17256642708742523439L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119511</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">10492220882152781343</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">13530430579978730688L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119510</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">9334018641265108305</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">8483849412489861947L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119509</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">3034920986040478940</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">5671488865933696509L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119508</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">1294035722169668450</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">7732327075039618143L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119507</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">10993368141790933167</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">14002064772471994991L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119506</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">6737389815878907544</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">14621643025887137539L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119505</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">15899272121900923103</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">15395643725490872504L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119504</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">837809238285539790</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">14094963326725135104L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119503</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">15009583421736857786</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">731651340951240077L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119502</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">4009903793667223913</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">3094123341542270120L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119501</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">6662286534585512448</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">16379340065696424247L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119500</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">9617174331508404132</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">11827477847453495423L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119499</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">6464631027363166516</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">18061915355115105944L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119498</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">7743790415165329612</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">3678934477280810090L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119497</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">4870754126208947154</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">8262743782745200263L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119496</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">8570286596555900493</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">9148070966646275696L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119495</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">8140400432419031734</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">4587382320632751958L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data --><tr ng-repeat="block in $data" ng-class="{'voted': address == block.generatorId}" class="ng-scope">
+                    <td data-title="tableBlocks.cols.height" sortable="'height'" ng-click="blockInfo(block)" class="pointer" data-title-text="Height"><a href="#" class="ng-binding">119494</a></td>
+                    <td data-title="tableBlocks.cols.blockId" ng-click="blockInfo(block)" class="pointer ng-hide" ng-show="showAllColumns" data-title-text="Block ID"><a href="#" class="ng-binding">1084167804996520159</a></td>
+                    <td data-title="tableBlocks.cols.generator" ng-show="showAllColumns" data-title-text="Generator" class="ng-hide"><a href="#" ng-click="userInfo(block.generatorId)" class="ng-binding">11815269903526138966L</a></td>
+                    <td data-title="tableBlocks.cols.timestamp" sortable="'timestamp'" data-title-text="Time"><span ng-show="block.timestamp &gt; 0" class="ng-binding">3 hours ago</span> <span ng-show="block.timestamp == 0" class="ng-hide">-</span></td>
+                    <td data-title="tableBlocks.cols.numberOfTransactions" ng-click="showBlock(block)" class="pointer" data-title-text="Transactions"><a href="#" class="ng-binding">0</a></td>
+                    <td data-title="tableBlocks.cols.totalAmount" sortable="'totalAmount'" data-title-text="Amount" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.totalFee" sortable="'totalFee'" data-title-text="Fee" class="ng-binding">0</td>
+                    <td data-title="tableBlocks.cols.reward" sortable="'reward'" data-title-text="Reward" class="ng-binding">5</td>
+                    <td data-title="''" class="width-80" data-title-text=""></td>
+                </tr><!-- end ngRepeat: block in $data -->
+                <tr ng-show="!loading &amp;&amp; (!$data || $data.length == 0) &amp;&amp; !searchBlocks.searchForBlock" class="ng-hide">
+                    <td colspan="8">
+                        <translate><span class="ng-scope">No blockchain</span></translate>
+                    </td>
+                </tr>
+                <tr ng-show="loading" class="ng-hide" style="">
+                    <td class="blue white-text" colspan="8">
+                        <translate><span class="ng-scope">Loading...</span></translate>
+                    </td>
+                </tr>
+            </tbody></table><div ng-table-pagination="params" template-url="templates.pagination" class="ng-scope ng-isolate-scope"><!-- ngInclude: templateUrl --><div ng-include="templateUrl" class="ng-scope">
+<ul class="pagination ng-table-pagination ng-scope">
+    <!-- ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope disabled" style="">
+        <!-- ngSwitchWhen: prev --><a ng-switch-when="prev" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <i class="mdi-hardware-keyboard-arrow-left"></i>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope active" style="">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first --><a ng-switch-when="first" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">1</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: page -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">2</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">3</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">4</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">5</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">6</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page --><a ng-switch-when="page" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">7</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope disabled">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page -->
+        <!-- ngSwitchWhen: more --><a ng-switch-when="more" ng-click="params.page(page.number)" href="" class="ng-scope">…</a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last --><a ng-switch-when="last" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <span ng-bind="page.number" class="ng-binding">4781</span>
+        </a><!-- end ngSwitchWhen: -->
+        <!-- ngSwitchWhen: next -->
+    </li><!-- end ngRepeat: page in pages --><li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type" class="ng-scope">
+        <!-- ngSwitchWhen: prev -->
+        <!-- ngSwitchWhen: first -->
+        <!-- ngSwitchWhen: page -->
+        <!-- ngSwitchWhen: more -->
+        <!-- ngSwitchWhen: last -->
+        <!-- ngSwitchWhen: next --><a ng-switch-when="next" ng-click="params.page(page.number)" href="" class="ng-scope">
+            <i class="mdi-hardware-keyboard-arrow-right"></i>
+        </a><!-- end ngSwitchWhen: -->
+    </li><!-- end ngRepeat: page in pages -->
+</ul>
+</div></div>
+            <!-- ngIf: !countForgingBlocks && searchBlocks.searchForBlock -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- /#page-content-wrapper -->
+<script type="text/ng-template" id="custom/pager">
+&lt;ul class="pagination ng-table-pagination"&gt;
+    &lt;li ng-class="{'disabled': !page.active &amp;&amp; !page.current, 'active': page.current}" ng-repeat="page in pages" ng-switch="page.type"&gt;
+        &lt;a ng-switch-when="prev" ng-click="params.page(page.number)" href=""&gt;
+            &lt;i class="mdi-hardware-keyboard-arrow-left"&gt;&lt;/i&gt;
+        &lt;/a&gt;
+        &lt;a ng-switch-when="first" ng-click="params.page(page.number)" href=""&gt;
+            &lt;span ng-bind="page.number"&gt;&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;a ng-switch-when="page" ng-click="params.page(page.number)" href=""&gt;
+            &lt;span ng-bind="page.number"&gt;&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;a ng-switch-when="more" ng-click="params.page(page.number)" href=""&gt;&amp;#8230;&lt;/a&gt;
+        &lt;a ng-switch-when="last" ng-click="params.page(page.number)" href=""&gt;
+            &lt;span ng-bind="page.number"&gt;&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;a ng-switch-when="next" ng-click="params.page(page.number)" href=""&gt;
+            &lt;i class="mdi-hardware-keyboard-arrow-right"&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</script>
+</div></div></div>
+    
+
+<div class="hiddendiv common"></div></body></html>

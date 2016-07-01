@@ -1,0 +1,87 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" ng-app="liskApp" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+        <base href="/" />
+        <title>Lisk</title>
+
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="/images/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+        <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+
+        <meta charset="UTF-8" />
+        <meta name="application-name" content="Lisk - Blockchain Application Platform" />
+        <meta name="msapplication-TileColor" content="#F3F3E1" />
+        <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
+        <meta name="msapplication-square70x70logo" content="/images/mstile-70x70.png" />
+        <meta name="msapplication-square150x150logo" content="/images/mstile-150x150.png" />
+        <meta name="msapplication-wide310x150logo" content="/images/mstile-310x150.png" />
+        <meta name="msapplication-square310x310logo" content="/images/mstile-310x310.png" />
+
+        <link rel="stylesheet" href="/static/css/app.css" />
+
+        <script src="/static/js/vendor_app.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="application/javascript">
+            var socket = io.connect();
+            socket.on('blocks/change', function (err, data) {
+
+            });
+        </script>
+    </head>
+    <body>
+        <!-- uiView:  --><div ui-view="" ng-class="lang.id" class="container-app ng-scope en" style=""><div id="pass" class="ng-scope">
+    <div class="pass-banner"></div>
+    <div class="pass-bottom">
+        <div class="pass-window">
+            <div class="pass-window-icon">
+            </div>
+            <form class="clearfix pass-window-form ng-valid ng-dirty ng-valid-parse" _lpchecked="1" ng-submit="login(pass, rememberPassphrase)" style="">
+              <div class="input-field">
+                  <input id="password" type="password" ng-model="pass" ng-trim="false" autofocus="" class="ng-valid ng-not-empty-add ng-pristine-remove ng-dirty-add ng-valid-parse-add ng-animate ng-empty-remove ng-not-empty ng-dirty ng-valid-parse ng-valid-parse-add-active ng-dirty-add-active ng-pristine-remove-active ng-not-empty-add-active ng-empty-remove-active ng-touched-add ng-untouched-remove ng-touched ng-touched-add-active ng-untouched-remove-active" data-ng-animate="2" />
+                  <label for="password" class="active"><translate><span class="ng-scope">Your Passphrase</span></translate></label>
+                  <span class="pass-error ng-binding ng-hide" ng-show="errorMessage"></span>
+              </div>
+              <div class="input-group">
+                  <div class="switch blue-switch margin">
+                      <label>
+                          <input type="checkbox" ng-model="rememberPassphrase" class="ng-pristine ng-untouched ng-valid ng-not-empty" />
+                          <span class="lever"></span>
+                          <translate><span class="ng-scope">Remember during this session</span></translate>
+                      </label>
+                  </div>
+              </div>
+              <div class="input-field">
+                  <!-- ngInclude: 'partials/shared/language-selector.html' --><div ng-include="'partials/shared/language-selector.html'" class="ng-scope"><div class="row language-selector ng-scope">
+  <div class="col s2 flag">
+    <img ng-src="/images/flags/en.png" src="/images/flags/en.png" />
+  </div>
+  <div class="col s10">
+    <select class="browser-default ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="selectedLang" ng-change="changeLang(selectedLang)">
+      <!-- ngRepeat: option in languages --><option ng-repeat="option in languages" value="en" ng-selected="option.id==selectedLang" class="ng-binding ng-scope" selected="selected">English</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="de" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Deutsch</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="ru" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Pусский</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="zh" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">中文</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="es" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Español</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="fr" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Français</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="hu" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Magyar</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="nl" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Nederlands</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="ro" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Română</option><!-- end ngRepeat: option in languages --><option ng-repeat="option in languages" value="uk_UA" ng-selected="option.id==selectedLang" class="ng-binding ng-scope">Yкраїнський</option><!-- end ngRepeat: option in languages -->
+    </select>
+  </div>
+</div>
+</div>
+              </div>
+              <div class="buttons-panel pull-right">
+                  <a class="btn btn-white waves-effect btn-marging" ng-click="newUser()"><translate><span class="ng-scope">NEW ACCOUNT</span></translate></a>
+                  <a class="btn btn-blue waves-effect waves-light" ng-click="login(pass, rememberPassphrase)" ng-disabled="!pass"><translate><span class="ng-scope">SIGN IN</span></translate><div class="waves-ripple " data-hold="1467408751122" data-scale="scale(8.2)" data-x="40.40625" data-y="17.625" style="top:17.625px;left:40.40625px;-webkit-transform:scale(8.2);-moz-transform:scale(8.2);-ms-transform:scale(8.2);-o-transform:scale(8.2);transform:scale(8.2);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div></a>
+              </div>
+            </form>
+        </div>
+
+        <div class="pass-footer clearfix">Lisk © 2016. All Rights Reserved.</div>
+    </div>
+</div>
+</div>
+    
+
+<div class="hiddendiv common"></div></body></html>
