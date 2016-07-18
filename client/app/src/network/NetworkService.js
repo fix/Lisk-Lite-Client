@@ -18,7 +18,6 @@
 
     connection.notify(peer);
 
-
     function getPrice(){
       $http.get("http://coinmarketcap.northpole.ro/api/v5/LSK.json",{timeout: 2000}).success(function(data){
         peer.market=data;

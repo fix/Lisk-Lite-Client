@@ -97,6 +97,29 @@
       return deferred.promise;
     };
 
+    function fetchAccountAndForget(address){
+      var deferred = $q.defer();
+      networkService.getFromPeer('/api/accounts?address='+address).then(
+        function (resp) {
+          if(resp.success){
+            var account=resp.account;
+            account.cold=!account.publicKey;
+            deferred.resolve(account);
+          }
+          else{
+            account={
+              address:address,
+              balance:0,
+              secondSignature:false,
+              cold:true
+            };
+            deferred.resolve(account);
+          }
+        }
+      );
+      return deferred.promise;
+    };
+
     function getAccount(address){
       var stringaccount=window.localStorage.getItem(address);
       if(stringaccount){
@@ -321,6 +344,9 @@
         if(!accounts){
           return [];
         }
+        accounts=accounts.filter(function(address){
+          return window.localStorage.getItem("username-"+address)!=null;
+        });
         return accounts.map(function(address){
           var account=JSON.parse(window.localStorage.getItem(address));
           if(account){
@@ -353,6 +379,8 @@
       deleteAccount: deleteAccount,
 
       fetchAccount: fetchAccount,
+
+      fetchAccountAndForget: fetchAccountAndForget,
 
       getTransactions: getTransactions,
 

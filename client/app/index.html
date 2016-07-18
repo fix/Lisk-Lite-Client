@@ -265,8 +265,8 @@
                         <td md-cell>{{it.label}}</td>
                         <td ng-if="it.total>=0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td ng-if="it.total<0" md-cell><md-button md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
-                        <td md-cell>{{it.senderId | accountlabel}}</td>
-                        <td md-cell>{{it.recipientId | accountlabel}}</td>
+                        <td md-cell><a href="" ng-click="ul.gotoAddress(it.senderId)">{{it.senderId | accountlabel}}</a></td>
+                        <td md-cell><a href="" ng-click="ul.gotoAddress(it.recipientId)">{{it.recipientId | accountlabel}}</a></td>
                       </tr>
                     </tbody>
                   </table>
@@ -309,7 +309,7 @@
                 <md-card flex="50">
                   <md-toolbar>
                     <h2 class="md-toolbar-tools">
-                      <span>Deposit LSK - {{(1/ul.buycoin.rate).toFixed(5)}} {{ul.selectedCoin}}</span>
+                      <span>Deposit LSK - {{(1/ul.buycoin.rate).toFixed(5)}} {{ul.selectedCoin.split("_")[1]}}</span>
                     </h2>
                   </md-toolbar>
                   <md-list ng-if="!ul.exchangeBuy">
@@ -367,7 +367,7 @@
                 <md-card flex="50">
                   <md-toolbar>
                     <h2 class="md-toolbar-tools">
-                      <span>Withdraw LSK - {{ul.sellcoin.rate.toFixed(5)}} {{ul.selectedCoin}} </span>
+                      <span>Withdraw LSK - {{ul.sellcoin.rate.toFixed(5)}} {{ul.selectedCoin.split("_")[1]}} </span>
                     </h2>
                   </md-toolbar>
                     <md-card-title ng-if="!ul.selected.virtual">Please login with your account before using this feature</md-card-title>

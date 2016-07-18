@@ -16,8 +16,6 @@
            };
          }
        ]);
-
-  const {app} = require('electron').remote;
   /**
    * Main Controller for the Angular Material Starter App
    * @param $scope
@@ -32,6 +30,7 @@
     self.selected     = null;
     self.accounts        = [ ];
     self.selectAccount   = selectAccount;
+    self.gotoAddress = gotoAddress;
     self.selectedVotes = [];
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
@@ -314,7 +313,7 @@
           .ok('Quit')
           .cancel('Cancel');
       $mdDialog.show(confirm).then(function() {
-        app.quit();
+        require('electron').remote.quit();
       });
     };
 
@@ -396,6 +395,62 @@
         });
       }
     };
+
+    function gotoAddress(address){
+      var currentaddress=address;
+      accountService.fetchAccountAndForget(currentaddress).then(function(a){
+        self.selected=a;
+        if(self.selected.delegates){
+          self.selectedVotes = self.selected.delegates.slice(0);
+        }
+        else self.selectedVotes=[];
+        accountService
+          .refreshAccount(self.selected)
+          .then(function(account){
+            if(self.selected.address==currentaddress){
+              self.selected.balance = account.balance;
+
+              if(!self.selected.virtual) self.selected.virtual = account.virtual;
+            }
+          });
+        accountService
+          .getTransactions(currentaddress)
+          .then(function(transactions){
+            if(self.selected.address==currentaddress){
+              if(!self.selected.transactions){
+                self.selected.transactions = transactions;
+              }
+              else{
+                transactions=transactions.sort(function(a,b){
+                  return b.timestamp-a.timestamp;
+                });
+                var temp=self.selected.transactions.sort(function(a,b){
+                  return b.timestamp-a.timestamp;
+                });
+                if(temp.length==0 || temp[0].id!=transactions[0].id){
+                  self.selected.transactions = transactions;
+                }
+              }
+            }
+          });
+        accountService
+          .getVotedDelegates(self.selected.address)
+          .then(function(delegates){
+            if(self.selected.address==currentaddress){
+              self.selected.delegates=delegates;
+              self.selectedVotes = delegates.slice(0);
+            }
+          });
+        accountService
+          .getDelegate(self.selected.publicKey)
+          .then(function(delegate){
+            if(self.selected.address==currentaddress){
+              self.selected.delegate = delegate;
+            }
+          });
+      });
+
+    }
 
     /**
      * Select the current avatars
