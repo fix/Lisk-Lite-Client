@@ -236,7 +236,7 @@
 
     function createTransaction(type,config){
       var deferred = $q.defer();
-      if(type==0){
+      if(type==0){ //send lisk
         var isAddress = /^[0-9]+[L|l]$/g;
         if(!isAddress.test(config.toAddress)){
           deferred.reject("The destination address "+config.toAddress+" is erroneous");
@@ -265,7 +265,68 @@
         transaction.senderId=config.fromAddress;
         deferred.resolve(transaction);
       }
+
+      else if(type==3){ //vote
+        var account=getAccount(config.fromAddress);
+        if(account.balance<100000000){
+          deferred.reject("Not enough LSK on your account "+config.fromAddress+", you need at least 1 LSK to vote");
+          return deferred.promise;
+        }
+        try{
+          var transaction=lisk.vote.createVote(config.masterpassphrase, config.publicKeys, config.secondpassphrase);
+        }
+        catch(e){
+          deferred.reject(e);
+          return deferred.promise;
+        }
+        if(lisk.crypto.getAddress(transaction.senderPublicKey)!=config.fromAddress){
+          deferred.reject("Passphrase is not corresponding to account "+config.fromAddress);
+          return deferred.promise;
+        }
+        transaction.senderId=config.fromAddress;
+        deferred.resolve(transaction);
+      }
       return deferred.promise;
+    };
+
+    // Given a final list of delegates, create a vote assets list to be sent
+    // return null if could not make it
+    function createDiffVote(address, delegates){
+      var deferred = $q.defer();
+      var assets = [];
+      var votedDelegates = JSON.parse(window.localStorage.getItem("voted-"+address)) | [];
+      if(delegates.length>101){
+        return null;
+      }
+      var difflist=[];
+      var notRemovedDelegates=[];
+      for(var i in delegates){
+        var delegate = delegates[i];
+        if(votedDelegates.indexOf(delegate) == -1){
+          difflist.push("+"+delegate);
+        }
+        else {
+          notRemovedDelegates.push(delegate);
+        }
+        if(difflist.length == 33){
+          assets.push(difflist.join(","));
+          difflist = [];
+        }
+      }
+      for(var i in votedDelegates){
+        var delegate = votedDelegates[i];
+        if(notRemovedDelegates.indexOf(delegate) == -1){
+          difflist.push("-"+delegate);
+        }
+        if(difflist.length == 33){
+          assets.push(difflist.join(","));
+          difflist = [];
+        }
+      }
+      if(difflist.length > 0){
+        assets.push(difflist.join(","));
+      }
+      return assets;
     };
 
     function createVirtual(passphrase){
@@ -278,7 +339,7 @@
         deferred.resolve(account.virtual);
       }
       else{
-        deferred.reject("No account "+address+" registered, please add it first");
+        deferred.reject("Passphrase does not match your address");
       }
 
       return deferred.promise;
@@ -385,6 +446,8 @@
       getTransactions: getTransactions,
 
       createTransaction: createTransaction,
+
+      createDiffVote: createDiffVote,
 
       getVotedDelegates: getVotedDelegates,
 

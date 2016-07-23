@@ -35,6 +35,7 @@
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
     self.sendLisk  = sendLisk;
+    self.showAccountMenu  = showAccountMenu;
     self.currency = JSON.parse(window.localStorage.getItem("currency")) || {name:"btc",symbol:"Ƀ"};
     self.marketinfo= {};
     self.exchangeHistory=changerService.getHistory();
@@ -376,21 +377,27 @@
       }
       else{
         var confirm = $mdDialog.prompt()
-            .title('Enable Virtual Folders')
-            .textContent('Please enter your passphrase to enable virtual folders.')
+            .title('Login')
+            .textContent('Please enter this account passphrase to login.')
             .placeholder('passphrase')
             .ariaLabel('Passphrase')
-            .ok('Enable')
+            .ok('Login')
             .cancel('Cancel');
         $mdDialog.show(confirm).then(function(passphrase) {
           accountService.createVirtual(passphrase).then(function(virtual){
             account.virtual=virtual;
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Virtual folders enabled!')
+                .textContent('Succesfully Logged In!')
                 .hideDelay(3000)
             );
             self.createFolder(account);
+          }, function(err) {
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error when trying to login: '+err)
+                .hideDelay(3000)
+            );
           });
         });
       }
@@ -547,10 +554,65 @@
 
     }
 
+    function sendLisk(selectAccount){
+      var data={fromAddress: selectAccount.address, secondSignature:selectAccount.secondSignature};
+
+      function next() {
+        $mdDialog.hide();
+        accountService.createTransaction(0,
+          {
+            fromAddress: $scope.send.data.fromAddress,
+            toAddress: $scope.send.data.toAddress,
+            amount: parseInt($scope.send.data.amount*100000000),
+            masterpassphrase: $scope.send.data.passphrase,
+            secondpassphrase: $scope.send.data.secondpassphrase
+          }
+        ).then(
+          function(transaction){
+            validateTransaction(transaction);
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
+        );
+      };
+
+      function querySearch(text){
+        text=text.toLowerCase();
+        var filter=self.accounts.filter(function(account){
+          return (account.address.toLowerCase().indexOf(text)>-1) || (account.username && (account.username.toLowerCase().indexOf(text)>-1));
+        });
+        return filter;
+      }
+
+      function cancel() {
+        $mdDialog.hide();
+      };
+
+      $scope.send = {
+        data: data,
+        cancel: cancel,
+        next: next,
+        querySearch: querySearch
+      };
+
+      $mdDialog.show({
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/sendLisk.html',
+        clickOutsideToClose: true,
+        preserveScope: true,
+        scope: $scope
+      });
+    };
+
     /**
      * Show the Contact view in the bottom sheet
      */
-    function sendLisk(selectedAccount) {
+    function showAccountMenu(selectedAccount) {
 
       var account = selectedAccount;
 
@@ -631,7 +693,7 @@
           accountService.createTransaction(0,
             {
               fromAddress: $scope.send.data.fromAddress,
-              toAddress: $scope.send.data.toAccount.address,
+              toAddress: $scope.send.data.toAddress,
               amount: parseInt($scope.send.data.amount*100000000),
               masterpassphrase: $scope.send.data.passphrase,
               secondpassphrase: $scope.send.data.secondpassphrase

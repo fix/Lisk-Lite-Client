@@ -82,16 +82,15 @@ md-list-item > button {
   padding-top: 5px;
 }
 
-#content .md-button.share {
+#content div.share {
   background-color: transparent;
   border: none;
-  width: 48px;
-  height: 48px;
   margin: 8px auto 16px 0;
   position: absolute;
   top: 10px;
-  right: 25px;
+  right: 45px;
 }
+
 
 #content md-icon.avatar {
   margin-top: 10px;
