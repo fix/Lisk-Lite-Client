@@ -42,6 +42,7 @@ function createWindow () {
   ];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

@@ -285,7 +285,7 @@
      */
     function toggleAccountsList() {
       if($mdMedia('md')||$mdMedia('sm')) $mdSidenav('left').toggle();
-    }
+    };
 
     self.myAccounts = function(){
       return self.accounts.filter(function(account){
@@ -293,6 +293,12 @@
       }).sort(function(a,b){
         return b.balance-a.balance;
       });
+    };
+
+    self.myAccountsBalance = function(){
+      return (self.myAccounts().reduce(function(memo,acc){
+        return memo+parseInt(acc.balance);
+      },0)/100000000).toFixed(2);
     }
 
     self.otherAccounts = function(){

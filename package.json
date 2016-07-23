@@ -1,12 +1,11 @@
 {
   "name": "LiskClient",
-  "version": "1.0.0beta3",
+  "version": "1.0.0",
   "productName":"LiskClient",
   "description": "Lisk Desktop Lite Client",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "postinstall": "install-app-deps",
     "pack": "build --target dir",
     "dist:win": "build --win",
     "dist:osx": "build --osx",
@@ -34,7 +33,7 @@
     "electron-prebuilt": "^1.2.0"
   },
   "build": {
-    "app-bundle-id": "com.liskwallet.liteclient",
+    "appId": "com.liskwallet.liteclient",
     "app-category-type": "finance",
     "win": {
       "iconUrl": "https://lisk.io/i/mediakit/icon_1.png"
