@@ -85,7 +85,7 @@
                      </span>
                    </md-list-item>
                    <md-list-item>
-                     <b>Capitalisation</b> <span class="md-secondary">{{ul.connectedPeer.market.marketCap[ul.currency.name] | number:0}}</span>
+                     <b>Market Cap.</b> <span class="md-secondary">{{ul.connectedPeer.market.marketCap[ul.currency.name] | number:0}}</span>
                    </md-list-item>
                  </md-list>
              </md-menu-content>
@@ -100,7 +100,7 @@
            <md-content style="min-width:50%; opacity:0.8; border-radius:10px;" md-whiteframe="3">
              <md-toolbar layout="row">
                <div class="md-toolbar-tools">
-                 <h2>My Accounts</h2>
+                 <h2>My Accounts Ⱡ{{ul.myAccountsBalance()}}</h2>
                </div>
                <md-button class="share" md-no-ink ng-click="ul.selected=ul.accounts[0]" aria-label="Switch of dashboard">
                  <md-icon md-font-library="material-icons">close</md-icon>
@@ -143,7 +143,7 @@
                    </span>
                  </md-list-item>
                  <md-list-item>
-                   <b>Capitalisation</b> <span class="md-secondary">{{ul.connectedPeer.market.marketCap[ul.currency.name] | number:0}}</span>
+                   <b>Market Cap.</b> <span class="md-secondary">{{ul.connectedPeer.market.marketCap[ul.currency.name] | number:0}}</span>
                  </md-list-item>
                </md-list>
              </md-content>
@@ -165,7 +165,7 @@
            <iframe src="clock.html" style="border:0;width:100%;opacity:0.8;left:50px;right:50px;"></iframe>
 
            <div class="footer">
-             Hand crafted with ❤ by <a href="#" onclick='require("electron").shell.openExternal("https://fix.github.io/Lisk-Lite-Client")'>fixcrypt</a>
+             <a href="#" onclick='require("electron").shell.openExternal("http://desktop.lisk-wallet.com/sponsors.html")'>Sponsors Page</a> - Hand crafted with ❤ by <a href="#" onclick='require("electron").shell.openExternal("https://fix.github.io/Lisk-Lite-Client")'>fixcrypt</a>
            </div>
       </div>
 
@@ -551,7 +551,7 @@
                     </md-card-title-media>
                     <md-card-title-text>
                       <span>
-                        If you own this account, you can enable virtual folders, acting as simple subaccounts to better manage your money, without needing to send a real transaction and pay a fee. <br>
+                        If you own this account, you can enable virtual folders. Virtual Folders are simple subaccounts to better organise your money, without needing to send a real transaction and pay a fee. <br>
                         Moreover, this account will move under the "My Accounts" list.
                       </span>
                       <md-button ng-click="ul.createFolder(ul.selected)">Enable Virtual Folders</md-button>
@@ -645,6 +645,21 @@
                       .accentPalette('red');
 
               });
+
+          const {remote} = require('electron');
+          const {Menu, MenuItem} = remote;
+
+          const menu = new Menu();
+          menu.append(new MenuItem({label: 'Select All', accelerator: "CmdOrCtrl+A", selector: 'selectAll:' }));
+          menu.append(new MenuItem({label: 'Copy', accelerator: "CmdOrCtrl+C", selector: "copy:" }));
+          menu.append(new MenuItem({label: 'Paste', accelerator: "CmdOrCtrl+V", selector: "paste:"}));
+
+
+
+          window.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            menu.popup(remote.getCurrentWindow());
+          }, false);
 
     </script>
 

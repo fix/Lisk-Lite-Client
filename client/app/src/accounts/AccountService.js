@@ -347,6 +347,7 @@
 
     function setToFolder(address, folder, amount){
       var virtual=getVirtual(address);
+      console.log(virtual);
       var f=virtual[folder];
       if(f && amount>=0){
         f.amount=amount;
