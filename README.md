@@ -1,7 +1,7 @@
 # Multi Platform Lisk Lite Client
 
 ## Sponsors
-Thanks for the sponsors that contribute to the development of this client. Be sure to vote their delegates to further develop it. [Visit the sponsors page](http://lisk-wallet.com/sponsors.html)
+Thanks for the sponsors that contribute to the development of this client. Be sure to vote their delegates to further develop it. [Visit the sponsors page](http://desktop.lisk-wallet.com/sponsors.html)
 
 ## Download
 Install the version 1.0.0 Beta 3
@@ -31,7 +31,7 @@ Second signature supported. Multisignature accounts not yet supported.
 
 ## Roadmap
 ### 1.1.0
-* internationalisation (Funded by [the sponsors](http://lisk-wallet.com/sponsors.html))
+* internationalisation (Funded by [the sponsors](http://desktop.lisk-wallet.com/sponsors.html))
 
 ### No version defined yet
 * charge your visa card directly from your account
