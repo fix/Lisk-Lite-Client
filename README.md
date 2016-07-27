@@ -1,9 +1,12 @@
 # Multi Platform Lisk Lite Client
 
-## Download
-Install the version 1.0.0 Beta 2
+## Sponsors
+Thanks for the sponsors that contribute to the development of this client. Be sure to vote their delegates to further develop it. [Visit the sponsors page](http://lisk-wallet.com/sponsors.html)
 
-[Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient.Setup.1.0.0-beta2.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.dmg)
+## Download
+Install the version 1.0.0 Beta 3
+
+[Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient.Setup.1.0.0.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.dmg)
 
 
 This version is fully functionnal and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
@@ -11,7 +14,7 @@ This version is fully functionnal and can be used. See the [changelog](https://g
 ## Features
 * Available on ***Windows***, ***Linux*** (ubuntu/debian) and ***Macosx*** (signed)
 * No wait to sync to the network: launch and use.
-* view any account from its address (transactions, delegate status and votes) 
+* view any account from its address (transactions, delegate status and votes)
 * deposit LSK using altcoins or USD (via changer.com) - no registration needed
 * label any account
 * realtime currency value (updated every 5 min) in UsD, Euro, BTC, HKD, JPY, CNY, AuD, CanD, Pound and Rubble

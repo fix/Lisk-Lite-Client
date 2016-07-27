@@ -14,9 +14,6 @@ function createWindow () {
   let {width,height} = electron.screen.getPrimaryDisplay().workAreaSize
   mainWindow = new BrowserWindow({width: width-100, height: height-100, center:true, icon: __dirname + "/client/lisk.png", resizable:true, frame:false})
 
-
-
-
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/client/app/index.html`)
 
@@ -42,7 +39,7 @@ function createWindow () {
   ];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-  
+
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
