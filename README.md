@@ -8,8 +8,9 @@ Install the version 1.0.0 Beta 3
 
 [Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient.Setup.1.0.0.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.dmg)
 
+Also check the ongoing development of mobile client: [Android](https://play.google.com/apps/testing/com.lisk_wallet.wallet)
 
-This version is fully functionnal and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
+This version is fully functional and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
 
 ## Features
 * Available on ***Windows***, ***Linux*** (ubuntu/debian) and ***Macosx*** (signed)
@@ -27,6 +28,17 @@ If you login to your account (with your passphrase)
 * Update your votes.
 
 Second signature supported. Multisignature accounts not yet supported.
+
+## Roadmap
+### 1.1.0
+* internationalisation (Funded by [the sponsors](http://lisk-wallet.com/sponsors.html))
+
+### No version defined yet
+* charge your visa card directly from your account
+* shapeshift integration
+* Secure your passphrases in the app
+* Mobile client (android and iOS) [check the android beta](https://play.google.com/apps/testing/com.lisk_wallet.wallet)
+
 
 ## Authors
 Fixcrypt. To support the development, please vote for delegate **fixcrypt**.
