@@ -320,7 +320,7 @@
           .ok('Quit')
           .cancel('Cancel');
       $mdDialog.show(confirm).then(function() {
-        require('electron').remote.quit();
+        require('electron').remote.app.quit();
       });
     };
 
