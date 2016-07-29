@@ -26,15 +26,21 @@
   function AccountController( accountService, networkService, changerService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $interval, $log, $mdDialog, $scope,$mdMedia) {
     var self = this;
 
+    self.openExternal = function(url){
+      require('electron').shell.openExternal(url);
+    }
+
     self.isNetworkConnected=false;
     self.selected     = null;
     self.accounts        = [ ];
     self.selectAccount   = selectAccount;
     self.gotoAddress = gotoAddress;
-    self.selectedVotes = [];
+    self.getAllDelegates = getAllDelegates;
     self.addAccount   = addAccount;
     self.toggleList   = toggleAccountsList;
     self.sendLisk  = sendLisk;
+    self.vote  = vote;
+    self.addDelegate = addDelegate;
     self.showAccountMenu  = showAccountMenu;
     self.currency = JSON.parse(window.localStorage.getItem("currency")) || {name:"btc",symbol:"Ƀ"};
     self.marketinfo= {};
@@ -397,7 +403,6 @@
                 .textContent('Succesfully Logged In!')
                 .hideDelay(3000)
             );
-            self.createFolder(account);
           }, function(err) {
             $mdToast.show(
               $mdToast.simple()
@@ -414,9 +419,9 @@
       accountService.fetchAccountAndForget(currentaddress).then(function(a){
         self.selected=a;
         if(self.selected.delegates){
-          self.selectedVotes = self.selected.delegates.slice(0);
+          self.selected.selectedVotes = self.selected.delegates.slice(0);
         }
-        else self.selectedVotes=[];
+        else self.selected.selectedVotes=[];
         accountService
           .refreshAccount(self.selected)
           .then(function(account){
@@ -451,7 +456,7 @@
           .then(function(delegates){
             if(self.selected.address==currentaddress){
               self.selected.delegates=delegates;
-              self.selectedVotes = delegates.slice(0);
+              self.selected.selectedVotes = delegates.slice(0);
             }
           });
         accountService
@@ -472,10 +477,12 @@
     function selectAccount (account) {
       var currentaddress=account.address;
       self.selected = accountService.getAccount(currentaddress);
-      if(self.selected.delegates){
-        self.selectedVotes = self.selected.delegates.slice(0);
+      if(!self.selected.selectedVotes){
+        if(self.selected.delegates){
+          self.selected.selectedVotes = self.selected.delegates.slice(0);
+        }
+        else self.selected.selectedVotes=[];
       }
-      else self.selectedVotes=[];
       accountService
         .refreshAccount(self.selected)
         .then(function(account){
@@ -510,7 +517,7 @@
         .then(function(delegates){
           if(self.selected.address==currentaddress){
             self.selected.delegates=delegates;
-            self.selectedVotes = delegates.slice(0);
+            self.selected.selectedVotes = delegates.slice(0);
           }
         });
       accountService
@@ -558,10 +565,159 @@
 
       });
 
-    }
+    };
 
-    function sendLisk(selectAccount){
-      var data={fromAddress: selectAccount.address, secondSignature:selectAccount.secondSignature};
+
+    function getAllDelegates(selectedAccount){
+      function arrayUnique(array) {
+        var a = array.concat();
+        for(var i=0; i<a.length; ++i) {
+          for(var j=i+1; j<a.length; ++j) {
+            if(a[i].username === a[j].username)
+              a.splice(j--, 1);
+          }
+        }
+        return a;
+      }
+      return arrayUnique(selectedAccount.selectedVotes.concat(selectedAccount.delegates))
+    };
+
+    function addDelegate(selectedAccount){
+      var data={fromAddress: selectedAccount.address, delegates:[]};
+      function add() {
+        $mdDialog.hide();
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('This function will be enabled when network is upgraded at 0.3.2')
+            .hideDelay(5000)
+        );
+      };
+
+      function addSponsors() {
+        function indexOfDelegates(array,item){
+          for(var i in array){
+            if(array[i].username==item.username){
+              console.log(array[i]);
+              return i;
+            }
+          }
+          return -1;
+        };
+        $mdDialog.hide();
+        accountService.getSponsors().then(
+          function(sponsors){
+            //check if sponsors are already voted
+            if(self.selected.delegates){
+              newsponsors=[];
+              for(var i = 0 ; i<sponsors.length; i++){
+                console.log(sponsors[i]);
+                if(indexOfDelegates(self.selected.delegates,sponsors[i])<0){
+                  newsponsors.push(sponsors[i]);
+                }
+              }
+              sponsors=newsponsors;
+            }
+
+            for(var i = 0 ; i<sponsors.length; i++){
+              if(self.selected.selectedVotes.length<101 && indexOfDelegates(selectedAccount.selectedVotes,sponsors[i])<0){
+                selectedAccount.selectedVotes.push(sponsors[i]);
+              }
+            }
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
+        );
+      };
+
+
+      function cancel() {
+        $mdDialog.hide();
+      };
+
+      $scope.addDelegateDialog = {
+        data: data,
+        cancel: cancel,
+        add: add,
+        addSponsors: addSponsors
+      };
+
+      $mdDialog.show({
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/addDelegate.html',
+        clickOutsideToClose: true,
+        preserveScope: true,
+        scope: $scope
+      });
+    };
+
+
+    function vote(selectedAccount){
+      var votes=accountService.createDiffVote(selectedAccount.address,selectedAccount.selectedVotes);
+      if(!votes || votes.length==0){
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('No difference from original delegate list')
+            .hideDelay(5000)
+        );
+        return;
+      }
+      votes=votes[0];
+      var data={fromAddress: selectedAccount.address, secondSignature:selectedAccount.secondSignature, votes:votes};
+      console.log(data.votes);
+      function next() {
+        $mdDialog.hide();
+        var publicKeys=$scope.voteDialog.data.votes.map(function(delegate){
+          return delegate.vote+delegate.publicKey;
+        }).join(",");
+        console.log(publicKeys);
+        accountService.createTransaction(3,
+          {
+            fromAddress: $scope.voteDialog.data.fromAddress,
+            publicKeys: publicKeys,
+            masterpassphrase: $scope.voteDialog.data.passphrase,
+            secondpassphrase: $scope.voteDialog.data.secondpassphrase
+          }
+        ).then(
+          function(transaction){
+            validateTransaction(transaction);
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
+        );
+      };
+
+
+      function cancel() {
+        $mdDialog.hide();
+      };
+
+      $scope.voteDialog = {
+        data: data,
+        cancel: cancel,
+        next: next
+      };
+
+      $mdDialog.show({
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/vote.html',
+        clickOutsideToClose: true,
+        preserveScope: true,
+        scope: $scope
+      });
+    };
+
+    function sendLisk(selectedAccount){
+      var data={fromAddress: selectedAccount.address, secondSignature:selectedAccount.secondSignature};
 
       function next() {
         $mdDialog.hide();
@@ -746,47 +902,48 @@
         });
       };
 
-      function validateTransaction(transaction){
-
-        function send() {
-          $mdDialog.hide();
-          networkService.postTransaction(transaction).then(
-            function(transaction){
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Transaction '+ transaction.id +' sent with success!')
-                  .hideDelay(5000)
-              );
-            },
-            function(error){
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Error: '+ error)
-                  .hideDelay(5000)
-              );
-            }
-          );
-        };
-
-        function cancel() {
-          $mdDialog.hide();
-        };
-
-        $scope.validate={
-          send:send,
-          cancel:cancel,
-          transaction:transaction
-        };
-
-        $mdDialog.show({
-          scope              : $scope,
-          preserveScope      : true,
-          parent             : angular.element(document.getElementById('app')),
-          templateUrl        : './src/accounts/view/showTransaction.html',
-          clickOutsideToClose: true
-        });
-      };
     }
+
+    function validateTransaction(transaction){
+
+      function send() {
+        $mdDialog.hide();
+        networkService.postTransaction(transaction).then(
+          function(transaction){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Transaction '+ transaction.id +' sent with success!')
+                .hideDelay(5000)
+            );
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
+        );
+      };
+
+      function cancel() {
+        $mdDialog.hide();
+      };
+
+      $scope.validate={
+        send:send,
+        cancel:cancel,
+        transaction:transaction
+      };
+
+      $mdDialog.show({
+        scope              : $scope,
+        preserveScope      : true,
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/showTransaction.html',
+        clickOutsideToClose: true
+      });
+    };
 
   }
 

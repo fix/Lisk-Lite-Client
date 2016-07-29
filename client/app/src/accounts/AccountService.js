@@ -220,6 +220,26 @@
       return deferred.promise;
     };
 
+    //TODO: NOT working yet, waiting for 0.3.2
+    function searchDelegates(term){
+      var deferred = $q.defer();
+      if(!term){
+        deferred.reject("No search term");
+        return deferred.promise;
+      }
+      $http.get(peer+"/api/delegates/search/?term="+term).then(function (resp) {
+        if(resp.data && resp.data.success && resp.data.delegates){
+          deferred.resolve(resp.data.delegates);
+        }
+        else{
+          deferred.reject("Cannot find delegates from this term: "+term);
+        }
+      }, function(err){
+        deferred.reject("Cannot find delegates on this peer: "+err);
+      });
+      return deferred.promise;
+    };
+
     function getVotedDelegates(address){
       var deferred = $q.defer();
       $http.get(peer+"/api/accounts/delegates/?address="+address).then(function(resp){
@@ -273,7 +293,7 @@
           return deferred.promise;
         }
         try{
-          var transaction=lisk.vote.createVote(config.masterpassphrase, config.publicKeys, config.secondpassphrase);
+          var transaction=lisk.vote.createVote(config.masterpassphrase, config.publicKeys.split(","), config.secondpassphrase);
         }
         catch(e){
           deferred.reject(e);
@@ -291,10 +311,33 @@
 
     // Given a final list of delegates, create a vote assets list to be sent
     // return null if could not make it
-    function createDiffVote(address, delegates){
-      var deferred = $q.defer();
+    function createDiffVote(address, newdelegates){
+
+      function arrayObjectIndexOf(myArray, searchTerm, property) {
+        for(var i = 0, len = myArray.length; i < len; i++) {
+          if (myArray[i][property] === searchTerm) return i;
+        }
+        return -1;
+      }
+
       var assets = [];
-      var votedDelegates = JSON.parse(window.localStorage.getItem("voted-"+address)) | [];
+      var votedDelegates = JSON.parse(window.localStorage.getItem("voted-"+address)) || [];
+      votedDelegates = votedDelegates.map(function(delegate){
+        return {
+          username: delegate.username,
+          address: delegate.address,
+          publicKey: delegate.publicKey
+        };
+      });
+
+      var delegates = newdelegates.map(function(delegate){
+        return {
+          username: delegate.username,
+          address: delegate.address,
+          publicKey: delegate.publicKey
+        };
+      });
+
       if(delegates.length>101){
         return null;
       }
@@ -302,31 +345,60 @@
       var notRemovedDelegates=[];
       for(var i in delegates){
         var delegate = delegates[i];
-        if(votedDelegates.indexOf(delegate) == -1){
-          difflist.push("+"+delegate);
+        if(arrayObjectIndexOf(votedDelegates,delegate.publicKey,"publicKey") == -1){
+          delegate.vote="+"
+          difflist.push(delegate);
         }
         else {
           notRemovedDelegates.push(delegate);
         }
         if(difflist.length == 33){
-          assets.push(difflist.join(","));
+          assets.push(difflist);
           difflist = [];
         }
       }
       for(var i in votedDelegates){
         var delegate = votedDelegates[i];
-        if(notRemovedDelegates.indexOf(delegate) == -1){
-          difflist.push("-"+delegate);
+        if(arrayObjectIndexOf(notRemovedDelegates,delegate.publicKey,"publicKey") == -1){
+          delegate.vote="-"
+          difflist.push(delegate);
         }
         if(difflist.length == 33){
-          assets.push(difflist.join(","));
+          assets.push(difflist);
           difflist = [];
         }
       }
       if(difflist.length > 0){
-        assets.push(difflist.join(","));
+        assets.push(difflist);
       }
+      console.log(assets);
       return assets;
+    };
+
+    function getSponsors(){
+      var deferred = $q.defer();
+      var result=[];
+      $http.get("https://gist.githubusercontent.com/fix/a7b1d797be38b0591e725a24e6735996/raw/sponsors.json").then(function (resp) {
+        var count=0;
+        for(var i in resp.data){
+          $http.get(peer+"/api/delegates/get/?publicKey="+resp.data[i].publicKey).then(function (resp2) {
+            if(resp2.data && resp2.data.success && resp2.data.delegate){
+              result.push(resp2.data.delegate);
+            }
+            count++;
+            if(count==resp.data.length-1){
+              deferred.resolve(result);
+            }
+          },
+          function(error){
+            count++;
+          });
+        }
+      },function(err){
+        console.log(err);
+        deferred.reject("Cannot get sponsors");
+      });
+      return deferred.promise;
     };
 
     function createVirtual(passphrase){
@@ -453,6 +525,8 @@
       getVotedDelegates: getVotedDelegates,
 
       getDelegate: getDelegate,
+
+      getSponsors: getSponsors,
 
       createVirtual: createVirtual,
 

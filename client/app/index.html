@@ -268,8 +268,8 @@
                       <tr md-row md-select="transaction" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.transactions | orderBy: query.order">
                         <td md-cell>{{it.date | date: 'short'}}</td>
                         <td md-cell>{{it.label}}</td>
-                        <td ng-if="it.total>=0" md-cell><md-button md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
-                        <td ng-if="it.total<0" md-cell><md-button md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
+                        <td ng-if="it.total>=0" md-cell><md-button ng-click="ul.openExternal('https://explorer.lisk.io/tx/'+it.id)" md-colors="{'background' : 'green-200' }">+{{(it.total/100000000).toFixed(2)}}</md-button></td>
+                        <td ng-if="it.total<0" md-cell><md-button ng-click="ul.openExternal('https://explorer.lisk.io/tx/'+it.id)" md-colors="{'background' : 'red-200' }">{{(it.total/100000000).toFixed(2)}}</md-button></td>
                         <td md-cell><a href="" ng-click="ul.gotoAddress(it.senderId)">{{it.senderId | accountlabel}}</a></td>
                         <td md-cell><a href="" ng-click="ul.gotoAddress(it.recipientId)">{{it.recipientId | accountlabel}}</a></td>
                       </tr>
@@ -489,7 +489,7 @@
               </md-card>
 
               <md-table-container ng-if="!ul.selected.virtual" flex="100">
-                <table md-table ng-model="ul.selectedVotes">
+                <table md-table ng-model="ul.selected.selectedVotes">
                   <thead md-head md-order="query.order">
                     <tr md-row>
                       <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
@@ -503,7 +503,7 @@
                     <tr md-row ng-repeat="it in ul.selected.delegates | orderBy: query.order">
                       <td md-cell>{{it.rate}}</td>
                       <td md-cell>{{it.username}}</td>
-                      <td md-cell>{{it.address}}</td>
+                      <td md-cell><a href="" ng-click="ul.gotoAddress(it.address)">{{it.address}}</a></td>
                       <td md-cell>{{it.approval}}%</td>
                       <td md-cell>{{it.productivity}}%</td>
                     </tr>
@@ -512,7 +512,10 @@
               </md-table-container>
 
               <md-table-container  ng-if="ul.selected.virtual" flex="100">
-                <table md-table md-row-select multiple ng-model="ul.selectedVotes">
+                <md-button ng-click="ul.vote(ul.selected)" md-colors="{background:'red'}">Vote</md-button>
+                <md-button ng-click="ul.addDelegate(ul.selected)" md-colors="{background:'green'}">Add Delegate</md-button>
+                <a href="#" onclick='require("electron").shell.openExternal("https://explorer.lisk.io/delegateMonitor")'>Open Delegate Monitor</a>
+                <table md-table md-row-select multiple ng-model="ul.selected.selectedVotes">
                   <thead md-head md-order="query.order">
                     <tr md-row>
                       <th md-column md-numeric md-order-by="rate"><span>Rank</span></th>
@@ -523,10 +526,10 @@
                     </tr>
                   </thead>
                   <tbody md-body>
-                    <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.selected.delegates | orderBy: query.order">
+                    <tr md-row md-select="it" md-select-id="id" md-auto-select ng-repeat="it in ul.getAllDelegates(ul.selected) | orderBy: query.order">
                       <td md-cell>{{it.rate}}</td>
                       <td md-cell>{{it.username}}</td>
-                      <td md-cell>{{it.address}}</td>
+                      <td md-cell><a href="" ng-click="ul.gotoAddress(it.address)">{{it.address}}</a></td>
                       <td md-cell>{{it.approval}}%</td>
                       <td md-cell>{{it.productivity}}%</td>
                     </tr>
