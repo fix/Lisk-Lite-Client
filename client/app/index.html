@@ -388,7 +388,8 @@
                       </md-list-item>
                       <md-list-item>
                         <md-input-container>
-                          <input flex="100" ng-model="ul.recipientAddress" type="text"  placeholder="Recepient Address">
+                          <label>Recipient Address ({{ul.selectedCoin.split('_')[1]}})</label>
+                          <input flex="100" ng-model="ul.recipientAddress" type="text">
                         </md-input-container>
                       </md-list-item>
 

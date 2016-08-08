@@ -746,47 +746,48 @@
         });
       };
 
-      function validateTransaction(transaction){
 
-        function send() {
-          $mdDialog.hide();
-          networkService.postTransaction(transaction).then(
-            function(transaction){
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Transaction '+ transaction.id +' sent with success!')
-                  .hideDelay(5000)
-              );
-            },
-            function(error){
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Error: '+ error)
-                  .hideDelay(5000)
-              );
-            }
-          );
-        };
-
-        function cancel() {
-          $mdDialog.hide();
-        };
-
-        $scope.validate={
-          send:send,
-          cancel:cancel,
-          transaction:transaction
-        };
-
-        $mdDialog.show({
-          scope              : $scope,
-          preserveScope      : true,
-          parent             : angular.element(document.getElementById('app')),
-          templateUrl        : './src/accounts/view/showTransaction.html',
-          clickOutsideToClose: true
-        });
-      };
     }
+    function validateTransaction(transaction){
+
+      function send() {
+        $mdDialog.hide();
+        networkService.postTransaction(transaction).then(
+          function(transaction){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Transaction '+ transaction.id +' sent with success!')
+                .hideDelay(5000)
+            );
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
+        );
+      };
+
+      function cancel() {
+        $mdDialog.hide();
+      };
+
+      $scope.validate={
+        send:send,
+        cancel:cancel,
+        transaction:transaction
+      };
+
+      $mdDialog.show({
+        scope              : $scope,
+        preserveScope      : true,
+        parent             : angular.element(document.getElementById('app')),
+        templateUrl        : './src/accounts/view/showTransaction.html',
+        clickOutsideToClose: true
+      });
+    };
 
   }
 
