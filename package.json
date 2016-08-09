@@ -30,8 +30,7 @@
   },
   "homepage": "https://github.com/fix/Lisk-Lite-Client#readme",
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-prebuilt": "^1.2.0"
   },
   "build": {
     "appId": "com.liskwallet.liteclient",
