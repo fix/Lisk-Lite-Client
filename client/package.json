@@ -25,8 +25,7 @@
     "angular-material": "^1.1.0-rc.5",
     "angular-material-data-table": "git://github.com/daniel-nagy/md-data-table.git#master",
     "angular-qrcode": "~6.2.1",
-    "lisk-js": "^0.2.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "lisk-js": "^0.2.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.9"
