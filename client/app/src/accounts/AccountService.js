@@ -220,6 +220,25 @@
       return deferred.promise;
     };
 
+    function getDelegateByUsername(username){
+      var deferred = $q.defer();
+      if(!username){
+        deferred.reject("No Username");
+        return deferred.promise;
+      }
+      $http.get(peer+"/api/delegates/get/?username="+username).then(function (resp) {
+        if(resp.data && resp.data.success && resp.data.delegate){
+          window.localStorage.setItem("delegate-"+resp.data.delegate.address,JSON.stringify(resp.data.delegate));
+          window.localStorage.setItem("username-"+resp.data.delegate.address,resp.data.delegate.username);
+          deferred.resolve(resp.data.delegate);
+        }
+        else{
+          deferred.reject("Cannot find delegate: "+ username);
+        }
+      });
+      return deferred.promise;
+    };
+
     //TODO: NOT working yet, waiting for 0.3.2
     function searchDelegates(term){
       var deferred = $q.defer();
@@ -525,6 +544,8 @@
       getVotedDelegates: getVotedDelegates,
 
       getDelegate: getDelegate,
+
+      getDelegateByUsername: getDelegateByUsername,
 
       getSponsors: getSponsors,
 
