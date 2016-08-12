@@ -67,7 +67,7 @@
 
           <md-menu md-offset="0 60">
             <md-button aria-label="Show market">
-              <md-icon md-colors="{'color' : ul.connectedPeer.market.change1h[ul.currency.name]<0?'red-200':'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_{{ul.connectedPeer.market.change1h[ul.currency.name]<0?"down":"up"}}ward</md-icon>
+              <md-icon md-colors="{'color' : ul.connectedPeer.market.change7h[ul.currency.name]<0?'red-200':'green-200' }" md-font-library="material-icons" ng-click="ul.openMenu($mdOpenMenu, $event)">arrow_{{ul.connectedPeer.market.change7h[ul.currency.name]<0?"down":"up"}}ward</md-icon>
             </md-button>
              <md-menu-content flex layout-padding width="6">
                  <md-list>
@@ -77,11 +77,11 @@
                    <md-list-item>
                      <b>Change 1h/7h/7d</b>
                      <span class="md-secondary">
-                       <span md-colors="{'color' : ul.connectedPeer.market.change1h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change1h[ul.currency.name]}}%</span>
+                       <span md-colors="{'color' : ul.connectedPeer.market.change1h[ul.currency.name]>=0?'green':'red' }">{{ul.connectedPeer.market.change1h[ul.currency.name]}}%</span>
                        /
-                       <span md-colors="{'color' : ul.connectedPeer.market.change7h.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7h[ul.currency.name]}}%</span>
+                       <span md-colors="{'color' : ul.connectedPeer.market.change7h[ul.currency.name]>=0?'green':'red' }">{{ul.connectedPeer.market.change7h[ul.currency.name]}}%</span>
                        /
-                       <span md-colors="{'color' : ul.connectedPeer.market.change7d.usd>=0?'green':'red' }">{{ul.connectedPeer.market.change7d[ul.currency.name]}}%</span>
+                       <span md-colors="{'color' : ul.connectedPeer.market.change7d[ul.currency.name]>=0?'green':'red' }">{{ul.connectedPeer.market.change7d[ul.currency.name]}}%</span>
                      </span>
                    </md-list-item>
                    <md-list-item>

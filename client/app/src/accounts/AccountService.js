@@ -175,7 +175,7 @@
       var deferred = $q.defer();
       var d = new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
       var t = parseInt(d.getTime() / 1000);
-      $http.get(peer+"/api/transactions?orderBy=t_timestamp:desc&recipientId=" +address +"&senderId="+address).then(function (resp) {
+      $http.get(peer+"/api/transactions?orderBy=timestamp:desc&recipientId=" +address +"&senderId="+address).then(function (resp) {
         if(resp.data.success){
           for(var i=0;i<resp.data.transactions.length;i++){
             var transaction = resp.data.transactions[i];
