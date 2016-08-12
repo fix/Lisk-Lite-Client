@@ -571,7 +571,30 @@
                 </span>
               </md-list-item>
               <md-list-item ng-repeat="folder in ul.selected.virtual.getFolders()">
-                <h3 style="text-transform: capitalize;"><md-icon md-font-library="material-icons">folder</md-icon> {{folder}}</h3>
+                <h3 style="text-transform: capitalize;">
+
+
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" ng-click="$mdOpenMenu($event)">
+        <md-icon>folder</md-icon>
+        {{folder}}
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="ul.removeVirtuaFolder(folder)">
+            Remove
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="ul.renameVirtuaFolder(folder)">
+            Rename
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
+                </h3>
                 <md-input-container md-no-float class="md-secondary">
                   <input ng-model-options="{ getterSetter: true }" ng-model="ul.selected.virtual.uservalue(folder)" ng-change="ul.saveFolder(ul.selected,folder)" type="number" placeholder="Amount (LSK)">
                   <div class="hint"> {{ul.currency.symbol}} {{(ul.selected.virtual[folder].amount/100000000*ul.connectedPeer.market.price[ul.currency.name]).toFixed(4)}} </div>
