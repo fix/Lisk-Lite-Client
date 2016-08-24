@@ -369,6 +369,10 @@
       accountService.setToFolder(account.address,folder,account.virtual.uservalue(folder)()*100000000);
     }
 
+    self.deleteFolder=function(account, foldername){
+      account.virtual=accountService.deleteFolder(account.address,foldername);
+    }
+
     self.createFolder=function(account){
       if(account.virtual){
         var confirm = $mdDialog.prompt()

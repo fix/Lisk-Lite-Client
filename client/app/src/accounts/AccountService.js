@@ -451,10 +451,10 @@
     };
 
     function deleteFolder(address, folder){
-      var virtual=getVirtual(address);
-      virtual[folder]=null;
+      var virtual=JSON.parse(window.localStorage.getItem("virtual-"+address));
+      delete virtual[folder];
       window.localStorage.setItem("virtual-"+address, JSON.stringify(virtual));
-      return virtual;
+      return getVirtual(address);
     };
 
     function getVirtual(address){
