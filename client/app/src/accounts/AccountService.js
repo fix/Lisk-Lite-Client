@@ -175,7 +175,7 @@
       var deferred = $q.defer();
       var d = new Date(Date.UTC(2016, 4, 24, 17, 0, 0, 0));
       var t = parseInt(d.getTime() / 1000);
-      $http.get(peer+"/api/transactions?orderBy=t_timestamp:desc&recipientId=" +address +"&senderId="+address).then(function (resp) {
+      $http.get(peer+"/api/transactions?orderBy=timestamp:desc&recipientId=" +address +"&senderId="+address).then(function (resp) {
         if(resp.data.success){
           for(var i=0;i<resp.data.transactions.length;i++){
             var transaction = resp.data.transactions[i];
@@ -215,6 +215,25 @@
         }
         else{
           deferred.reject("Cannot state if account is a delegate");
+        }
+      });
+      return deferred.promise;
+    };
+
+    function getDelegateByUsername(username){
+      var deferred = $q.defer();
+      if(!username){
+        deferred.reject("No Username");
+        return deferred.promise;
+      }
+      $http.get(peer+"/api/delegates/get/?username="+username).then(function (resp) {
+        if(resp.data && resp.data.success && resp.data.delegate){
+          window.localStorage.setItem("delegate-"+resp.data.delegate.address,JSON.stringify(resp.data.delegate));
+          window.localStorage.setItem("username-"+resp.data.delegate.address,resp.data.delegate.username);
+          deferred.resolve(resp.data.delegate);
+        }
+        else{
+          deferred.reject("Cannot find delegate: "+ username);
         }
       });
       return deferred.promise;
@@ -432,10 +451,10 @@
     };
 
     function deleteFolder(address, folder){
-      var virtual=getVirtual(address);
-      virtual[folder]=null;
+      var virtual=JSON.parse(window.localStorage.getItem("virtual-"+address));
+      delete virtual[folder];
       window.localStorage.setItem("virtual-"+address, JSON.stringify(virtual));
-      return virtual;
+      return getVirtual(address);
     };
 
     function getVirtual(address){
@@ -525,6 +544,8 @@
       getVotedDelegates: getVotedDelegates,
 
       getDelegate: getDelegate,
+
+      getDelegateByUsername: getDelegateByUsername,
 
       getSponsors: getSponsors,
 

@@ -369,6 +369,10 @@
       accountService.setToFolder(account.address,folder,account.virtual.uservalue(folder)()*100000000);
     }
 
+    self.deleteFolder=function(account, foldername){
+      account.virtual=accountService.deleteFolder(account.address,foldername);
+    }
+
     self.createFolder=function(account){
       if(account.virtual){
         var confirm = $mdDialog.prompt()
@@ -585,11 +589,36 @@
     function addDelegate(selectedAccount){
       var data={fromAddress: selectedAccount.address, delegates:[]};
       function add() {
+        function indexOfDelegates(array,item){
+          for(var i in array){
+            if(array[i].username==item.username){
+              console.log(array[i]);
+              return i;
+            }
+          }
+          return -1;
+        };
         $mdDialog.hide();
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('This function will be enabled when network is upgraded at 0.3.2')
-            .hideDelay(5000)
+        accountService.getDelegateByUsername(data.delegatename).then(
+          function(delegate){
+            if(self.selected.selectedVotes.length<101 && indexOfDelegates(selectedAccount.selectedVotes,delegate)<0){
+              selectedAccount.selectedVotes.push(delegate);
+            }
+            else{
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('List full or delegate already voted.')
+                  .hideDelay(5000)
+              );
+            }
+          },
+          function(error){
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Error: '+ error)
+                .hideDelay(5000)
+            );
+          }
         );
       };
 
