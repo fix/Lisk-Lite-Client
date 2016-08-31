@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: VERSION\n"
+"POT-Creation-Date: 2016-08-25 18:21+0000\n"
+"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
+"Language: es_419\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Account added!"
+msgstr "Cuenta adicionada!"
+
+msgid "Account deleted!"
+msgstr "Cuenta eliminada!"
+
+msgid "Add"
+msgstr "Añadir"
+
+msgid "Add Account"
+msgstr "Añadir Cuenta"
+
+msgid "Add Account from address"
+msgstr "Añadir Cuenta desde dirección"
+
+msgid "Add Delegate"
+msgstr "Añadir Delegado"
+
+msgid "Add Sponsors Delegates"
+msgstr "Añadir Delegados Patrocinadores"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Amount"
+msgstr "Cantidad"
+
+msgid "Amount (Ⱡ)"
+msgstr "Cantidad (Ⱡ)"
+
+msgid "Approval"
+msgstr "Aprobación"
+
+msgid "Are you sure?"
+msgstr "¿Está seguro?"
+
+msgid "Blockchain Application Registration"
+msgstr "Registro de Aplicación Blockchain"
+
+msgid "By using the following forms, you are accepting their"
+msgstr "Al completar el siguiente formulario, usted está aceptando estos"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cannot find delegate:"
+msgstr "No se puede encontrar el delegado:"
+
+msgid "Cannot find delegates from this term:"
+msgstr "No se encuentran delegados a partir de este término:"
+
+msgid "Cannot find delegates on this peer:"
+msgstr "No se encuentran delegados en este par:"
+
+msgid "Cannot get sponsors"
+msgstr "No se puede obtener patrocinadores"
+
+msgid "Cannot get transactions"
+msgstr "No se puede obtener transacciones"
+
+msgid "Cannot get voted delegates"
+msgstr "No se puede obtener delegados votados"
+
+msgid "Cannot state if account is a delegate"
+msgstr "No se puede asegurar que la cuenta es de un delegado"
+
+msgid "Change 1h/7h/7d"
+msgstr "Cambio 1h/7h/7d"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Create Virtual Folder"
+msgstr "Crear Carpeta Virtual"
+
+msgid "Create a new virtual folder"
+msgstr "Crear una nueva carpeta virtual"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Default"
+msgstr "Predeterminado"
+
+msgid "Delay"
+msgstr "Retraso"
+
+msgid "Delegate"
+msgstr "Delegado"
+
+msgid "Delegate Registration"
+msgstr "Registro de Delegado"
+
+msgid "Delegate name"
+msgstr "Nombre de Delegado"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Delete Account"
+msgstr "Eliminar Cuenta"
+
+msgid "Delete permanently this account"
+msgstr "Eliminar esta cuenta de forma permanente"
+
+msgid "Deposit LSK"
+msgstr "Depositar LSK"
+
+msgid "Deposit and Withdraw through our partner"
+msgstr "Deposito y Extracción a través de nuestro socio."
+
+msgid "Destination Address"
+msgstr "Dirección de Destino"
+
+msgid "Enable Virtual Folders"
+msgstr "Habilitar Carpetas Virtuales"
+
+msgid "Enable Votes"
+msgstr "Habilitar Votos"
+
+msgid "Error when trying to login:"
+msgstr "Error al iniciar sesión"
+
+msgid "Error:"
+msgstr "Error:"
+
+msgid "Fee (Ⱡ)"
+msgstr "Tasa (Ⱡ)"
+
+msgid "Folder Name"
+msgstr "Nombre de la carpeta"
+
+msgid "Folders"
+msgstr "Carpetas"
+
+msgid "From"
+msgstr "Desde"
+
+msgid "Hand crafted with ❤ by"
+msgstr "Elaborado artesanalmente con ❤ por"
+
+msgid "Height"
+msgstr "Altura"
+
+msgid "History"
+msgstr "Historia"
+
+msgid "If you own this account, you can enable Voting"
+msgstr "Si es el propietario de esta cuenta , puede habilitar la Votación"
+
+msgid "If you own this account, you can enable virtual folders. Virtual Folders are simple subaccounts to better organise your money, without needing to send a real transaction and pay a fee. <br>\n                        Moreover, this account will move under the \"My Accounts\" list."
+msgstr "Si es el propietario de esta cuenta, puede habilitar carpetas virtuales . Las Carpetas Virtuales son simples sub cuentas que permiten organizar mejor su dinero, sin necesidad de enviar una transacción real y pagar una tasa. <br>\nPor otra parte, esta cuenta se moverá bajo la lista \" Mis cuentas \" ."
+
+msgid "Label"
+msgstr "Etiqueta"
+

@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Update vote from {{voteDialog.data.fromAddress}}</h2>
+        <h2><span translate>Update vote from</span> {{voteDialog.data.fromAddress}}</h2>
       </div>
     </md-toolbar>
     <md-dialog-content>
@@ -11,18 +11,18 @@
           <md-chip-template>{{$chip.vote}}{{$chip.username}}</md-chip-template>
         </md-chips>
         <md-input-container class="md-block">
-          <input ng-model="voteDialog.data.passphrase" type="password" placeholder="Passphrase" ng-required="true">
+          <input ng-model="voteDialog.data.passphrase" type="password" placeholder="{{'Passphrase'|translate}}" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block" ng-if="voteDialog.data.secondSignature">
-          <input ng-model="voteDialog.data.secondpassphrase" type="password" placeholder="Second Passphrase" ng-required="true">
+          <input ng-model="voteDialog.data.secondpassphrase" type="password" placeholder="{{'Second Passphrase'|translate}}" ng-required="true">
         </md-input-container>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button ng-click="voteDialog.next()">
+      <md-button ng-click="voteDialog.next()" translate>
         Next
       </md-button>
-      <md-button ng-click="voteDialog.cancel()" style="margin-right:20px;">
+      <md-button ng-click="voteDialog.cancel()" style="margin-right:20px;" translate>
         Cancel
       </md-button>
     </md-dialog-actions>

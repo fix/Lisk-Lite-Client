@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Send Lisk from {{send.data.fromAddress}}</h2>
+        <h2><span translate>Send Lisk from</span>{{send.data.fromAddress}}</h2>
       </div>
     </md-toolbar>
     <md-dialog-content>
@@ -22,24 +22,24 @@
               </span>
             </md-item-template>
           </md-autocomplete> -->
-          <input ng-model="send.data.toAddress" type="text" placeholder="Destination Address" ng-required="true" md-autofocus>
+          <input ng-model="send.data.toAddress" type="text" placeholder="{{'Destination Address'|translate}}" ng-required="true" md-autofocus>
         </md-input-container>
         <md-input-container md-no-float class="md-block">
-          <input ng-model="send.data.amount" type="number" step="0.00000001" placeholder="Amount (LSK)" ng-required="true">
+          <input ng-model="send.data.amount" type="number" step="0.00000001" placeholder="{{'Amount'|translate}} (LSK)" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block">
-          <input ng-model="send.data.passphrase" type="password" placeholder="Passphrase" ng-required="true">
+          <input ng-model="send.data.passphrase" type="password" placeholder="{{'Passphrase'|translate}}" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block" ng-if="send.data.secondSignature">
-          <input ng-model="send.data.secondpassphrase" type="password" placeholder="Second Passphrase" ng-required="true">
+          <input ng-model="send.data.secondpassphrase" type="password" placeholder="{{'Second Passphrase'|translate}}" ng-required="true">
         </md-input-container>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button ng-click="send.next()">
+      <md-button ng-click="send.next()" translate>
         Next
       </md-button>
-      <md-button ng-click="send.cancel()" style="margin-right:20px;">
+      <md-button ng-click="send.cancel()" style="margin-right:20px;" translate>
         Cancel
       </md-button>
     </md-dialog-actions>

@@ -1,0 +1,301 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: VERSION\n"
+"POT-Creation-Date: 2016-08-25 18:21+0000\n"
+"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+msgid "Account added!"
+msgstr "حساب مضاف!"
+
+msgid "Account deleted!"
+msgstr "تم حذف الحساب!"
+
+msgid "Add"
+msgstr "إضافة"
+
+msgid "Add Account"
+msgstr "إضافة حساب"
+
+msgid "Add Account from address"
+msgstr "إضافة الحساب من عنوان"
+
+msgid "Add Delegate"
+msgstr "إضافة مندوب"
+
+msgid "Add Sponsors Delegates"
+msgstr "إضافة الرعاة المندوبين"
+
+msgid "Address"
+msgstr "عنوان"
+
+msgid "Amount"
+msgstr "مبلغ"
+
+msgid "Amount (Ⱡ)"
+msgstr "مبلغ (Ⱡ)"
+
+msgid "Approval"
+msgstr "موافقة"
+
+msgid "Are you sure?"
+msgstr "هل أنت متأكد؟"
+
+msgid "Blockchain Application Registration"
+msgstr "تسجيل تطبيق سلسلة الكثل (blockchain)"
+
+msgid "By using the following forms, you are accepting their"
+msgstr "باستخدامك النماذج التالية، فإنك تقبل ب"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Cannot find delegate:"
+msgstr "لا يمكن العثور على المندوب:"
+
+msgid "Cannot find delegates from this term:"
+msgstr "لا يمكن العثور على مندوب من هذا المصطلح:"
+
+msgid "Cannot find delegates on this peer:"
+msgstr "لا يمكن العثور على المندوبين في هذا النظير:"
+
+msgid "Cannot get sponsors"
+msgstr "لا يمكن الحصول على الرعاة"
+
+msgid "Cannot get transactions"
+msgstr "لا يمكن الحصول على الصفقات"
+
+msgid "Cannot get voted delegates"
+msgstr "لا يمكن الحصول على المندوبين الذي تم التصويت عليهم"
+
+msgid "Cannot state if account is a delegate"
+msgstr "لا يمكن معرفة هل الحساب مندوب"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Create Virtual Folder"
+msgstr "إنشاء مُجلّد افتراضي"
+
+msgid "Create a new virtual folder"
+msgstr "إنشاء مُجلّد افتراضي جديد"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Delay"
+msgstr "تأخير"
+
+msgid "Delegate"
+msgstr "مندوب"
+
+msgid "Delegate Registration"
+msgstr "تسجيل المندوب"
+
+msgid "Delegate name"
+msgstr "اسم المندوب"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Delete Account"
+msgstr "حذف الحساب"
+
+msgid "Delete permanently this account"
+msgstr "حذف هذا الحساب بشكل دائم"
+
+msgid "Deposit LSK"
+msgstr "إيداع LSK"
+
+msgid "Deposit and Withdraw through our partner"
+msgstr "الإيداع والسحب من خلال شريكنا"
+
+msgid "Destination Address"
+msgstr "عنوان الوجهة"
+
+msgid "Enable Virtual Folders"
+msgstr "تمكين المُجلّد  افتراضي"
+
+msgid "Enable Votes"
+msgstr "تمكين التصويت"
+
+msgid "Error when trying to login:"
+msgstr "خطأ عند محاولة الدخول:"
+
+msgid "Error:"
+msgstr "خطأ:"
+
+msgid "Fee (Ⱡ)"
+msgstr "رسوم (Ⱡ)"
+
+msgid "Folder Name"
+msgstr "اسم المُجلّد"
+
+msgid "Folders"
+msgstr "مُجلّدات"
+
+msgid "From"
+msgstr "من"
+
+msgid "Height"
+msgstr "ارتفاع"
+
+msgid "History"
+msgstr "تاريخ التصفح"
+
+msgid "If you own this account, you can enable Voting"
+msgstr "إذا كنت تملك هذا الحساب، يمكنك تمكين التصويت"
+
+msgid "Label"
+msgstr "علامة"
+
+msgid "Last checked"
+msgstr "تاريخ آخر فحص"
+
+msgid "Lisk Client"
+msgstr "عميل lisk"
+
+msgid "List full or delegate already voted."
+msgstr "القائمة كاملة أو مندوب صُوِّت."
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Market Cap."
+msgstr "رسملة السوق."
+
+msgid "Maximum:"
+msgstr "الحدالأقصى"
+
+msgid "Minimum:"
+msgstr "الحد الأدنى:"
+
+msgid "Multisignature Creation"
+msgstr "إنشاء التوقيع المتعدد"
+
+msgid "My Accounts"
+msgstr "حساباتي"
+
+msgid "Network connected and healthy!"
+msgstr "الشبكة متصلة وصحية!"
+
+msgid "Network disconected!"
+msgstr "انقطاع الاتصال بالشبكة!"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "Next..."
+msgstr "التالي.."
+
+msgid "No difference from original delegate list"
+msgstr "لا فرق عن قائمة المندوب الأصلية"
+
+msgid "No publicKey"
+msgstr "لا يوجد مفتاح عام"
+
+msgid "No search term"
+msgstr "مصطلح البحث غير موجود"
+
+msgid "Open Delegate Monitor"
+msgstr "فتح مراقب المندوب"
+
+msgid "Other Accounts"
+msgstr "حسابات أخرى"
+
+msgid "Passphrase"
+msgstr "عبارة المرور"
+
+msgid "Passphrase does not match your address"
+msgstr "عبارة المرور لا تطابق عنوانك"
+
+msgid "Passphrase is not corresponding to account"
+msgstr "عبارة المرور لا تتطابق مع الحساب"
+
+msgid "Peer"
+msgstr "نظير"
+
+msgid "Please enter a folder name."
+msgstr "الرجاء إدخال اسم المجلد."
+
+msgid "Please enter a new address."
+msgstr "يرجى إدخال عنوان جديد."
+
+msgid "Please enter a short label."
+msgstr "يرجى إدخال تسمية قصيرة."
+
+msgid "Please enter this account passphrase to login."
+msgstr "الرجاء إدخال عبارة مرور هذا الحساب للدخول."
+
+msgid "Please login with your account before using this feature"
+msgstr "الرجاء الدخول بحسابك قبل استخدام هذه الميزه"
+
+msgid "Please report any issue to"
+msgstr "الرجاء الإبلاغ عن أي قضية ل"
+
+msgid "Price"
+msgstr "السعر"
+
+msgid "Productivity"
+msgstr "الإنتاج"
+
+msgid "Quit"
+msgstr "الخروج"
+
+msgid "Quit Lisk Client?"
+msgstr "الخروج من العميل Lisk?"
+
+msgid "Rank"
+msgstr "مرتبة"
+
+msgid "Receive"
+msgstr "تسلم"
+
+msgid "Receive Lisk"
+msgstr "تسلم Lisk"
+
+msgid "Recepient Address"
+msgstr "عنوان المستلم"
+
+msgid "Refresh"
+msgstr "تجديد"
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Rename"
+msgstr "إعادة التسمية"
+
+msgid "Second Passphrase"
+msgstr "عبارة المرور الثانية"
+
+msgid "Second Signature Creation"
+msgstr "إنشاء التوقيع الثاني"
+
+msgid "Second passphrase"
+msgstr "عبارة المرور الثانية"
+
+msgid "Select a coin"
+msgstr "اختر عملة"
+
+msgid "Send"
+msgstr "إرسال"
+
+msgid "Send Lisk"
+msgstr "إرسال Lisk"
+
+msgid "Send Lisk from"
+msgstr "إرسال Lisk من"
+
+msgid "Virtual folder added!"
+msgstr "مجلّد افتراضي مُضاف !"
+
+msgid "folder name"
+msgstr "اسم المجلّد"
+
