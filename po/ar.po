@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-08-25 18:21+0000\n"
-"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"POT-Creation-Date: 2016-09-01 19:48+0000\n"
+"PO-Revision-Date: 2016-09-01 19:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -10,6 +10,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+msgid "Exchange"
+msgstr "تبادل"
+
+msgid "Total Ⱡ"
+msgstr "مجموع  Ⱡ"
+
+msgid "This account has never interacted with the network. This is either:"
+msgstr " هذا الحساب لم يتفاعل أبدا مع الشبكة. هذا هو إما:"
+
+msgid "Transactions"
+msgstr "المعاملات"
+
+msgid "a cold wallet, ie the owner of the passphrase has never used it"
+msgstr "محفظة باردة، صاحب عبارة المرور لم يستاخدمها أبدا "
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost"
+msgstr "محفظة منعدمة، أي لا أحد يعرف عبارة مرور هذه المحفظة. تم فقدان LSK"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
+msgstr "محفظة منعدمة، أي لا أحد يعرف عبارة مرور هذه المحفظة."
+
+msgid "Balance"
+msgstr "الرصيد"
+
+msgid "Details"
+msgstr "تفاصيل"
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "Recipient Address"
+msgstr "عنوان المُستلم"
 
 msgid "Account added!"
 msgstr "حساب مضاف!"
@@ -77,6 +110,9 @@ msgstr "لا يمكن الحصول على المندوبين الذي تم ال�
 msgid "Cannot state if account is a delegate"
 msgstr "لا يمكن معرفة هل الحساب مندوب"
 
+msgid "Change 1h/7h/7d"
+msgstr "التَغَيُّر1h/7h/7d"
+
 msgid "Close"
 msgstr "إغلاق"
 
@@ -88,6 +124,9 @@ msgstr "إنشاء مُجلّد افتراضي جديد"
 
 msgid "Date"
 msgstr "التاريخ"
+
+msgid "Default"
+msgstr "افتراضياً"
 
 msgid "Delay"
 msgstr "تأخير"
@@ -143,6 +182,9 @@ msgstr "مُجلّدات"
 msgid "From"
 msgstr "من"
 
+msgid "Hand crafted with ❤ by"
+msgstr "مُبرمج ب ❤  بواسطة"
+
 msgid "Height"
 msgstr "ارتفاع"
 
@@ -152,8 +194,14 @@ msgstr "تاريخ التصفح"
 msgid "If you own this account, you can enable Voting"
 msgstr "إذا كنت تملك هذا الحساب، يمكنك تمكين التصويت"
 
+msgid "If you own this account, you can enable virtual folders. Virtual Folders are simple subaccounts to better organise your money, without needing to send a real transaction and pay a fee. <br>\n                        Moreover, this account will move under the \"My Accounts\" list."
+msgstr "إذ كنت تملك هذا الحساب، يمكنك إنشاء مُجلّدات افتراضية. المجلدات الافتراضية حسابات فرعية بسيطة لتحسين تنظيم أموالك، دون الحاجة إلى إرسال معاملات حقيقية ودفع رسوم. <BR> وعلاوة على ذلك، فإن هذا الحساب سيوجد تحت قائمة \"حساباتي\"."
+
 msgid "Label"
 msgstr "علامة"
+
+msgid "Label set"
+msgstr "وضع العلامات"
 
 msgid "Last checked"
 msgstr "تاريخ آخر فحص"
@@ -202,6 +250,9 @@ msgstr "لا يوجد مفتاح عام"
 
 msgid "No search term"
 msgstr "مصطلح البحث غير موجود"
+
+msgid "Not enough LSK on your account"
+msgstr "LSK غير كافية على حسابك"
 
 msgid "Open Delegate Monitor"
 msgstr "فتح مراقب المندوب"
@@ -293,9 +344,105 @@ msgstr "إرسال Lisk"
 msgid "Send Lisk from"
 msgstr "إرسال Lisk من"
 
+msgid "Set"
+msgstr "تعيين"
+
+msgid "Sponsors Page"
+msgstr "صفحة الرعاة"
+
+msgid "Status"
+msgstr "الوَضْع"
+
+msgid "Status:"
+msgstr "الوَضْع:"
+
+msgid "Succesfully Logged In!"
+msgstr "تسجيل ناجح !"
+
+msgid "Terms and Conditions"
+msgstr "الأحكام والشروط"
+
+msgid "The destination address"
+msgstr "عنوان الوجهة"
+
+msgid "They have funded this app so you can use it for free. <br>\n                Vote them to help the development."
+msgstr "لقد مَوَّلوا هذا التطبيق حتى تتمكنوا من استخدامه مجانا. <BR>\nصَوِّتو عليهم للمساعدة في التنمية."
+
+msgid "To"
+msgstr "إلى"
+
+msgid "Transaction"
+msgstr "صفقة"
+
+msgid "Transaction id"
+msgstr "هوية الصفقة"
+
+msgid "Transfer Lisk from Blockchain Application"
+msgstr "نقل Lisk  من تطبيق Blockchain "
+
+msgid "Transfer Lisk to Blockchain Application"
+msgstr "نقل Lisk  إلى تطبيق Blockchain "
+
+msgid "Type"
+msgstr "نوع"
+
+msgid "Update vote from"
+msgstr "تحديث التصويت من"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Valid until"
+msgstr "صالح حتى"
+
 msgid "Virtual folder added!"
 msgstr "مجلّد افتراضي مُضاف !"
 
+msgid "Vote"
+msgstr "صوت"
+
+msgid "Votes"
+msgstr "أصوات"
+
+msgid "Withdraw LSK"
+msgstr "سحب LSK"
+
+msgid "Your email, used to send confirmation"
+msgstr "البريد الإلكتروني الخاص بك، يُستخدم لإرسال التأكيد"
+
+msgid "address"
+msgstr "عنوان"
+
 msgid "folder name"
 msgstr "اسم المجلّد"
+
+msgid "is erroneous"
+msgstr "خاطئ"
+
+msgid "is not recognised"
+msgstr "غير معترف بها"
+
+msgid "label"
+msgstr "علامة"
+
+msgid "missed blocks"
+msgstr "كتل ضائعة"
+
+msgid "now!"
+msgstr "الآن!"
+
+msgid "passphrase"
+msgstr "عبارة مرور"
+
+msgid "produced blocks"
+msgstr "الكتل المنتجة"
+
+msgid "sent with success!"
+msgstr "أرسلت بنجاح!"
+
+msgid "to"
+msgstr "إلى"
+
+msgid "you need at least 1 LSK to vote"
+msgstr "تحتاج على الأقل 1 LSK  لكي تصوت"
 

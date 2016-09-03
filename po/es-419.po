@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-08-25 18:21+0000\n"
-"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"POT-Creation-Date: 2016-09-01 19:48+0000\n"
+"PO-Revision-Date: 2016-09-01 19:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: es_419\n"
@@ -11,11 +11,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Exchange"
+msgstr "Intercambio"
+
+msgid "Total Ⱡ"
+msgstr "Total Ⱡ"
+
+msgid "This account has never interacted with the network. This is either:"
+msgstr "Esta cuenta nunca ha interactuado con la red. Esto es ya sea:"
+
+msgid "Transactions"
+msgstr "Transacciones"
+
+msgid "a cold wallet, ie the owner of the passphrase has never used it"
+msgstr "una billetera fría, por ejemplo el propietario de una contraseña de frase nunca utilizada"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost"
+msgstr "una billetera inexistente , por ejemplo nadie sabe la contraseña de frase de esta billetera. Los LSK  están perdidos"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
+msgstr "una billetera inexistente, por ejemplo nadie conoce la contraseña de frase de esta billetera."
+
 msgid "Account added!"
-msgstr "Cuenta adicionada!"
+msgstr "¡Cuenta adicionada!"
 
 msgid "Account deleted!"
-msgstr "Cuenta eliminada!"
+msgstr "¡Cuenta eliminada!"
 
 msgid "Add"
 msgstr "Añadir"
@@ -141,7 +162,7 @@ msgid "Fee (Ⱡ)"
 msgstr "Tasa (Ⱡ)"
 
 msgid "Folder Name"
-msgstr "Nombre de la carpeta"
+msgstr "Nombre de Carpeta"
 
 msgid "Folders"
 msgstr "Carpetas"
@@ -166,4 +187,250 @@ msgstr "Si es el propietario de esta cuenta, puede habilitar carpetas virtuales 
 
 msgid "Label"
 msgstr "Etiqueta"
+
+msgid "Label set"
+msgstr "Grupo de Etiquetas"
+
+msgid "Last checked"
+msgstr "Ultima consulta"
+
+msgid "Lisk Client"
+msgstr "Cliente Lisk"
+
+msgid "List full or delegate already voted."
+msgstr "Lista completa o delegado ya votado."
+
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+msgid "Market Cap."
+msgstr "Capitalización de Mercado"
+
+msgid "Maximum:"
+msgstr "Máximo"
+
+msgid "Minimum:"
+msgstr "Mínimo"
+
+msgid "Multisignature Creation"
+msgstr "Creación de múltiple firma"
+
+msgid "My Accounts"
+msgstr "Mis Cuentas"
+
+msgid "Network connected and healthy!"
+msgstr "¡Red conectada y en óptimas condiciones!"
+
+msgid "Network disconected!"
+msgstr "¡Red desconectada!"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Next..."
+msgstr "Siguiente..."
+
+msgid "No difference from original delegate list"
+msgstr "Sin diferencias con la lista original de delegados"
+
+msgid "No publicKey"
+msgstr "No hay clave pública"
+
+msgid "No search term"
+msgstr "No hay término de búsqueda"
+
+msgid "Not enough LSK on your account"
+msgstr "LSK insuficientes en su cuenta"
+
+msgid "Open Delegate Monitor"
+msgstr "Abrir Monitoreo de Delegados"
+
+msgid "Other Accounts"
+msgstr "Otras Cuentas"
+
+msgid "Passphrase"
+msgstr "Contraseña de Frase"
+
+msgid "Passphrase does not match your address"
+msgstr "La Contraseña de Frase no coincide con su dirección"
+
+msgid "Passphrase is not corresponding to account"
+msgstr "La Contraseña de Frase no corresponde a la cuenta"
+
+msgid "Peer"
+msgstr "Par"
+
+msgid "Please enter a folder name."
+msgstr "Por favor ingrese un nombre de carpeta."
+
+msgid "Please enter a new address."
+msgstr "Por favor ingrese una nueva dirección."
+
+msgid "Please enter a short label."
+msgstr "Por favor ingrese una etiqueta corta."
+
+msgid "Please enter this account passphrase to login."
+msgstr "Por favor ingrese la contraseña de frase correspondiente a esta cuenta para iniciar sesión."
+
+msgid "Please login with your account before using this feature"
+msgstr "Por favor inicie sesión con su cuenta antes de utilizar esta función"
+
+msgid "Please report any issue to"
+msgstr "Por favor reportar cualquier problema a"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Productivity"
+msgstr "Productividad"
+
+msgid "Quit"
+msgstr "Salir"
+
+msgid "Quit Lisk Client?"
+msgstr "¿Quiere salir del Cliente Lisk?"
+
+msgid "Rank"
+msgstr "Posición"
+
+msgid "Receive"
+msgstr "Recibir"
+
+msgid "Receive Lisk"
+msgstr "Recibir Lisk"
+
+msgid "Recepient Address"
+msgstr "Dirección del destinatario"
+
+msgid "Refresh"
+msgstr "Refrescar"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "Rename"
+msgstr "Renombrar"
+
+msgid "Second Passphrase"
+msgstr "Segunda Contraseña de Frase"
+
+msgid "Second Signature Creation"
+msgstr "Segunda Creación de Firma"
+
+msgid "Second passphrase"
+msgstr "Segunda contraseña de frase"
+
+msgid "Select a coin"
+msgstr "Seleccionar moneda"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Send Lisk"
+msgstr "Enviar  Lisk"
+
+msgid "Send Lisk from"
+msgstr "Enviar Lisk desde"
+
+msgid "Set"
+msgstr "Establecer"
+
+msgid "Sponsors Page"
+msgstr "Página de Patrocinadores"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Status:"
+msgstr "Estado:"
+
+msgid "Succesfully Logged In!"
+msgstr "Inicio de Sesión Exitoso!"
+
+msgid "Terms and Conditions"
+msgstr "Términos y Condiciones"
+
+msgid "The destination address"
+msgstr "La dirección de destino"
+
+msgid "They have funded this app so you can use it for free. <br>\n                Vote them to help the development."
+msgstr "Ellos han financiado esta aplicación para que puedas utilizarla de forma gratuita.<br> Vota por ellos para contribuir al desarrollo de la misma."
+
+msgid "To"
+msgstr "Hacia"
+
+msgid "Transaction"
+msgstr "Transacción"
+
+msgid "Transaction id"
+msgstr "ID de Transacción"
+
+msgid "Transfer Lisk from Blockchain Application"
+msgstr "Transferir Lisk desde Aplicación Blockchain"
+
+msgid "Transfer Lisk to Blockchain Application"
+msgstr "Transferir Lisk hacia Aplicación Blockchain"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Update vote from"
+msgstr "Votar a favor desde"
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Valid until"
+msgstr "Válido hasta"
+
+msgid "Virtual folder added!"
+msgstr "¡Carpeta virtual añadida!"
+
+msgid "Vote"
+msgstr "Voto"
+
+msgid "Votes"
+msgstr "Votos"
+
+msgid "Withdraw LSK"
+msgstr "Extraer LSK"
+
+msgid "Your email, used to send confirmation"
+msgstr "Su correo electrónico, utilizado para enviar la confirmación"
+
+msgid "address"
+msgstr "dirección"
+
+msgid "folder name"
+msgstr "Nombre de carpeta"
+
+msgid "is erroneous"
+msgstr "es erroneo"
+
+msgid "is not recognised"
+msgstr "no es reconocido"
+
+msgid "label"
+msgstr "etiqueta"
+
+msgid "missed blocks"
+msgstr "bloques perdidos"
+
+msgid "now!"
+msgstr "¡ahora!"
+
+msgid "passphrase"
+msgstr "contraseña de frase"
+
+msgid "produced blocks"
+msgstr "bloques producidos"
+
+msgid "sent with success!"
+msgstr "¡Enviado exitosamente!"
+
+msgid "to"
+msgstr "hacia"
+
+msgid "you need at least 1 LSK to vote"
+msgstr "necesitas al menos 1 LSK para votar"
 

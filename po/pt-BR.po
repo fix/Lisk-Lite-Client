@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-08-25 18:21+0000\n"
-"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"POT-Creation-Date: 2016-09-01 19:48+0000\n"
+"PO-Revision-Date: 2016-09-01 19:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
@@ -10,6 +10,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Exchange"
+msgstr "Troca"
+
+msgid "Total Ⱡ"
+msgstr "Total Ⱡ"
+
+msgid "This account has never interacted with the network. This is either:"
+msgstr "Essa conta nunca interagiu com a rede. Isto é:"
+
+msgid "Transactions"
+msgstr "Transações"
+
+msgid "a cold wallet, ie the owner of the passphrase has never used it"
+msgstr "Uma cold wallet, ou seja, o proprietário da senha nunca a usou."
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost"
+msgstr "Uma wallet inexistente, ou seja, ninguém sabe a senha da wallet. Os LSK estão perdidos"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
+msgstr "Uma wallet inexistente, ou seja, ninguém sabe a senha da wallet."
 
 msgid "Account added!"
 msgstr "Conta adicionada!"
@@ -135,7 +156,7 @@ msgid "Error when trying to login:"
 msgstr "Erro ao tentar logar:"
 
 msgid "Error:"
-msgstr "Error:"
+msgstr "Erro:"
 
 msgid "Fee (Ⱡ)"
 msgstr "Taxa (Ⱡ)"
@@ -190,4 +211,226 @@ msgstr "Máximo"
 
 msgid "Minimum:"
 msgstr "Mínimo"
+
+msgid "Multisignature Creation"
+msgstr "Criação de Multi-assinatura"
+
+msgid "My Accounts"
+msgstr "Minhas contas"
+
+msgid "Network connected and healthy!"
+msgstr "Rede conectada e saudável!"
+
+msgid "Network disconected!"
+msgstr "Rede desconectada!"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Next..."
+msgstr "Próximo..."
+
+msgid "No difference from original delegate list"
+msgstr "Nenhuma diferença da lista delegados original."
+
+msgid "No publicKey"
+msgstr "Nenhuma chave pública"
+
+msgid "No search term"
+msgstr "Nenhum termo de pesquisa"
+
+msgid "Not enough LSK on your account"
+msgstr "Não há LSK suficiente em sua conta"
+
+msgid "Open Delegate Monitor"
+msgstr "Abra o Monitor de Delegado"
+
+msgid "Other Accounts"
+msgstr "Outras contas"
+
+msgid "Passphrase"
+msgstr "Frase secreta"
+
+msgid "Passphrase does not match your address"
+msgstr "Frase secreta não coincide com o seu endereço"
+
+msgid "Passphrase is not corresponding to account"
+msgstr "Frase secreta não é correspondente à conta"
+
+msgid "Peer"
+msgstr "Peer"
+
+msgid "Please enter a folder name."
+msgstr "Por favor, insira um nome de pasta."
+
+msgid "Please enter a new address."
+msgstr "Por favor, insira um novo endereço."
+
+msgid "Please enter a short label."
+msgstr "Por favor, insira um rótulo curto."
+
+msgid "Please enter this account passphrase to login."
+msgstr "Por favor, insira a frase secreta desta conta para logar."
+
+msgid "Please login with your account before using this feature"
+msgstr "Por favor, faça o login com a sua conta antes de usar este recurso"
+
+msgid "Please report any issue to"
+msgstr "Por favor, reporte qualquer problema para"
+
+msgid "Price"
+msgstr "Preço"
+
+msgid "Productivity"
+msgstr "Produtividade"
+
+msgid "Quit"
+msgstr "Sair"
+
+msgid "Quit Lisk Client?"
+msgstr "Sair do Cliente Lisk?"
+
+msgid "Rank"
+msgstr "Rank"
+
+msgid "Receive"
+msgstr "Receber"
+
+msgid "Receive Lisk"
+msgstr "Receber Lisk"
+
+msgid "Recepient Address"
+msgstr "Endereço de destino"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Rename"
+msgstr "Renomear"
+
+msgid "Second Passphrase"
+msgstr "Segunda frase secreta"
+
+msgid "Second Signature Creation"
+msgstr "Criação de segunda assinatura"
+
+msgid "Second passphrase"
+msgstr "Segunda frase secreta"
+
+msgid "Select a coin"
+msgstr "Selecione uma moeda"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Send Lisk"
+msgstr "Enviar Lisk"
+
+msgid "Send Lisk from"
+msgstr "Enviar Lisk de"
+
+msgid "Set"
+msgstr "Conjunto"
+
+msgid "Sponsors Page"
+msgstr "Página de Patrocinadores."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status:"
+msgstr "Status:"
+
+msgid "Succesfully Logged In!"
+msgstr "Logado com sucesso!"
+
+msgid "Terms and Conditions"
+msgstr "Termos e Condições"
+
+msgid "The destination address"
+msgstr "Endereço de destino"
+
+msgid "They have funded this app so you can use it for free. <br>\n                Vote them to help the development."
+msgstr "Eles financiaram este aplicativo para que você possa usá-lo gratuitamente. <br>\nVote neles para ajudar o desenvolvimento."
+
+msgid "To"
+msgstr "Para"
+
+msgid "Transaction"
+msgstr "Transação"
+
+msgid "Transaction id"
+msgstr "Id da transação"
+
+msgid "Transfer Lisk from Blockchain Application"
+msgstr "Transferir Lisk de Aplicação Blockchain"
+
+msgid "Transfer Lisk to Blockchain Application"
+msgstr "Transferir Lisk para Aplicação Blockchain"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Update vote from"
+msgstr "Atualize o voto de"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Valid until"
+msgstr "Válido até"
+
+msgid "Virtual folder added!"
+msgstr "Pasta virtual adicionada!"
+
+msgid "Vote"
+msgstr "Voto"
+
+msgid "Votes"
+msgstr "Votos"
+
+msgid "Withdraw LSK"
+msgstr "Sacar LSK"
+
+msgid "Your email, used to send confirmation"
+msgstr "Seu e-mail, usado para enviar a confirmação"
+
+msgid "address"
+msgstr "endereço"
+
+msgid "folder name"
+msgstr "nome da pasta"
+
+msgid "is erroneous"
+msgstr "está errado"
+
+msgid "is not recognised"
+msgstr "não é reconhecido"
+
+msgid "label"
+msgstr "rótulo"
+
+msgid "missed blocks"
+msgstr "blocos perdidos"
+
+msgid "now!"
+msgstr "agora!"
+
+msgid "passphrase"
+msgstr "frase secreta"
+
+msgid "produced blocks"
+msgstr "blocos produzidos"
+
+msgid "sent with success!"
+msgstr "enviado com sucesso!"
+
+msgid "to"
+msgstr "Para"
+
+msgid "you need at least 1 LSK to vote"
+msgstr "você precisa de pelo menos 1 ISK para votar"
 

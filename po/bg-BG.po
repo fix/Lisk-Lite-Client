@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-08-25 18:21+0000\n"
-"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"POT-Creation-Date: 2016-09-01 19:48+0000\n"
+"PO-Revision-Date: 2016-09-01 19:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: bg_BG\n"
@@ -129,7 +129,7 @@ msgid "Label"
 msgstr "Етикет"
 
 msgid "Last checked"
-msgstr "Последно проверен"
+msgstr "Последна проверка"
 
 msgid "Lisk Client"
 msgstr "Лиск клиент"
@@ -148,6 +148,33 @@ msgstr "Максимум:"
 
 msgid "Minimum:"
 msgstr "Минимум:"
+
+msgid "My Accounts"
+msgstr "Моите Акаунти"
+
+msgid "Network connected and healthy!"
+msgstr "Сързан с мрежата"
+
+msgid "Network disconected!"
+msgstr "Няма връзка с мрежата"
+
+msgid "Next"
+msgstr "Следващ"
+
+msgid "Next..."
+msgstr "Следващ..."
+
+msgid "No difference from original delegate list"
+msgstr "Няма разлика с оригиналния списък с делегати"
+
+msgid "No publicKey"
+msgstr "Няма публичен ключ"
+
+msgid "Other Accounts"
+msgstr "Други акаунти"
+
+msgid "Passphrase"
+msgstr "Парола"
 
 msgid "Passphrase does not match your address"
 msgstr "Паролата не съвпада с въведения адрес"
@@ -175,6 +202,9 @@ msgstr "Продуктивност"
 
 msgid "Quit"
 msgstr "Изход"
+
+msgid "Quit Lisk Client?"
+msgstr "Изход от Лиск клиента?"
 
 msgid "Rank"
 msgstr "Ранг"
@@ -226,4 +256,70 @@ msgstr "Успешен изход"
 
 msgid "Terms and Conditions"
 msgstr "Условия за ползване"
+
+msgid "Transaction"
+msgstr "Транзакция"
+
+msgid "Transaction id"
+msgstr "Номер на транзакция"
+
+msgid "Transfer Lisk from Blockchain Application"
+msgstr "Трансфер на Лиск от Блокчейн приложение"
+
+msgid "Transfer Lisk to Blockchain Application"
+msgstr "Трансфер на Лиск към Блокчейн приложение"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Update vote from"
+msgstr "Обнови гласовете от"
+
+msgid "Username"
+msgstr "Потребител"
+
+msgid "Valid until"
+msgstr "Валидност до"
+
+msgid "Virtual folder added!"
+msgstr "Добавена виртуална папка!"
+
+msgid "Vote"
+msgstr "Гласуване"
+
+msgid "Votes"
+msgstr "Гласове"
+
+msgid "Withdraw LSK"
+msgstr "Изтегли Лиск"
+
+msgid "Your email, used to send confirmation"
+msgstr "Вашият мейл, използва се за изпращане на потвърждение"
+
+msgid "address"
+msgstr "адрес"
+
+msgid "folder name"
+msgstr "име на папка"
+
+msgid "label"
+msgstr "етикет"
+
+msgid "missed blocks"
+msgstr "пропуснати блокове"
+
+msgid "now!"
+msgstr "сега!"
+
+msgid "passphrase"
+msgstr "парола"
+
+msgid "sent with success!"
+msgstr "успешно изпратени!"
+
+msgid "to"
+msgstr "до"
+
+msgid "you need at least 1 LSK to vote"
+msgstr "за да гласувате ви трябва поне 1 LSK"
 

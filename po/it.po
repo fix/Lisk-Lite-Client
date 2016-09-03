@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-08-25 18:21+0000\n"
-"PO-Revision-Date: 2016-08-25 18:21+0000\n"
+"POT-Creation-Date: 2016-09-01 19:48+0000\n"
+"PO-Revision-Date: 2016-09-01 19:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -10,6 +10,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Exchange"
+msgstr "Exchange"
+
+msgid "Total Ⱡ"
+msgstr "Ⱡ totali"
+
+msgid "This account has never interacted with the network. This is either:"
+msgstr "Questo account non si è mai connesso alla rete. Può essere che :"
+
+msgid "Transactions"
+msgstr "Transazioni"
+
+msgid "a cold wallet, ie the owner of the passphrase has never used it"
+msgstr "un cold wallet, esempio il possessore della passphrase non l'ha mai usato\n"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost"
+msgstr "un wallet inesistente, esempio : nessuno sa la passphrase del wallet. I LSK sono persi"
+
+msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
+msgstr "un wallet inesistente, esempio : nessuno sa la passphrase del wallet."
+
+msgid "Balance"
+msgstr "Bilancio"
+
+msgid "Details"
+msgstr "Dettagli"
+
+msgid "Language"
+msgstr "Lingua"
+
+msgid "Recipient Address"
+msgstr "Indirizzo del destinatario"
 
 msgid "Account added!"
 msgstr "Account aggiunto!"
