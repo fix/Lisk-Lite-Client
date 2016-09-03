@@ -1,23 +1,20 @@
 # Multi Platform Lisk Lite Client
 
 ## Sponsors
-Thanks for the sponsors that contribute to the development of this client. Be sure to vote their delegates to further develop it. [Visit the sponsors page](http://desktop.lisk-wallet.com/sponsors.html)
+Visit and vote for the sponsors [here](http://desktop.lisk-wallet.com/sponsors.html)
 
 ## Download
-Install the version 1.0.0 Beta 3
+Install the version 1.0.0
 
-[Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient.Setup.1.0.0.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.3/LiskClient-1.0.0.dmg)
+Last stable version is available [here](http://desktop.lisk-wallet.com/)
 
-Also check the ongoing development of mobile client: [Android](https://play.google.com/apps/testing/com.lisk_wallet.wallet)
+[Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0/LiskClient.Setup.1.0.0-beta2.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.dmg)
 
-This version is fully functional and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
 
-## Security
-* All transactions are signed locally, no passphrases are ever sent over the network
-* The Windows installer is not signed, so you will have a popup, at installation, warning you it is not safe to install the LiskClient. This not due to the fact that Windows has detected evil code, but only because the application is not signed. Signing a Windows app costs 500$ a year. If somebody knows how to do it with a fraction of this cost, please open an issue
+This version is fully functionnal and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
 
 ## Features
-* Available on ***Windows*** (not signed), ***Linux*** (ubuntu/debian) and ***Macosx*** (signed)
+* Available on ***Windows***, ***Linux*** (ubuntu/debian) and ***Macosx*** (signed)
 * No wait to sync to the network: launch and use.
 * view any account from its address (transactions, delegate status and votes)
 * deposit LSK using altcoins or USD (via changer.com) - no registration needed
@@ -33,19 +30,8 @@ If you login to your account (with your passphrase)
 
 Second signature supported. Multisignature accounts not yet supported.
 
-## Roadmap
-### 1.1.0
-* internationalisation (Funded by [the sponsors](http://desktop.lisk-wallet.com/sponsors.html))
-
-### No version defined yet
-* charge your visa card directly from your account
-* shapeshift integration
-* Secure your passphrases in the app
-* Mobile client (android and iOS) [check the android beta](https://play.google.com/apps/testing/com.lisk_wallet.wallet)
-
-
 ## Authors
-Fixcrypt. To support the development, please vote for delegate **fixcrypt**.
+Fixcrypt.
 
 ## Screenshot
 
