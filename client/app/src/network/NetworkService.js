@@ -102,8 +102,14 @@
     function pickRandomPeer(){
       getFromPeer("/api/peers?state=2").then(function(response){
         if(response.success){
+          window.localStorage.setItem("peers",JSON.stringify(response.peers));
           findGoodPeer(response.peers,0);
         }
+        else{
+          findGoodPeer(JSON.parse(window.localStorage.getItem("peers")),0);
+        }
+      }, function(error){
+        findGoodPeer(JSON.parse(window.localStorage.getItem("peers")),0);
       })
     };
 

@@ -17,14 +17,14 @@
     var lisk=require('lisk-js');
 
     var TxTypes = {
-      0:gettextCatalog.getString("Send Lisk"),
-      1:gettextCatalog.getString("Second Signature Creation"),
-      2:gettextCatalog.getString("Delegate Registration"),
-      3:gettextCatalog.getString("Vote"),
-      4:gettextCatalog.getString("Multisignature Creation"),
-      5:gettextCatalog.getString("Blockchain Application Registration"),
-      6:gettextCatalog.getString("Transfer Lisk to Blockchain Application"),
-      7:gettextCatalog.getString("Transfer Lisk from Blockchain Application")
+      0:"Send Lisk",
+      1:"Second Signature Creation",
+      2:"Delegate Registration",
+      3:"Vote",
+      4:"Multisignature Creation",
+      5:"Blockchain Application Registration",
+      6:"Transfer Lisk to Blockchain Application",
+      7:"Transfer Lisk from Blockchain Application"
     };
 
     var peer=networkService.getPeer().ip;
@@ -179,7 +179,7 @@
         if(resp.data.success){
           for(var i=0;i<resp.data.transactions.length;i++){
             var transaction = resp.data.transactions[i];
-            transaction.label=TxTypes[transaction.type];
+            transaction.label=gettextCatalog.getString(TxTypes[transaction.type]);
             transaction.date=new Date((transaction.timestamp + t) * 1000);
             if(transaction.recipientId==address){
               transaction.total=transaction.amount;

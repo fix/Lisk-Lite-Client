@@ -25,9 +25,11 @@
    */
   function AccountController( accountService, networkService, changerService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $interval, $log, $mdDialog, $scope, $mdMedia, gettextCatalog) {
 
-    gettextCatalog.setCurrentLanguage('fr');
-
     var self = this;
+    gettextCatalog.debug = true;
+    self.language  = window.localStorage.getItem("language");
+    if(!self.language) selectNextLanguage();
+    else gettextCatalog.setCurrentLanguage(self.language);
 
     self.openExternal = function(url){
       require('electron').shell.openExternal(url);
@@ -45,6 +47,7 @@
     self.vote  = vote;
     self.addDelegate = addDelegate;
     self.showAccountMenu  = showAccountMenu;
+    self.selectNextLanguage = selectNextLanguage;
     self.currency = JSON.parse(window.localStorage.getItem("currency")) || {name:"btc",symbol:"Ƀ"};
     self.marketinfo= {};
     self.exchangeHistory=changerService.getHistory();
@@ -85,6 +88,14 @@
         }
       }
     );
+
+    function selectNextLanguage(){
+      var languages = ["en","fr","ara","de","it"];
+      if(self.language) self.language=languages[languages.indexOf(self.language) + 1 % languages.length];
+      else self.language = "en";
+      window.localStorage.setItem("language",self.language);
+      gettextCatalog.setCurrentLanguage(self.language);
+    }
 
     self.getMarketInfo=function(symbol){
       changerService.getMarketInfo(symbol,"lisk_LSK").then(function(answer){
@@ -564,7 +575,7 @@
         else{
           $mdToast.show(
             $mdToast.simple()
-              .textContent(gettextCatalog.getString('Address ')+address+gettextCatalog.getString(' is not recognised'))
+              .textContent(gettextCatalog.getString('Address')+" "+address+" "+gettextCatalog.getString('is not recognised'))
               .hideDelay(3000)
           );
         }
@@ -935,7 +946,7 @@
 
     }
 
-    
+
     function validateTransaction(transaction){
 
       function send() {

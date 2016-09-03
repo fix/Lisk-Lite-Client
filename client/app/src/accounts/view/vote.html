@@ -11,10 +11,12 @@
           <md-chip-template>{{$chip.vote}}{{$chip.username}}</md-chip-template>
         </md-chips>
         <md-input-container class="md-block">
-          <input ng-model="voteDialog.data.passphrase" type="password" placeholder="{{'Passphrase'|translate}}" ng-required="true">
+          <label translate>Passphrase</label>
+          <input ng-model="voteDialog.data.passphrase" type="password" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block" ng-if="voteDialog.data.secondSignature">
-          <input ng-model="voteDialog.data.secondpassphrase" type="password" placeholder="{{'Second Passphrase'|translate}}" ng-required="true">
+          <label translate>Second Passphrase</label>
+          <input ng-model="voteDialog.data.secondpassphrase" type="password"  ng-required="true">
         </md-input-container>
       </div>
     </md-dialog-content>

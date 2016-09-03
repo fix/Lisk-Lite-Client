@@ -22,16 +22,20 @@
               </span>
             </md-item-template>
           </md-autocomplete> -->
-          <input ng-model="send.data.toAddress" type="text" placeholder="{{'Destination Address'|translate}}" ng-required="true" md-autofocus>
+          <label translate>Destination Address</label>
+          <input ng-model="send.data.toAddress" type="text" ng-required="true" md-autofocus>
         </md-input-container>
         <md-input-container md-no-float class="md-block">
-          <input ng-model="send.data.amount" type="number" step="0.00000001" placeholder="{{'Amount'|translate}} (LSK)" ng-required="true">
+          <label>{{'Amount'|translate}} (LSK)</label>
+          <input ng-model="send.data.amount" type="number" step="0.00000001" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block">
-          <input ng-model="send.data.passphrase" type="password" placeholder="{{'Passphrase'|translate}}" ng-required="true">
+          <label translate>Passphrase</label>
+          <input ng-model="send.data.passphrase" type="password" ng-required="true">
         </md-input-container>
         <md-input-container class="md-block" ng-if="send.data.secondSignature">
-          <input ng-model="send.data.secondpassphrase" type="password" placeholder="{{'Second Passphrase'|translate}}" ng-required="true">
+          <label translate>Second Passphrase</label>
+          <input ng-model="send.data.secondpassphrase" type="password" ng-required="true">
         </md-input-container>
       </div>
     </md-dialog-content>
