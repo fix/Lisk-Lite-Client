@@ -2,35 +2,35 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Transaction {{validate.transaction.id}}</h2>
+        <h2><span translate>Transaction</span> {{validate.transaction.id}}</h2>
       </div>
     </md-toolbar>
     <md-dialog-content>
       <div class="md-dialog-content">
         <md-list>
           <md-list-item>
-            <b>Type</b> <span class="md-secondary">{{validate.transaction.type}}</span>
+            <b translate>Type</b> <span class="md-secondary">{{validate.transaction.type}}</span>
           </md-list-item>
           <md-list-item>
-            <b>From</b> <span class="md-secondary">{{validate.transaction.senderId}}</span>
+            <b translate>From</b> <span class="md-secondary">{{validate.transaction.senderId}}</span>
           </md-list-item>
           <md-list-item ng-if="validate.transaction.recipientId">
-            <b>To</b> <span class="md-secondary">{{validate.transaction.recipientId}}</span>
+            <b translate>To</b> <span class="md-secondary">{{validate.transaction.recipientId}}</span>
           </md-list-item>
           <md-list-item ng-if="validate.transaction.amount">
-            <b>Amount (Ⱡ)</b> <span class="md-secondary">{{validate.transaction.amount/100000000}}</span>
+            <b translate>Amount (Ⱡ)</b> <span class="md-secondary">{{validate.transaction.amount/100000000}}</span>
           </md-list-item>
           <md-list-item>
-            <b>Fee (Ⱡ)</b> <span class="md-secondary">{{validate.transaction.fee/100000000}}</span>
+            <b translate>Fee (Ⱡ)</b> <span class="md-secondary">{{validate.transaction.fee/100000000}}</span>
           </md-list-item>
         </md-list>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
       <md-button  md-colors="{'background':'red' }"  ng-click="validate.send(validate.transaction)">
-        Send Ⱡ{{(validate.transaction.amount+validate.transaction.fee)/100000000}} now!
+        <span translate>Send</span> Ⱡ{{(validate.transaction.amount+validate.transaction.fee)/100000000}} <span translate>now!</span>
       </md-button>
-      <md-button ng-click="validate.cancel()" style="margin-right:20px;">
+      <md-button ng-click="validate.cancel()" style="margin-right:20px;" translate>
         Cancel
       </md-button>
     </md-dialog-actions>

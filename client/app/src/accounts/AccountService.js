@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('liskclient')
-         .service('accountService', ['$q','$http','networkService', AccountService]);
+         .service('accountService', ['$q', '$http', 'networkService', 'gettextCatalog', AccountService]);
 
   /**
    * Accounts DataService
@@ -12,19 +12,19 @@
    * @returns {{loadAll: Function}}
    * @constructor
    */
-  function AccountService($q,$http,networkService){
+  function AccountService($q, $http, networkService, gettextCatalog){
 
     var lisk=require('lisk-js');
 
     var TxTypes = {
-      0:"Send Lisk",
-      1:"Second Signature Creation",
-      2:"Delegate Registration",
-      3:"Vote",
-      4:"Multisignature Creation",
-      5:"Blockchain Application Registration",
-      6:"Transfer Lisk to Blockchain Application",
-      7:"Transfer Lisk from Blockchain Application"
+      0:gettextCatalog.getString("Send Lisk"),
+      1:gettextCatalog.getString("Second Signature Creation"),
+      2:gettextCatalog.getString("Delegate Registration"),
+      3:gettextCatalog.getString("Vote"),
+      4:gettextCatalog.getString("Multisignature Creation"),
+      5:gettextCatalog.getString("Blockchain Application Registration"),
+      6:gettextCatalog.getString("Transfer Lisk to Blockchain Application"),
+      7:gettextCatalog.getString("Transfer Lisk from Blockchain Application")
     };
 
     var peer=networkService.getPeer().ip;
@@ -184,7 +184,7 @@
             if(transaction.recipientId==address){
               transaction.total=transaction.amount;
               if(transaction.type==0){
-                transaction.label="Receive Lisk";
+                transaction.label=gettextCatalog.getString("Receive Lisk");
               }
             }
             if(transaction.senderId==address){
@@ -195,7 +195,7 @@
           deferred.resolve(resp.data.transactions);
         }
         else{
-          deferred.reject("Cannot get transactions");
+          deferred.reject(gettextCatalog.getString("Cannot get transactions"));
         }
       });
       return deferred.promise;
@@ -204,7 +204,7 @@
     function getDelegate(publicKey){
       var deferred = $q.defer();
       if(!publicKey){
-        deferred.reject("No publicKey");
+        deferred.reject(gettextCatalog.getString("No publicKey"));
         return deferred.promise;
       }
       $http.get(peer+"/api/delegates/get/?publicKey="+publicKey).then(function (resp) {
@@ -214,7 +214,7 @@
           deferred.resolve(resp.data.delegate);
         }
         else{
-          deferred.reject("Cannot state if account is a delegate");
+          deferred.reject(gettextCatalog.getString("Cannot state if account is a delegate"));
         }
       });
       return deferred.promise;
@@ -233,7 +233,7 @@
           deferred.resolve(resp.data.delegate);
         }
         else{
-          deferred.reject("Cannot find delegate: "+ username);
+          deferred.reject(gettextCatalog.getString("Cannot find delegate: ")+ username);
         }
       });
       return deferred.promise;
@@ -243,7 +243,7 @@
     function searchDelegates(term){
       var deferred = $q.defer();
       if(!term){
-        deferred.reject("No search term");
+        deferred.reject(gettextCatalog.getString("No search term"));
         return deferred.promise;
       }
       $http.get(peer+"/api/delegates/search/?term="+term).then(function (resp) {
@@ -251,10 +251,10 @@
           deferred.resolve(resp.data.delegates);
         }
         else{
-          deferred.reject("Cannot find delegates from this term: "+term);
+          deferred.reject(gettextCatalog.getString("Cannot find delegates from this term: ")+term);
         }
       }, function(err){
-        deferred.reject("Cannot find delegates on this peer: "+err);
+        deferred.reject(gettextCatalog.getString("Cannot find delegates on this peer: ")+err);
       });
       return deferred.promise;
     };
@@ -267,7 +267,7 @@
           deferred.resolve(resp.data.delegates);
         }
         else{
-          deferred.reject("Cannot get voted delegates");
+          deferred.reject(gettextCatalog.getString("Cannot get voted delegates"));
         }
       });
       return deferred.promise;
@@ -278,13 +278,13 @@
       if(type==0){ //send lisk
         var isAddress = /^[0-9]+[L|l]$/g;
         if(!isAddress.test(config.toAddress)){
-          deferred.reject("The destination address "+config.toAddress+" is erroneous");
+          deferred.reject(gettextCatalog.getString("The destination address ")+config.toAddress+gettextCatalog.getString(" is erroneous"));
           return deferred.promise;
         }
 
         var account=getAccount(config.fromAddress);
         if(config.amount+10000000>account.balance){
-          deferred.reject("Not enough LSK on your account "+config.fromAddress);
+          deferred.reject(gettextCatalog.getString("Not enough LSK on your account ")+config.fromAddress);
           return deferred.promise;
         }
 
@@ -297,7 +297,7 @@
         }
 
         if(lisk.crypto.getAddress(transaction.senderPublicKey)!=config.fromAddress){
-          deferred.reject("Passphrase is not corresponding to account "+config.fromAddress);
+          deferred.reject(gettextCatalog.getString("Passphrase is not corresponding to account ")+config.fromAddress);
           return deferred.promise;
         }
 
@@ -308,7 +308,7 @@
       else if(type==3){ //vote
         var account=getAccount(config.fromAddress);
         if(account.balance<100000000){
-          deferred.reject("Not enough LSK on your account "+config.fromAddress+", you need at least 1 LSK to vote");
+          deferred.reject(gettextCatalog.getString("Not enough LSK on your account ")+config.fromAddress+", "+gettextCatalog.getString("you need at least 1 LSK to vote"));
           return deferred.promise;
         }
         try{
@@ -319,7 +319,7 @@
           return deferred.promise;
         }
         if(lisk.crypto.getAddress(transaction.senderPublicKey)!=config.fromAddress){
-          deferred.reject("Passphrase is not corresponding to account "+config.fromAddress);
+          deferred.reject(gettextCatalog.getString("Passphrase is not corresponding to account ")+config.fromAddress);
           return deferred.promise;
         }
         transaction.senderId=config.fromAddress;
@@ -415,7 +415,7 @@
         }
       },function(err){
         console.log(err);
-        deferred.reject("Cannot get sponsors");
+        deferred.reject(gettextCatalog.getString("Cannot get sponsors"));
       });
       return deferred.promise;
     };
@@ -430,7 +430,7 @@
         deferred.resolve(account.virtual);
       }
       else{
-        deferred.reject("Passphrase does not match your address");
+        deferred.reject(gettextCatalog.getString("Passphrase does not match your address"));
       }
 
       return deferred.promise;

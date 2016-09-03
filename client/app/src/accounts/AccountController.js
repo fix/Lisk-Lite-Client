@@ -3,7 +3,7 @@
   angular
        .module('liskclient')
        .controller('AccountController', [
-          'accountService', 'networkService', 'changerService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$interval', '$log', '$mdDialog', '$scope', '$mdMedia',
+          'accountService', 'networkService', 'changerService', '$mdToast', '$mdSidenav', '$mdBottomSheet', '$timeout', '$interval', '$log', '$mdDialog', '$scope', '$mdMedia', 'gettextCatalog',
           AccountController
        ]).filter('accountlabel', ['accountService', function(accountService) {
            return function(address) {
@@ -23,7 +23,10 @@
    * @param avatarsService
    * @constructor
    */
-  function AccountController( accountService, networkService, changerService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $interval, $log, $mdDialog, $scope,$mdMedia) {
+  function AccountController( accountService, networkService, changerService, $mdToast, $mdSidenav, $mdBottomSheet, $timeout, $interval, $log, $mdDialog, $scope, $mdMedia, gettextCatalog) {
+
+    gettextCatalog.setCurrentLanguage('fr');
+
     var self = this;
 
     self.openExternal = function(url){
@@ -64,7 +67,7 @@
           self.isNetworkConnected=false;
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Network disconected!')
+              .textContent(gettextCatalog.getString('Network disconected!'))
               .hideDelay(10000)
           );
         }
@@ -74,7 +77,7 @@
           $timeout(function(){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Network connected and healthy!')
+                .textContent(gettextCatalog.getString('Network connected and healthy!'))
                 .hideDelay(10000)
             );
           },1000);
@@ -247,14 +250,14 @@
           self.exchangeSell.sentTransaction=transaction;
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Transaction '+ transaction.id +' sent with success!')
+              .textContent(gettextCatalog.getString('Transaction ')+ transaction.id +gettextCatalog.getString(' sent with success!'))
               .hideDelay(5000)
           );
         },
         function(error){
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Error: '+ error)
+              .textContent(gettextCatalog.getString('Error: ')+ error)
               .hideDelay(5000)
           );
         }
@@ -322,9 +325,9 @@
 
     self.closeApp = function() {
       var confirm = $mdDialog.confirm()
-          .title('Quit Lisk Client?')
-          .ok('Quit')
-          .cancel('Cancel');
+          .title(gettextCatalog.getString('Quit Lisk Client?'))
+          .ok(gettextCatalog.getString('Quit'))
+          .cancel(gettextCatalog.getString('Cancel'));
       $mdDialog.show(confirm).then(function() {
         require('electron').remote.app.quit();
       });
@@ -349,7 +352,6 @@
     };
 
     self.pickRandomPeer=function(){
-      console.log("fire");
       networkService.pickRandomPeer();
     };
 
@@ -376,41 +378,41 @@
     self.createFolder=function(account){
       if(account.virtual){
         var confirm = $mdDialog.prompt()
-            .title('Create Virtual Folder')
-            .textContent('Please enter a folder name.')
-            .placeholder('folder name')
-            .ariaLabel('Folder Name')
-            .ok('Add')
-            .cancel('Cancel');
+            .title(gettextCatalog.getString('Create Virtual Folder'))
+            .textContent(gettextCatalog.getString('Please enter a folder name.'))
+            .placeholder(gettextCatalog.getString('folder name'))
+            .ariaLabel(gettextCatalog.getString('Folder Name'))
+            .ok(gettextCatalog.getString('Add'))
+            .cancel(gettextCatalog.getString('Cancel'));
         $mdDialog.show(confirm).then(function(foldername) {
           account.virtual=accountService.setToFolder(account.address,foldername,0);
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Virtual folder added!')
+              .textContent(gettextCatalog.getString('Virtual folder added!'))
               .hideDelay(3000)
           );
         });
       }
       else{
         var confirm = $mdDialog.prompt()
-            .title('Login')
-            .textContent('Please enter this account passphrase to login.')
-            .placeholder('passphrase')
-            .ariaLabel('Passphrase')
-            .ok('Login')
-            .cancel('Cancel');
+            .title(gettextCatalog.getString('Login'))
+            .textContent(gettextCatalog.getString('Please enter this account passphrase to login.'))
+            .placeholder(gettextCatalog.getString('passphrase'))
+            .ariaLabel(gettextCatalog.getString('Passphrase'))
+            .ok(gettextCatalog.getString('Login'))
+            .cancel(gettextCatalog.getString('Cancel'));
         $mdDialog.show(confirm).then(function(passphrase) {
           accountService.createVirtual(passphrase).then(function(virtual){
             account.virtual=virtual;
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Succesfully Logged In!')
+                .textContent(gettextCatalog.getString('Succesfully Logged In!'))
                 .hideDelay(3000)
             );
           }, function(err) {
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Error when trying to login: '+err)
+                .textContent(gettextCatalog.getString('Error when trying to login: ')+err)
                 .hideDelay(3000)
             );
           });
@@ -540,12 +542,12 @@
      */
     function addAccount() {
       var confirm = $mdDialog.prompt()
-          .title('New Account')
-          .textContent('Please enter a new address.')
-          .placeholder('address')
-          .ariaLabel('Address')
-          .ok('Add')
-          .cancel('Cancel');
+          .title(gettextCatalog.getString('Add Account'))
+          .textContent(gettextCatalog.getString('Please enter a new address.'))
+          .placeholder(gettextCatalog.getString('address'))
+          .ariaLabel(gettextCatalog.getString('Address'))
+          .ok(gettextCatalog.getString('Add'))
+          .cancel(gettextCatalog.getString('Cancel'));
       $mdDialog.show(confirm).then(function(address) {
         var isAddress = /^[0-9]+[L|l]$/g;
         if(isAddress.test(address)){
@@ -554,7 +556,7 @@
             selectAccount(account);
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Account added!')
+                .textContent(gettextCatalog.getString('Account added!'))
                 .hideDelay(3000)
             );
           });
@@ -562,7 +564,7 @@
         else{
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Address '+address+' is not recognised')
+              .textContent(gettextCatalog.getString('Address ')+address+gettextCatalog.getString(' is not recognised'))
               .hideDelay(3000)
           );
         }
@@ -607,7 +609,7 @@
             else{
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent('List full or delegate already voted.')
+                  .textContent(gettextCatalog.getString('List full or delegate already voted.'))
                   .hideDelay(5000)
               );
             }
@@ -615,7 +617,7 @@
           function(error){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Error: '+ error)
+                .textContent(gettextCatalog.getString('Error: ')+ error)
                 .hideDelay(5000)
             );
           }
@@ -656,7 +658,7 @@
           function(error){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Error: '+ error)
+                .textContent(gettextCatalog.getString('Error: ')+ error)
                 .hideDelay(5000)
             );
           }
@@ -690,7 +692,7 @@
       if(!votes || votes.length==0){
         $mdToast.show(
           $mdToast.simple()
-            .textContent('No difference from original delegate list')
+            .textContent(gettextCatalog.getString('No difference from original delegate list'))
             .hideDelay(5000)
         );
         return;
@@ -765,7 +767,7 @@
           function(error){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Error: '+ error)
+                .textContent(gettextCatalog.getString('Error: ')+ error)
                 .hideDelay(5000)
             );
           }
@@ -808,53 +810,53 @@
       var account = selectedAccount;
 
       var items = [
-        { name: 'Send Lisk', icon: 'send'},
-        { name: 'Delete', icon: 'delete'}
+        { name: gettextCatalog.getString('Send Lisk'), icon: 'send'},
+        { name: gettextCatalog.getString('Delete'), icon: 'delete'}
       ];
 
       if(!selectedAccount.delegate){
-        items.push({ name: 'Label', icon: 'local_offer'});
+        items.push({ name: gettextCatalog.getString('Label'), icon: 'local_offer'});
       }
 
       function answer(action){
         $mdBottomSheet.hide();
-        if(action=="Delete"){
+        if(action==gettextCatalog.getString("Delete")){
           var confirm = $mdDialog.confirm()
-              .title('Delete Account '+ account.address)
-              .textContent('Are you sure? There is no way back.')
-              .ok('Delete permanently this account')
-              .cancel('Cancel');
+              .title(gettextCatalog.getString('Delete Account')+ ' ' +account.address)
+              .textContent(gettextCatalog.getString('Are you sure?'))
+              .ok(gettextCatalog.getString('Delete permanently this account'))
+              .cancel(gettextCatalog.getString('Cancel'));
           $mdDialog.show(confirm).then(function() {
             accountService.deleteAccount(account).then(function(){
               self.accounts = accountService.loadAllAccounts();
               if(self.accounts.length>0) selectAccount(self.accounts[0]);
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent('Account deleted!')
+                  .textContent(gettextCatalog.getString('Account deleted!'))
                   .hideDelay(3000)
               );
             });
           });
         }
 
-        else if(action=="Send Lisk"){
+        else if(action==gettextCatalog.getString("Send Lisk")){
           createLiskTransaction();
         }
 
-        else if (action=="Label") {
+        else if (action==gettextCatalog.getString("Label")) {
           var prompt = $mdDialog.prompt()
-              .title('Label')
-              .textContent('Please enter a short label.')
-              .placeholder('label')
-              .ariaLabel('Label')
-              .ok('Set')
-              .cancel('Cancel');
+              .title(gettextCatalog.getString('Label'))
+              .textContent(gettextCatalog.getString('Please enter a short label.'))
+              .placeholder(gettextCatalog.getString('label'))
+              .ariaLabel(gettextCatalog.getString('Label'))
+              .ok(gettextCatalog.getString('Set'))
+              .cancel(gettextCatalog.getString('Cancel'));
           $mdDialog.show(prompt).then(function(label) {
             accountService.setUsername(selectedAccount.address,label);
             self.accounts = accountService.loadAllAccounts();
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Label set')
+                .textContent(gettextCatalog.getString('Label set'))
                 .hideDelay(3000)
             );
           });
@@ -896,7 +898,7 @@
             function(error){
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent('Error: '+ error)
+                  .textContent(gettextCatalog.getString('Error: ')+ error)
                   .hideDelay(5000)
               );
             }
@@ -942,14 +944,14 @@
           function(transaction){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Transaction '+ transaction.id +' sent with success!')
+                .textContent(gettextCatalog.getString('Transaction ')+ transaction.id +gettextCatalog.getString(' sent with success!'))
                 .hideDelay(5000)
             );
           },
           function(error){
             $mdToast.show(
               $mdToast.simple()
-                .textContent('Error: '+ error)
+                .textContent(gettextCatalog.getString('Error: ')+ error)
                 .hideDelay(5000)
             );
           }
