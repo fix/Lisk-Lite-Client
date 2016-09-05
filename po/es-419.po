@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-09-01 19:48+0000\n"
-"PO-Revision-Date: 2016-09-01 19:48+0000\n"
+"POT-Creation-Date: 2016-09-05 16:04+0000\n"
+"PO-Revision-Date: 2016-09-05 16:04+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: es_419\n"
@@ -31,6 +31,18 @@ msgstr "una billetera inexistente , por ejemplo nadie sabe la contraseña de fra
 
 msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
 msgstr "una billetera inexistente, por ejemplo nadie conoce la contraseña de frase de esta billetera."
+
+msgid "Balance"
+msgstr "Balance"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Language"
+msgstr "Lenguaje"
+
+msgid "Recipient Address"
+msgstr "Dirección del Destinatario"
 
 msgid "Account added!"
 msgstr "¡Cuenta adicionada!"

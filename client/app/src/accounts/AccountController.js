@@ -90,7 +90,7 @@
     );
 
     function selectNextLanguage(){
-      var languages = ["en","fr","ara","de","it"];
+      var languages = ["en","fr","ara","de","it","es"];
       if(self.language) self.language=languages[languages.indexOf(self.language) + 1 % languages.length];
       else self.language = "en";
       window.localStorage.setItem("language",self.language);

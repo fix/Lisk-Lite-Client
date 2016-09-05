@@ -4,12 +4,9 @@
 Visit and vote for the sponsors [here](http://desktop.lisk-wallet.com/sponsors.html)
 
 ## Download
-Install the version 1.0.0
+Install the version 1.1.0
 
 Last stable version is available [here](http://desktop.lisk-wallet.com/)
-
-[Windows](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0/LiskClient.Setup.1.0.0-beta2.exe) | [Linux - ubuntu/debian](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.deb) | [Mac](https://github.com/fix/Lisk-Lite-Client/releases/download/v1.0.0-beta.2/LiskClient-1.0.0-beta2.dmg)
-
 
 This version is fully functionnal and can be used. See the [changelog](https://github.com/fix/Lisk-Lite-Client/releases)
 

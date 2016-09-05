@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VERSION\n"
-"POT-Creation-Date: 2016-09-01 19:48+0000\n"
-"PO-Revision-Date: 2016-09-01 19:48+0000\n"
+"POT-Creation-Date: 2016-09-05 16:04+0000\n"
+"PO-Revision-Date: 2016-09-05 16:04+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE TEAM <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -15,10 +15,10 @@ msgid "Exchange"
 msgstr "Börse"
 
 msgid "Total Ⱡ"
-msgstr "Total Ⱡ"
+msgstr "Gesamtsumme Ⱡ"
 
 msgid "This account has never interacted with the network. This is either:"
-msgstr "Dieser Account war nie mit dem Netzwerk verbunden. Die ist entweder:"
+msgstr "Dieser Account war nie mit dem Netzwerk verbunden. Dies ist entweder:"
 
 msgid "Transactions"
 msgstr "Transaktionen"
@@ -27,10 +27,10 @@ msgid "a cold wallet, ie the owner of the passphrase has never used it"
 msgstr "Eine Cold-Wallet, z.B. hat der Besitzer des Passwortes dieses nie verwendet"
 
 msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet. The LSK are lost"
-msgstr "Eine Wallet die nicht existiert, z.B. weiss niemand das entsprechende Passwort. Die LSK sind verloren"
+msgstr "Eine Wallet die nicht existiert, z.B. weiß niemand das entsprechende Passwort. Die LSK sind verloren"
 
 msgid "an inexistant wallet, ie nobody knows the passphrase of this wallet."
-msgstr "Eine Wallet die nicht existiert, z.B. weiss niemand das entsprechende Passwort."
+msgstr "Eine Wallet die nicht existiert, z.B. weiß niemand das entsprechende Passwort."
 
 msgid "Balance"
 msgstr "Kontostand"
@@ -111,7 +111,7 @@ msgid "Cannot state if account is a delegate"
 msgstr "Kann nicht ermitteln, ob dieser Account ein Delegate ist"
 
 msgid "Change 1h/7h/7d"
-msgstr "Änderung 1 Stunden / 7 Stunden / 7 Tage"
+msgstr "Änderung 1h/7h/7t"
 
 msgid "Close"
 msgstr "Schliessen"
