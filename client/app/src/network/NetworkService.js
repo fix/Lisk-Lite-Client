@@ -84,7 +84,7 @@
         headers: {
           'Content-Type': 'application/json',
           'os': 'liskwalletapp',
-          'version': '0.0.3',
+          'version': '0.5.1',
           'port': 1,
           'nethash': 'ed14889723f24ecc54871d058d98ce91ff2f973192075c0155ba2b7b70ad2511'
         }
